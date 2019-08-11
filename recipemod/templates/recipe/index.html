@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Recipes{% endblock %}</h1>
+    {% if g.user %}
+<!-- 
+        <form method="post" class="needs-validation">
+            <div class="form-group">
+                <label for="recipe_link">Add Recipe:</label>
+                <input type="url" value="{{ request.form['link'] }}" class="form-control form-control-lg" placeholder="Enter link to recipe" name="recipe_link" required>
+                <div class="invalid-feedback">Please enter a URL here</div>
+            </div>
+            <button type="submit" class="btn btn-primary" href="{{ url_for('recipe.add') }}">Add</button>
+        </form>
+ -->
+        <button type="button" class="btn btn-primary btn-block" href="{{ url_for('recipe.add') }}">Add Recipe</button>
+      {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for recipe in recipes %}
+    <article class="recipe">
+      <header>
+        <div>
+          <h3>{{ recipe['name'] }}</h3>
+          <div class="about">Posted on {{ recipe['created'].strftime('%Y-%m-%d') }} <a class="action" href="{{ url_for('recipe.edit', id=recipe['id']) }}">Edit</a></div>
+        </div>
+    </header>
+    <div>
+    <p class="description"><i>{{ recipe['description'] }}</i></p>
+    </div>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
+        
