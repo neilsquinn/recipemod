@@ -2,19 +2,13 @@
 
 {% block header %}
     <h1>{% block title %}Recipes{% endblock %}</h1>
-    {% if g.user %}
-<!-- 
         <form method="post" class="needs-validation">
             <div class="form-group">
-                <label for="recipe_link">Add Recipe:</label>
-                <input type="url" value="{{ request.form['link'] }}" class="form-control form-control-lg" placeholder="Enter link to recipe" name="recipe_link" required>
+                <input type="url" value="{{ request.form['url'] }}" class="form-control form-control-lg" placeholder="Enter link to recipe" name="url" required>
                 <div class="invalid-feedback">Please enter a URL here</div>
             </div>
-            <button type="submit" class="btn btn-primary" href="{{ url_for('recipe.add') }}">Add</button>
+            <button type="submit" class="btn btn-primary">Add</button>
         </form>
- -->
-        <button type="button" class="btn btn-primary btn-block" href="{{ url_for('recipe.add') }}">Add Recipe</button>
-      {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -22,8 +16,8 @@
     <article class="recipe">
       <header>
         <div>
-          <h3>{{ recipe['name'] }}</h3>
-          <div class="about">Posted on {{ recipe['created'].strftime('%Y-%m-%d') }} <a class="action" href="{{ url_for('recipe.edit', id=recipe['id']) }}">Edit</a></div>
+          <h3>{{ recipe['name'] }}</h3><button type="button" href="{{ url_for('recipe.edit', id=recipe['id']) }} class="btn btn-outline-primary">Edit</button>
+          <span class="about font-italic">Posted on {{ recipe['created'].strftime('%Y-%m-%d') }}</span>
         </div>
     </header>
     <div>
