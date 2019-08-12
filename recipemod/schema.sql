@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS recipes;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -17,6 +17,7 @@ CREATE TABLE recipes (
     image_url text,
     url text,
     yield text,
+    authors jsonb,
     ingredients jsonb,
     instructions jsonb,
     times jsonb,

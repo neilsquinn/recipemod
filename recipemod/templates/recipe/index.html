@@ -5,28 +5,24 @@
         <form method="post" class="needs-validation">
             <div class="form-group">
                 <input type="url" value="{{ request.form['url'] }}" class="form-control form-control-lg" placeholder="Enter link to recipe" name="url" required>
-                <div class="invalid-feedback">Please enter a URL here</div>
             </div>
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
 {% endblock %}
 
 {% block content %}
+    <br>
+    <div class="card-columns">
   {% for recipe in recipes %}
-    <article class="recipe">
-      <header>
-        <div>
-          <h3>{{ recipe['name'] }}</h3><button type="button" href="{{ url_for('recipe.edit', id=recipe['id']) }} class="btn btn-outline-primary">Edit</button>
-          <span class="about font-italic">Posted on {{ recipe['created'].strftime('%Y-%m-%d') }}</span>
+    <div class="card">
+        <img class="card-img-top" src="{{ recipe['image_url'] }}" alt="Recipe image">
+        <div class="card-body">
+            <h5 class="card-title">{{ recipe['name'] }} <span class="text-secondary small">({{ recipe['domain'] }})</span></h5>
+            <p class="card-text font-italic">{{ recipe['description'] }}</p>
+            <a href="{{ url_for('recipe.view', id=recipe['id']) }}" class="btn btn-primary stretched-link" >View</a>
         </div>
-    </header>
-    <div>
-    <p class="description"><i>{{ recipe['description'] }}</i></p>
     </div>
-    </article>
-    {% if not loop.last %}
-      <hr>
-    {% endif %}
   {% endfor %}
+</div>
 {% endblock %}
         

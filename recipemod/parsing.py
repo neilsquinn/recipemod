@@ -3,6 +3,11 @@ from datetime import timedelta
 
 import requests
 from bs4 import BeautifulSoup
+import ftfy
+
+def clean_text(text):
+    return ftfy.fix_text(BeautifulSoup(text, 'lxml').text.strip())
+
 
 def parse_iso_8601(iso_duration) -> timedelta:
     time = iso_duration.split('T')[1]
@@ -11,7 +16,7 @@ def parse_iso_8601(iso_duration) -> timedelta:
         if time:
             element = time.split(char)
             if len(element) > 1:
-                args[arg] = int(element[0])
+                args[arg] = float(element[0])
                 time = element[1]
     return timedelta(**args)
 
@@ -51,22 +56,22 @@ def ldjson_get_image_url(ldjson_recipe):
         return None
     
 def ldjson_get_instructions(ldjson_recipe):
-    html_to_text = lambda text: BeautifulSoup(text, 'lxml').text.strip()
+    clean_text = lambda text: BeautifulSoup(text, 'lxml').text.strip()
     steps = ldjson_recipe.get('recipeInstructions')
     if steps:
         if type(steps) == str:
-            return {'type':'one_step', 'steps': [html_to_text(step) for step in steps]}
+            return {'type':'one_step', 'step': clean_text(steps)}
         
         if type(steps) == dict and steps['@type'] == 'ItemList':
             steps = steps['itemListElement']
         if type(steps) == list:
             first_step = steps[0]
             if type(first_step) == str:
-                return {'type': 'steps', 'steps': [html_to_text(step) for step in steps]}
+                return {'type': 'steps', 'steps': [clean_text(step) for step in steps]}
             elif type(first_step) == dict:
                 print(first_step['@type'])
                 if 'HowToStep' in first_step['@type']:
-                    return {'type': 'steps', 'steps': [html_to_text(step['text']) for step in steps]}
+                    return {'type': 'steps', 'steps': [clean_text(step['text']) for step in steps]}
                 elif 'HowToSection' in first_step['@type']:
                     sections = []
                     print('getting sections')
@@ -77,7 +82,7 @@ def ldjson_get_instructions(ldjson_recipe):
                         elif type(first_substep) == dict and 'HowToStep' in first_substep['@type']:
                             substeps = [step['text'] for step in section['itemListElement']]
                         sections += [{'name': section['name'],
-                                     'steps': [[html_to_text(step) for step in substeps]]}]
+                                     'steps': [clean_text(step) for step in substeps]}]
                     return {'type': 'sections', 'sections': sections}
     else:    
         return {'type': None}
@@ -89,24 +94,26 @@ def ldjson_get_times(ldjson_recipe):
             times[key.replace('Time', '')] = parse_iso_8601(value).seconds
     return times    
 
-def get_recipe(url, browser_header):
+def save_recipe(url, browser_header):
     recipe = {}
     r = requests.get(url, headers=browser_header)
-#     breakpoint()
     if not r:
         return {'request_error': r.status_code}
     
     soup = BeautifulSoup(r.text, 'lxml')
     ldjson_recipe = extract_ldjson(soup.find_all('script', type='application/ld+json'))
     if ldjson_recipe:
-        print(ldjson_recipe['recipeIngredient'])
-        recipe.update({key: ldjson_recipe.get(key) 
-                       for key in ['name', 'description', 'url']})
+        recipe['name'] = ldjson_recipe.get('name')
+        recipe['url'] = url
+        description = ldjson_recipe.get('description')
+        if description:
+            description = clean_text(description)
+        recipe['description'] = description
         recipe['yield'] = ldjson_recipe.get('recipeYield')
         recipe['image_url'] = ldjson_get_image_url(ldjson_recipe)
         recipe['instructions'] = ldjson_get_instructions(ldjson_recipe)
         recipe['times'] = ldjson_get_times(ldjson_recipe)
-        recipe['ingredients'] = ldjson_recipe.get('recipeIngredient')
+        recipe['ingredients'] = [clean_text(item) for item in ldjson_recipe.get('recipeIngredient')]
         
         return recipe
     else:

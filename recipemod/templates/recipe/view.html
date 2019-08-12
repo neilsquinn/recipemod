@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% block header %} <img src="{{ recipe['image_url'] }}" height="300px"> 
+<h1>
+	{% block title %}{{ recipe['name'] }} {% endblock %}
+</h1>
+<p class="font-italic">
+	{{ recipe['description'] }}
+</p>
+{% endblock %} {% block content %} 
+<div class="row">
+	<div class="col-sm-4">
+		<h3>
+			Ingredients
+		</h3>
+		<ul>
+			{% for ingredient in recipe['ingredients'] %} 
+			<li>{{ ingredient }}</li>
+			{% endfor %} 
+		</ul>
+	</div>
+	<div class="col-sm-8">
+		<h3>
+			Instructions
+		</h3>
+		{% if recipe.instructions.type == 'steps' %} 
+		<ol>
+			{% for step in recipe.instructions.steps %} 
+			<li>{{ step }}</li>
+			{% endfor %} 
+		</ol>
+		{% elif recipe.instructions.type == 'sections' %}
+		<div>
+            {% for section in recipe.instructions.sections %}
+            <h6>{{ section.name }}</h6>
+            <ol>
+            {% for step in section.steps %}
+                <li>{{ step }}</li>
+            {% endfor %}
+            </ol>
+            {% endfor %}
+        {% elif recipe.instructions.type == 'one_step' %}
+        {{ recipe.instructions.step }}
+		{% endif %} 
+		</div>
+	</div>
+	{% endblock %}
