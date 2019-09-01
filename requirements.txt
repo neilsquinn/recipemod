@@ -1,0 +1,7 @@
+pip
+flask
+psycopg2
+requests
+gunicorn
+ftfy
+bs4
