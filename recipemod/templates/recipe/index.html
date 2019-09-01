@@ -12,17 +12,35 @@
 
 {% block content %}
     <br>
-    <div class="card-columns">
+<div>
+<div class="input-group mb-3">
+<input class="form-control" id="filterByName" type="text" placeholder="Filter by name" width="95%">
+<input class="form-control" id="filterByDomain" type="text" placeholder="Filter by website" width="95%">
+</div>
+    <div id="recipe-cards" class="card-columns">
   {% for recipe in recipes %}
     <div class="card">
-        <img class="card-img-top" src="{{ recipe['image_url'] }}" alt="Recipe image">
+        <img class="card-img-top" src="{{ recipe['image_url'] }}" alt="Recipe image" onerror="this.src='../../../static/not_found.png';">
         <div class="card-body">
-            <h5 class="card-title">{{ recipe['name'] }} <span class="text-secondary small">({{ recipe['domain'] }})</span></h5>
+            <h5 class="card-title"><span class="recipe-name">{{ recipe['name'] }}</span> <span class="text-secondary small recipe-domain">({{ recipe['domain'] }})</span></h5>
             <p class="card-text font-italic">{{ recipe['description'] }}</p>
             <a href="{{ url_for('recipe.view', id=recipe['id']) }}" class="btn btn-primary stretched-link" >View</a>
         </div>
     </div>
   {% endfor %}
 </div>
+</div>
+<script>
+function filterCards(filterBox, field) {
+    $("#" + filterBox).on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#recipe-cards .card").filter(function() {
+            $(this).toggle($(this).find('.' + field).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+}
+$(document).ready(filterCards('filterByName', 'recipe-name'));
+$(document).ready(filterCards('filterByDomain', 'recipe-domain'));
+</script>
 {% endblock %}
         

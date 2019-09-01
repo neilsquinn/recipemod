@@ -64,6 +64,7 @@ def ldjson_get_instructions(ldjson_recipe):
         
         if type(steps) == dict and steps['@type'] == 'ItemList':
             steps = steps['itemListElement']
+            
         if type(steps) == list:
             first_step = steps[0]
             if type(first_step) == str:
@@ -92,7 +93,16 @@ def ldjson_get_times(ldjson_recipe):
     for key, value in ldjson_recipe.items():
         if key.endswith('Time'):
             times[key.replace('Time', '')] = parse_iso_8601(value).seconds
-    return times    
+    return times
+
+def ldjson_get_author(ldjson_recipe):
+    author = ldjson_recipe.get('author')
+    if type(author) == str:
+        return [author]
+    elif type(author) == dict:
+        return [author['name']]
+    elif type(author) == list:
+        return [item['name'] for item in author]
 
 def save_recipe(url, browser_header):
     recipe = {}
@@ -113,6 +123,7 @@ def save_recipe(url, browser_header):
         recipe['image_url'] = ldjson_get_image_url(ldjson_recipe)
         recipe['instructions'] = ldjson_get_instructions(ldjson_recipe)
         recipe['times'] = ldjson_get_times(ldjson_recipe)
+        recipe['authors'] = ldjson_get_author(ldjson_recipe)
         recipe['ingredients'] = [clean_text(item) for item in ldjson_recipe.get('recipeIngredient')]
         
         return recipe

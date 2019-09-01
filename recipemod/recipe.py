@@ -12,6 +12,9 @@ import urllib
 
 bp = Blueprint('recipe', __name__)
 
+def get_domain(url):
+    return urllib.parse.urlsplit(url).netloc.replace('www.', '')
+    
 
 @bp.route('/', methods=('GET', 'POST'))
 @login_required
@@ -25,10 +28,9 @@ def index():
             for key, value in recipe_data.items():
                 if type(value) in (list, dict):
                     recipe_data[key] = Json(value)
-#             breakpoint()
             c.execute(
-                '''INSERT INTO recipes (name, description, yield, ingredients, instructions, times, user_id, image_url, url) 
-                VALUES (%(name)s, %(description)s, %(yield)s, %(ingredients)s, %(instructions)s, %(times)s, %(user_id)s, %(image_url)s, %(url)s);''',
+                '''INSERT INTO recipes (name, description, yield, ingredients, instructions, times, user_id, image_url, url, authors) 
+                VALUES (%(name)s, %(description)s, %(yield)s, %(ingredients)s, %(instructions)s, %(times)s, %(user_id)s, %(image_url)s, %(url)s, %(authors)s);''',
                 recipe_data
             )
             db.commit()
@@ -43,7 +45,7 @@ def index():
         )
         recipes = [dict(row) for row in c.fetchall()]
         for recipe in recipes:
-            recipe['domain'] = urllib.parse.urlsplit(recipe['url']).netloc.replace('www.', '')
+            recipe['domain'] = get_domain(recipe['url'])
             if recipe['description']:
                 if len(recipe['description']) > 150:
                     recipe['description'] = recipe['description'][:150] + '...'
@@ -56,7 +58,7 @@ def get_recipe(id, check_user=True):
     db = get_db()
     with db.cursor() as c:
         c.execute(
-        '''SELECT r.id, name, description, created, updated, yield, ingredients, instructions, times, category, cuisine, keywords, ratings, video, reviews, user_id, image_url, url
+        '''SELECT r.id, name, description, created, updated, yield, ingredients, instructions, times, category, cuisine, keywords, ratings, video, reviews, user_id, image_url, url, authors
         FROM recipes r INNER JOIN users u on u.id=r.user_id
         WHERE r.id = %s''', (id,)
         ) 
@@ -65,26 +67,60 @@ def get_recipe(id, check_user=True):
         abort(404, f'Recipe {id} does not exist.')
     if check_user and recipe['user_id'] != g.user['id']:
         abort(403)  
-    print(recipe.keys)
+#     print(recipe.keys)
+    recipe = dict(recipe)
+    recipe['domain'] = get_domain(recipe['url'])
     return recipe
+
+@bp.route('/<int:id>/view')
+@login_required
+def view(id):
+    recipe = get_recipe(id)
+    return render_template('recipe/view.html', recipe=recipe)
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_recipe(id)
     db = get_db()
     with db.cursor() as c:
         c.execute('DELETE FROM recipes WHERE id = %s;', (id,))
     db.commit()
     return redirect(url_for('recipe.index'))
 
-@bp.route('/<int:id>')
-@login_required
-def view(id):
-    recipe = get_recipe(id, check_user=True)
-    return render_template('recipe/view.html', recipe=recipe)
     
-@bp.route('/<int:id>/edit')
+@bp.route('/<int:id>/edit', methods=('GET', 'POST'))
 @login_required
 def edit(id):
-    pass
+    def parse_form_lines(field):
+        return  [line.strip() for line in request.form[field].split('\n')]
+
+    recipe = get_recipe(id)
+    if request.method == 'POST':
+        ingredients = parse_form_lines('ingredients')
+        instructions_type = recipe['instructions']['type']
+        instructions = {'type': instructions_type}
+        if instructions_type == 'steps':
+            instructions['steps'] = parse_form_lines('instructions') 
+        elif instructions_type == 'one_step':
+            instructions['step'] = request.form['instructions']
+        elif instructions_type == 'sections':
+            sections = [{'name': section['name'], 'steps': parse_form_lines(f'instructions-{index}')}
+                        for index, section in enumerate(recipe['instructions']['sections'], 1)]  
+            instructions['sections'] = sections
+        
+        db = get_db()
+        with db.cursor() as c:
+            c.execute(
+                'UPDATE recipes SET instructions = %(instructions)s, ingredients = %(ingredients)s'
+                'WHERE id=%(id)s;', 
+                {'ingredients': Json(ingredients), 'instructions': Json(instructions), 'id':id}
+            )
+            db.commit()
+        return redirect(url_for('recipe.view', id=id))
+    
+    
+#     recipe['ingredients'] = '\n'.join(recipe['ingredients'])
+    
+
+    
+    return render_template('recipe/edit.html', recipe=recipe)

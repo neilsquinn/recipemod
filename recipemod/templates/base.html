@@ -16,11 +16,11 @@
 			RecipeMod 
 		</a>
 		{% if g.user %} 
-		<span class="navbar-text">
+		<span class="navbar-text mr-auto">
 			{{ g.user['username'] }} 
 		</span>
 		<ul class="navbar-nav">
-			<li class="nav-item">
+			<li class="nav-item mr-auto">
 				<a class="nav-link" href="{{ url_for('auth.logout') }}">
 					Log Out 
 				</a>
@@ -28,12 +28,12 @@
 		</ul>
 		{% else %} 
 		<ul class="navbar-nav">
-			<li class="nav-item">
+			<li class="nav-item mr-auto">
 				<a class="nav-link" href="{{ url_for('auth.register') }}">
 					Register 
 				</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item" mr-auto>
 				<a class="nav-link" href="{{ url_for('auth.login') }}">
 					Log In 
 				</a>
@@ -42,15 +42,13 @@
 		{% endif %} 
 	</nav>
 	<div class="container-fluid" style="margin-top:80px">
-		<section class="content">
-			<header>
-				{% block header %}{% endblock %} 
-			</header>
-			{% for message in get_flashed_messages() %} 
-			<div class="flash">
-				{{ message }} 
-			</div>
-			{% endfor %} {% block content %}{% endblock %} 
-		</section>
+        <header>
+            {% block header %}{% endblock %} 
+        </header>
+        {% for message in get_flashed_messages() %} 
+        <div class="flash">
+            {{ message }} 
+        </div>
+        {% endfor %} {% block content %}{% endblock %} 
 	</div>
 </body>
