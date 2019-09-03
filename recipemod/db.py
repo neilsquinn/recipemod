@@ -6,8 +6,9 @@ from flask.cli import with_appcontext
 
 def get_db():
     if 'db' not in g:
-        db_name = current_app.config['DATABASE']
-        g.db = psycopg2.connect(f'dbname={db_name}', cursor_factory=DictCursor)
+        db_url = current_app.config['DATABASE']
+        print(db_name)
+        g.db = psycopg2.connect(db_url, cursor_factory=DictCursor)
             
     return g.db
     
@@ -21,6 +22,7 @@ def init_db():
     db = get_db()
     
     with current_app.open_resource('schema.sql') as f:
+        print('hello')
         sql = f.read().decode('utf8')  
         with db.cursor() as c:
             c.execute(sql)
