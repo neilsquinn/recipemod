@@ -5,3 +5,4 @@ requests
 gunicorn
 ftfy
 bs4
+lxml
