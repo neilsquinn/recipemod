@@ -1,5 +1,6 @@
 import json
 from datetime import timedelta
+import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -20,7 +21,7 @@ def parse_iso_8601(iso_duration) -> timedelta:
                 time = element[1]
     return timedelta(**args)
 
-def extract_ldjson(script_tags):
+def extract_ldjson(script_tags) -> list:
     def parse_tree(data, recipes):
         if type(data) == dict:
             if data.get('@type') == 'Recipe':
@@ -106,6 +107,7 @@ def ldjson_get_author(ldjson_recipe):
 
 def save_recipe(url, browser_header):
     recipe = {}
+    recipe['url'] = url
     r = requests.get(url, headers=browser_header)
     if not r:
         return {'request_error': r.status_code}
@@ -114,7 +116,6 @@ def save_recipe(url, browser_header):
     ldjson_recipe = extract_ldjson(soup.find_all('script', type='application/ld+json'))
     if ldjson_recipe:
         recipe['name'] = ldjson_recipe.get('name')
-        recipe['url'] = url
         description = ldjson_recipe.get('description')
         if description:
             description = clean_text(description)
@@ -127,5 +128,57 @@ def save_recipe(url, browser_header):
         recipe['ingredients'] = [clean_text(item) for item in ldjson_recipe.get('recipeIngredient')]
         
         return recipe
+    
+    recipe_tags = soup.find(itemtype=re.compile("https?://schema.org/Recipe"))
+    if recipe_tags:
+
+        recipe['name'] = recipe_tags.find(itemprop=['name']).text
+        description_tag = recipe_tags.find(itemprop='description')
+        if not description_tag:
+            text = None 
+        elif 'content' in description_tag.attrs:
+            text = description_tag.get['content']
+        else:
+            text=description_tag.text
+        recipe['description'] = text
+        
+        instructions_tags = recipe_tags.find_all(itemprop='recipeInstructions')
+        if len(instructions_tags) == 1:
+            instructions = [line.strip() for line in instructions_tags[0].text.split('\n')]
+        elif len(instructions_tags) > 1:
+            instructions = [tag.text.strip().replace('\r', '') 
+                            for tag in instructions_tags]
+        else:
+            instructions = []
+        recipe['instructions'] = {'steps': instructions, 'type': 'steps'}
+        recipe['authors'] = [tag.text for tag in recipe_tags.find_all(itemprop='author')]
+        
+        ingredients_tags = recipe_tags.find_all(itemprop='recipeIngredient')
+        if not len(ingredients_tags):
+            ingredients_tags = recipe_tags.find_all(itemprop='ingredients')
+        recipe['ingredients'] = [tag.text.strip() for tag in ingredients_tags]
+        
+        times = {}
+        for tag in recipe_tags.find_all(re.compile('\w*Time')):
+            times[key.replace('Time', '')] = parse_iso_8601(tag['content']).seconds
+        recipe['times'] = times
+        recipe_yield = recipe_tags.find(itemprop='recipeYield')
+        if recipe_yield:
+            recipe['yield'] = recipe_yield.text
+        else:
+            recipe['yield'] = None
+        
+        image_tag = recipe_tags.find(itemprop='thumbnailUrl')
+        if image_tag:
+            if 'content' in image_tag.attrs:
+                image_url = image_tag['content']
+            else:
+                image_url = image_tag['src']
+        else:
+            image_url = None
+        recipe['image_url'] = image_url
+        print(recipe)
+        return recipe
+        
     else:
         return {'parse_error': 'no recipe JSON found'} # todo look for tags

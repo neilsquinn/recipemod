@@ -10,6 +10,10 @@
 <div style="max-width:95%">
 	<form action="{{ url_for('recipe.edit', id=recipe['id']) }}" method="post">
 		<div class="form-group">
+			<label for="title">Name</label> 
+			<textarea class="form-control" name="name">{{ request.form.name or recipe.name }}</textarea>
+		</div>
+		<div class="form-group">
 			<label for="ingredients">Ingredients</label> 
 			<textarea class="form-control" name="ingredients" rows="{{ recipe.ingredients | length }}">{{ request.form.ingredients or recipe.ingredients | join('\n') }}</textarea>
 		</div>

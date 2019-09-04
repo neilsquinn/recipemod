@@ -67,7 +67,6 @@ def get_recipe(id, check_user=True):
         abort(404, f'Recipe {id} does not exist.')
     if check_user and recipe['user_id'] != g.user['id']:
         abort(403)  
-#     print(recipe.keys)
     recipe = dict(recipe)
     recipe['domain'] = get_domain(recipe['url'])
     return recipe
@@ -107,13 +106,14 @@ def edit(id):
             sections = [{'name': section['name'], 'steps': parse_form_lines(f'instructions-{index}')}
                         for index, section in enumerate(recipe['instructions']['sections'], 1)]  
             instructions['sections'] = sections
-        
         db = get_db()
         with db.cursor() as c:
             c.execute(
-                'UPDATE recipes SET instructions = %(instructions)s, ingredients = %(ingredients)s'
+                'UPDATE recipes SET instructions = %(instructions)s, name = %(name)s,' 
+                'ingredients = %(ingredients)s'
                 'WHERE id=%(id)s;', 
-                {'ingredients': Json(ingredients), 'instructions': Json(instructions), 'id':id}
+                {'ingredients': Json(ingredients), 'name': request.form['name'],
+                'instructions': Json(instructions), 'id':id}
             )
             db.commit()
         return redirect(url_for('recipe.view', id=id))

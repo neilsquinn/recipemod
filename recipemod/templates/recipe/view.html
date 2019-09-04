@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block header %} 
 <div class="row">
-	<div class="col-sm-6">
+	<div class="{{'col-sm-8' if recipe.image_url else 'col-sm-12'}}" ">
 		<h1>
 			{% block title %}{{ recipe['name'] }} {% endblock %} 
 		</h1>
@@ -8,20 +8,29 @@
 		<p class="font-italic">
 			"{{ recipe['description'] }}" 
 		</p>
-		{% endif %} {% if recipe.authors %} <span class="font-italic">By: {{ ', '.join(recipe.authors) }}</span> | {% endif %} Source: <a href="{{ recipe.url }}" class="font-italic" target="_blank">{{ recipe.domain }}</a> 
-	<div>
+		{% endif %} 
+		<ul class="list-group list-group-horizontal">
+			{% if recipe.authors %} 
+			<li class="list-group-item ">By: <span class="font-italic">{{ ', '.join(recipe.authors) }}</span></li>
+			{% endif %} {% if recipe.yield %} 
+			<li class="list-group-item "> Yield: <span class="font-italic"> {{ recipe.yield }}</span></li>
+			{% endif %} 
+			<li class="list-group-item ">Source: <a href="{{ recipe.url }}" class="font-italic" target="_blank">{{ recipe.domain }}</a></li>
+		</ul>
+		<div>
+		</div>
+		<div class="btn-group mb-3 mt-3">
+			<form action="{{ url_for('recipe.delete', id=recipe['id']) }}" method="post">
+				<a class="btn btn-primary" role="button" href="{{ url_for('recipe.edit', id=recipe['id']) }}">Edit</a> 
+				<input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+			</form>
+		</div>
 	</div>
-	<div class="btn-group mt-3">
-	<form action="{{ url_for('recipe.delete', id=recipe['id']) }}" method="post">
-        <a class="btn btn-primary" role="button" href="{{ url_for('recipe.edit', id=recipe['id']) }}">Edit</a>
-        <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure?')">
-    </form>
-    </div>
+	{% if recipe.image_url %} 
+	<div class="col-sm-4">
+		<img src="{{ recipe['image_url'] }}" class="img-fluid float-right" onerror='this.style.display = "none"'> 
 	</div>
-	
-	<div class="col-sm-6">
-		<img src="{{ recipe['image_url'] }}" class="img-fluid float-right"> 
-	</div>
+	{% endif %} 
 </div>
 <br>
 {% endblock %} {% block content %} 
@@ -40,8 +49,10 @@
 		<h3>
 			Instructions 
 		</h3>
-		{% if recipe.instructions.type == 'one_step' %}
-		<p>{{ recipe.instructions.step }}</p>
+		{% if recipe.instructions.type == 'one_step' %} 
+		<p>
+			{{ recipe.instructions.step }}
+		</p>
 		{% elif recipe.instructions.type == 'steps' %} 
 		<ol>
 			{% for step in recipe.instructions.steps %} 
@@ -52,7 +63,7 @@
 		<div>
 			{% for section in recipe.instructions.sections %} 
 			<h6 class="font-italic">
-				{{ section.name }}
+				{{ section.name }} 
 			</h6>
 			<ol>
 				{% for step in section.steps %} 

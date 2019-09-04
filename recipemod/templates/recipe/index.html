@@ -20,7 +20,7 @@
     <div id="recipe-cards" class="card-columns">
   {% for recipe in recipes %}
     <div class="card">
-        <img class="card-img-top" src="{{ recipe['image_url'] }}" alt="Recipe image" onerror="this.src='../../../static/not_found.png';">
+        <img class="card-img-top" src="{{ recipe['image_url'] }}" alt="Recipe image" onerror='this.style.display = "none";'>
         <div class="card-body">
             <h5 class="card-title"><span class="recipe-name">{{ recipe['name'] }}</span> <span class="text-secondary small recipe-domain">({{ recipe['domain'] }})</span></h5>
             <p class="card-text font-italic">{{ recipe['description'] }}</p>
