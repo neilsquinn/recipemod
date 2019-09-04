@@ -28,7 +28,7 @@
 	</div>
 	{% if recipe.image_url %} 
 	<div class="col-sm-4">
-		<img src="{{ recipe['image_url'] }}" class="img-fluid float-right" onerror='this.style.display = "none"'> 
+		<img src="{{ recipe['image_url'] }}" class="img-fluid rounded mx-auto d-block" onerror='this.style.display = "none"'> 
 	</div>
 	{% endif %} 
 </div>
@@ -62,7 +62,7 @@
 		{% elif recipe.instructions.type == 'sections' %} 
 		<div>
 			{% for section in recipe.instructions.sections %} 
-			<h6 class="font-italic">
+			<h6 class="initialism">
 				{{ section.name }} 
 			</h6>
 			<ol>

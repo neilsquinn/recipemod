@@ -27,13 +27,15 @@
 			{% elif recipe.instructions.type == 'sections' %}
 			<label>Instructions</label><br>
 			{% for section in recipe.instructions.sections %}
-			<label for="instructions-{{loop.index}}" class="font-italic">{{ section.name }}</label>
+			<label for="instructions-{{loop.index}}" class="initialism">{{ section.name }}</label>
 			<textarea class="form-control" name="instructions-{{loop.index}}" rows="{{ section.steps | length + 1 }}">{{ request.form['instructions-%s' | format(loop.index)] or section.steps | join('\n') }}</textarea>
 			{% endfor %}
 			{% endif %}
 		</div>
+		<div class="mb-3">
 		<button type="submit" class="btn btn-primary">Save</button> 
 		<a role="button" class="btn btn-danger" href="{{ url_for('recipe.view', id=recipe['id']) }}">Cancel</a> 
 	</form>
+	</div>
 </div>
 {% endblock %}

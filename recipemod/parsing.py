@@ -169,15 +169,17 @@ def save_recipe(url, browser_header):
             recipe['yield'] = None
         
         image_tag = recipe_tags.find(itemprop='thumbnailUrl')
+        image_url = None
         if image_tag:
             if 'content' in image_tag.attrs:
                 image_url = image_tag['content']
             else:
                 image_url = image_tag['src']
         else:
-            image_url = None
+            image_tag = recipe_tags.find('img')
+            if image_tag:
+                image_url = image_tag['src']
         recipe['image_url'] = image_url
-        print(recipe)
         return recipe
         
     else:
