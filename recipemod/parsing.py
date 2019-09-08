@@ -71,12 +71,10 @@ def ldjson_get_instructions(ldjson_recipe):
             if type(first_step) == str:
                 return {'type': 'steps', 'steps': [clean_text(step) for step in steps]}
             elif type(first_step) == dict:
-                print(first_step['@type'])
                 if 'HowToStep' in first_step['@type']:
                     return {'type': 'steps', 'steps': [clean_text(step['text']) for step in steps]}
                 elif 'HowToSection' in first_step['@type']:
                     sections = []
-                    print('getting sections')
                     for section in steps:
                         first_substep = section['itemListElement'][0]
                         if type(first_substep) == list:
@@ -107,12 +105,16 @@ def ldjson_get_author(ldjson_recipe):
 
 def save_recipe(url, browser_header):
     recipe = {}
-    recipe['url'] = url
     r = requests.get(url, headers=browser_header)
     if not r:
         return {'request_error': r.status_code}
-    
     soup = BeautifulSoup(r.text, 'lxml')
+    canonical_tag = soup.find('link', rel='canonical')
+    if canonical_tag:
+        recipe['url'] = canonical_tag['href']
+    else:
+        recipe['url'] = url
+    
     ldjson_recipe = extract_ldjson(soup.find_all('script', type='application/ld+json'))
     if ldjson_recipe:
         recipe['name'] = ldjson_recipe.get('name')

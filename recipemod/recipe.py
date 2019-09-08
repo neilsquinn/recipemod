@@ -54,6 +54,23 @@ def index():
         
         return render_template('recipe/index.html', recipes=recipes)
 
+@bp.route('/add')
+def add_recipe():
+    db = get_db()
+    recipe_data = save_recipe(request.args['url'], {'User-Agent': request.headers['User-Agent']})
+    recipe_data['user_id'] = g.user['id']
+    with db.cursor() as c:  
+        for key, value in recipe_data.items():
+            if type(value) in (list, dict):
+                recipe_data[key] = Json(value)
+        c.execute(
+            '''INSERT INTO recipes (name, description, yield, ingredients, instructions, times, user_id, image_url, url, authors) 
+            VALUES (%(name)s, %(description)s, %(yield)s, %(ingredients)s, %(instructions)s, %(times)s, %(user_id)s, %(image_url)s, %(url)s, %(authors)s);''',
+            recipe_data
+        )
+        db.commit()
+    return redirect(url_for('recipe.index'))
+
 def get_recipe(id, check_user=True):
     db = get_db()
     with db.cursor() as c:
