@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Bookmarklet{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<br>
+<div>
+<p>Drag this to your bookmarks bar:</p>
+<a style="display:inline-block;border-radius: 4px;background: #32a0eb;color:white;height:32px;padding: 4px 6px;" href="javascript:(function()%7Bfunction%20rmsave()%20%7Bvar%20d%20%3D%20document%2Cz%20%3D%20d.createElement('scr'%20%2B%20'ipt')%2Cb%20%3D%20d.body%2Cl%20%3D%20d.location%3Btry%20%7Bif%20(!b)%20throw%20(0)%3Bvar%20page_title%20%3D%20d.title%3Bd.title%20%3D%20'(Adding...)'%20%2B%20page_title%3Bz.setAttribute('src'%2C%20'https%3A%2F%2Frecipemod.herokuapp.com%2Fadd%3Furl%3D'%20%2B%20encodeURIComponent(l.href))%3Bb.appendChild(z)%3Bd.title%20%3D%20'(Added)'%20%2B%20page_title%3Bwindow.setTimeout(function()%7Bd.title%20%3D%20page_title%7D%2C%205000)%3B%7D%20catch%20(e)%20%7Balert('Please%20wait%20for%20the%20page%20to%20finish%20loading.')%7D%7Drmsave()%3Bvoid(0)%7D)()">Add to RecipeMod</a>
+</div>
+{% endblock %}

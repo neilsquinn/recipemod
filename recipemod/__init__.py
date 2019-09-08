@@ -27,6 +27,10 @@ def create_app(test_config=None):
 	
 	from . import recipe
 	app.register_blueprint(recipe.bp)
+	
+	from . import extras
+	app.register_blueprint(extras.bp)
+	
 	app.add_url_rule('/', endpoint='index')
 	
 	return app
