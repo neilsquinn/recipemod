@@ -90,7 +90,7 @@ def ldjson_get_instructions(ldjson_recipe):
 def ldjson_get_times(ldjson_recipe):
     times = {}
     for key, value in ldjson_recipe.items():
-        if key.endswith('Time'):
+        if key.endswith('Time') and value:
             times[key.replace('Time', '')] = parse_iso_8601(value).seconds
     return times
 
