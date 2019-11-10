@@ -139,7 +139,7 @@ def save_recipe(url, browser_header):
         if not description_tag:
             text = None 
         elif 'content' in description_tag.attrs:
-            text = description_tag.get['content']
+            text = description_tag.get('content')
         else:
             text=description_tag.text
         recipe['description'] = text
