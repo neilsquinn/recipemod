@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, flash
 )
 from werkzeug.exceptions import abort
 
@@ -9,33 +9,40 @@ from recipemod.parsing import *
 
 from psycopg2.extras import Json
 import urllib
+import requests
 
 bp = Blueprint('recipe', __name__)
 
 def get_domain(url):
     return urllib.parse.urlsplit(url).netloc.replace('www.', '')
-    
 
+def save_recipe(db, url, user_agent):
+    r = requests.get(url, {'User-Agent': request.headers['User-Agent']})
+    if not r:
+        raise ValueError(r'Request to {url} failed with error {r.status_code}: \n {r.text}')
+    recipe_data = parse_recipe_html(r.text)
+    recipe_data['user_id'] = g.user['id']
+    with db.cursor() as c:  
+        for key, value in recipe_data.items():
+            if type(value) in (list, dict):
+                recipe_data[key] = Json(value)
+        c.execute(
+            'INSERT INTO recipes (name, description, yield, ingredients, '
+            'instructions, times, user_id, image_url, url, authors) '
+            'VALUES (%(name)s, %(description)s, %(yield)s, %(ingredients)s, '
+            '%(instructions)s, %(times)s, %(user_id)s, %(image_url)s, '
+            '%(url)s, %(authors)s);', recipe_data
+        )
+        db.commit()
+    
 @bp.route('/', methods=('GET', 'POST'))
 @login_required
 def index():
     db = get_db()
+    if request.method == 'POST':
+        save_recipe(db, request.form['url'], request.headers['User-Agent'])
+        flash({'type': 'success', 'text': 'New recipe added.'})
     with db.cursor() as c:
-        if request.method == 'POST':
-            url = request.form['url']
-            recipe_data = save_recipe(url, {'User-Agent': request.headers['User-Agent']})
-            recipe_data['user_id'] = g.user['id']
-            for key, value in recipe_data.items():
-                if type(value) in (list, dict):
-                    recipe_data[key] = Json(value)
-            c.execute(
-                '''INSERT INTO recipes (name, description, yield, ingredients, instructions, times, user_id, image_url, url, authors) 
-                VALUES (%(name)s, %(description)s, %(yield)s, %(ingredients)s, %(instructions)s, %(times)s, %(user_id)s, %(image_url)s, %(url)s, %(authors)s);''',
-                recipe_data
-            )
-            db.commit()
-            return redirect(url_for('recipe.index'))
-        
         c.execute(
         '''SELECT r.id, name, description, image_url, url, created
         FROM recipes r
@@ -51,24 +58,12 @@ def index():
                     recipe['description'] = recipe['description'][:150] + '...'
             else:
                 recipe['description'] = ''
-        
-        return render_template('recipe/index.html', recipes=recipes)
+    return render_template('recipe/index.html', recipes=recipes)
 
 @bp.route('/add')
-def add_recipe():
+def add_recipe(index_request=None):
     db = get_db()
-    recipe_data = save_recipe(request.args['url'], {'User-Agent': request.headers['User-Agent']})
-    recipe_data['user_id'] = g.user['id']
-    with db.cursor() as c:  
-        for key, value in recipe_data.items():
-            if type(value) in (list, dict):
-                recipe_data[key] = Json(value)
-        c.execute(
-            '''INSERT INTO recipes (name, description, yield, ingredients, instructions, times, user_id, image_url, url, authors) 
-            VALUES (%(name)s, %(description)s, %(yield)s, %(ingredients)s, %(instructions)s, %(times)s, %(user_id)s, %(image_url)s, %(url)s, %(authors)s);''',
-            recipe_data
-        )
-        db.commit()
+    save_recipe(db, request.args['url'], request.headers['User-Agent'])
     return redirect(url_for('recipe.index'))
 
 def get_recipe(id, check_user=True):

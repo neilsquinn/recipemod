@@ -2,11 +2,10 @@ import json
 from datetime import timedelta
 import re
 
-import requests
 from bs4 import BeautifulSoup
 import ftfy
 
-def clean_text(text):
+def clean_text(text) -> str:
     return ftfy.fix_text(BeautifulSoup(text, 'lxml').text.strip())
 
 
@@ -26,6 +25,8 @@ def extract_ldjson(script_tags) -> list:
         if type(data) == dict:
             if data.get('@type') == 'Recipe':
                 recipes += [data]
+            elif data.get('mainEntity'):
+                recipes += [data['mainEntity']]
             else:
                 graph = data.get('@graph')
                 if graph:
@@ -45,18 +46,16 @@ def extract_ldjson(script_tags) -> list:
                         [recipe['name'] for recipe in recipes])
     return recipes[0]
 
-def ldjson_get_image_url(ldjson_recipe):
+def ldjson_get_image_url(ldjson_recipe) -> str:
     image = ldjson_recipe.get('image')
+    if type(image) == list:
+        image = image[0]
     if type(image) == str:
         return image
-    elif type(image) == list:
-        return image[0]
-    elif type(image) == dict and image['@type'] == 'ImageObject':
+    if type(image) == dict and image['@type'] == 'ImageObject':
         return image['url']
-    else:
-        return None
     
-def ldjson_get_instructions(ldjson_recipe):
+def ldjson_get_instructions(ldjson_recipe) -> dict:
     clean_text = lambda text: BeautifulSoup(text, 'lxml').text.strip()
     steps = ldjson_recipe.get('recipeInstructions')
     if steps:
@@ -87,14 +86,14 @@ def ldjson_get_instructions(ldjson_recipe):
     else:    
         return {'type': None}
 
-def ldjson_get_times(ldjson_recipe):
+def ldjson_get_times(ldjson_recipe) -> dict:
     times = {}
     for key, value in ldjson_recipe.items():
         if key.endswith('Time') and value:
             times[key.replace('Time', '')] = parse_iso_8601(value).seconds
     return times
 
-def ldjson_get_author(ldjson_recipe):
+def ldjson_get_author(ldjson_recipe) -> list:
     author = ldjson_recipe.get('author')
     if type(author) == str:
         return [author]
@@ -103,12 +102,10 @@ def ldjson_get_author(ldjson_recipe):
     elif type(author) == list:
         return [item['name'] for item in author]
 
-def save_recipe(url, browser_header):
+
+def parse_recipe_html(html) -> dict:
     recipe = {}
-    r = requests.get(url, headers=browser_header)
-    if not r:
-        return {'request_error': r.status_code}
-    soup = BeautifulSoup(r.text, 'lxml')
+    soup = BeautifulSoup(html, 'lxml')
     canonical_tag = soup.find('link', rel='canonical')
     if canonical_tag:
         recipe['url'] = canonical_tag['href']
@@ -133,7 +130,6 @@ def save_recipe(url, browser_header):
     
     recipe_tags = soup.find(itemtype=re.compile("https?://schema.org/Recipe"))
     if recipe_tags:
-
         recipe['name'] = recipe_tags.find(itemprop=['name']).text
         description_tag = recipe_tags.find(itemprop='description')
         if not description_tag:

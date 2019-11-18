@@ -3,7 +3,8 @@
 	<title>
 		{% block title %}{% endblock %} - RecipeMod 
 	</title>
-	<meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -11,28 +12,27 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm bg-danger navbar-dark fixed-top ">
+	<nav class="navbar navbar-expand-md bg-danger navbar-dark fixed-top ">
 		<a class="navbar-brand" href="../">
 			<img src="{{ url_for('static', filename='logo.png') }}" style="width:25px;"> RecipeMod  
 		</a>
 		{% if g.user %} 
-		<span class="navbar-text mr-auto">
-			{{ g.user['username'] }} 
-		</span>
-		<ul class="navbar-nav">
-			<li class="nav-item mr-auto">
-				<a class="nav-link" href="{{ url_for('extras.bookmarklet') }}">
-					Get Bookmarklet
-				</a>
-			</li>
-		</ul>
-		<ul class="navbar-nav">
-			<li class="nav-item mr-auto">
-				<a class="nav-link" href="{{ url_for('auth.logout') }}">
-					Log Out 
-				</a>
-			</li>
-		</ul>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		    <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('extras.bookmarklet') }}">Get Bookmarklet</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.change_password') }}"">Change Password</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout {{ g.user['username'] }}</a>
+                </li>
+            </ul>
+        </div>
 		{% else %} 
 		<ul class="navbar-nav">
 			<li class="nav-item mr-auto"">
@@ -54,9 +54,10 @@
 				{% block header %}{% endblock %} 
 			</header>
 			{% for message in get_flashed_messages() %} 
-			<div class="flash">
-				{{ message }} 
-			</div>
+			<div class="alert alert-{{ message.type }} alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ message.text }}
+            </div>
 			{% endfor %} {% block content %}{% endblock %} 
 		</section>
 	</div>

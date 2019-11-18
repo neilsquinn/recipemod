@@ -18,15 +18,15 @@ def register():
             error = None
         
             if not username:
-                error = 'Username is required.'
+                error = {'type': 'danger', 'text': 'Username is required.'}
             elif not password:
-                error = 'Password is required.'
+                error =  {'type': 'danger', 'text': 'Password is required'}
             else: 
                 c.execute(
                 'SELECT id FROM users WHERE username = %s;', (username,)
                 )
                 if c.fetchone():
-                    error = f'User {username} is already registered.'
+                    error = {'type': 'danger', 'text': f'User {username} is already registered.'}
         
             if not error:
                 c.execute(
@@ -35,8 +35,8 @@ def register():
                 )
                 db.commit()
                 return redirect(url_for('auth.login'))
-        
-            flash(error)
+            if error:
+                flash(error)
     
     return render_template('auth/register.html')
 
@@ -51,10 +51,10 @@ def login():
             c.execute('SELECT * FROM users WHERE username = %s;', (username,))
             user = c.fetchone()
             if not user:
-                error = 'Incorrect username.'
+                error =  {'type': 'danger', 'text': 'Incorrect username'}
             elif not check_password_hash(user['password'], password):
-                error = 'Incorrect password'
-            
+                error = {'type': 'danger', 'text': 'Incorrect password'}
+            print(check_password_hash(user['password'], password))
             if not error:
                 session.clear()
                 session['user_id'] = user['id']
@@ -91,3 +91,29 @@ def login_required(view):
         return view(**kwargs)
     
     return wrapped_view
+    
+@bp.route('/change_password', methods=('GET', 'POST'))
+def change_password():
+    if request.method == "POST":
+        message = None
+        user = g.user
+        print(request.form)
+        current_password = request.form['current-password']
+        new_password = request.form['new-password']
+        if not new_password == request.form['confirm-new-password']:
+            message = {'type': 'danger', 'text': 'New passwords don\'t match'}
+        if not check_password_hash(user['password'], current_password):
+            message = {'type': 'danger', 'text': 'Incorrect current password'}
+
+        if not message:
+            db = get_db()
+            with db.cursor() as c:
+                c.execute(
+                    'UPDATE users SET password = %(password)s '
+                    'WHERE id = %(id)s;', 
+                    {'password': new_password, 'id': user['id']}
+                )
+            db.commit()
+            message = {'type': 'success', 'text': 'Password successfully changed'}
+        flash(message) 
+    return render_template('auth/change_password.html')
