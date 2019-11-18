@@ -54,7 +54,6 @@ def login():
                 error =  {'type': 'danger', 'text': 'Incorrect username'}
             elif not check_password_hash(user['password'], password):
                 error = {'type': 'danger', 'text': 'Incorrect password'}
-            print(check_password_hash(user['password'], password))
             if not error:
                 session.clear()
                 session['user_id'] = user['id']
@@ -111,7 +110,8 @@ def change_password():
                 c.execute(
                     'UPDATE users SET password = %(password)s '
                     'WHERE id = %(id)s;', 
-                    {'password': new_password, 'id': user['id']}
+                    {'password': generate_password_hash(password), 
+                     'id': user['id']}
                 )
             db.commit()
             message = {'type': 'success', 'text': 'Password successfully changed'}
