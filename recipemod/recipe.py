@@ -17,7 +17,7 @@ def get_domain(url):
     return urllib.parse.urlsplit(url).netloc.replace('www.', '')
 
 def save_recipe(db, url, user_agent):
-    r = requests.get(url, {'User-Agent': request.headers['User-Agent']})
+    r = requests.get(url, headers={'User-Agent': user_agent})
     if not r:
         raise ValueError(f'Request to {url} failed with error {r.status_code}: \n {r.text} /nUser Agent: {r.request.headers["User-Agent"]}')
     recipe_data = parse_recipe_html(r.text)
