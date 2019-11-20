@@ -19,7 +19,7 @@ def get_domain(url):
 def save_recipe(db, url, user_agent):
     r = requests.get(url, {'User-Agent': request.headers['User-Agent']})
     if not r:
-        raise ValueError(r'Request to {url} failed with error {r.status_code}: \n {r.text}')
+        raise ValueError(f'Request to {url} failed with error {r.status_code}: \n {r.text}')
     recipe_data = parse_recipe_html(r.text)
     recipe_data['user_id'] = g.user['id']
     with db.cursor() as c:  
