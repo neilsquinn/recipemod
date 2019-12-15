@@ -1,11 +1,12 @@
 import os
+from random import randint
 
 from flask import Flask
 
 def create_app(test_config=None):
 	app = Flask(__name__, instance_relative_config=True)
 	app.config.from_mapping(
-		SECRET_KEY='amanda',
+		SECRET_KEY=randint(1, 100000),
 		DATABASE=os.environ['DATABASE_URL']
 		)
 	

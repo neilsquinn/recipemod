@@ -19,8 +19,15 @@ def get_domain(url):
 def save_recipe(db, url, user_agent):
     r = requests.get(url, headers={'User-Agent': user_agent})
     if not r:
-        raise ValueError(f'Request to {url} failed with error {r.status_code}: \n {r.text} /nUser Agent: {r.request.headers["User-Agent"]}')
+        flash({'type': 'warning', 'text': f'Failed to load {url}'})
+        print(f'Request to {url} failed with error {r.status_code}: \n {r.text} /nUser Agent: {r.request.headers["User-Agent"]}')
+        return
     recipe_data = parse_recipe_html(r.text)
+    if 'parse_error' in recipe_data:
+        error_message = f'Unable to parse recipe in {url}'
+        flash({'type': 'warning', 'text': error_message})
+        print(error_message)
+        return
     recipe_data['user_id'] = g.user['id']
     with db.cursor() as c:  
         for key, value in recipe_data.items():
@@ -34,14 +41,14 @@ def save_recipe(db, url, user_agent):
             '%(url)s, %(authors)s);', recipe_data
         )
         db.commit()
+    flash({'type': 'success', 'text': 'New recipe added.'})
     
 @bp.route('/', methods=('GET', 'POST'))
 @login_required
 def index():
     db = get_db()
     if request.method == 'POST':
-        save_recipe(db, request.form['url'], request.headers['User-Agent'])
-        flash({'type': 'success', 'text': 'New recipe added.'})
+        save = save_recipe(db, request.form['url'], request.headers['User-Agent'])
     with db.cursor() as c:
         c.execute(
         '''SELECT r.id, name, description, image_url, url, created

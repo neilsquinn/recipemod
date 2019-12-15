@@ -19,7 +19,7 @@
 </div>
     <div id="recipe-cards" class="card-columns">
   {% for recipe in recipes %}
-    <div class="card">
+    <div class="card shadow-sm">
         <img class="card-img-top" src="{{ recipe['image_url'] }}" alt="Recipe image" onerror='this.style.display = "none";'>
         <div class="card-body">
             <h5 class="card-title"><span class="recipe-name">{{ recipe['name'] }}</span> <span class="text-secondary small recipe-domain">({{ recipe['domain'] }})</span></h5>
