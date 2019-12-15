@@ -40,8 +40,7 @@ def save_recipe(db, url, user_agent):
             '%(instructions)s, %(times)s, %(user_id)s, %(image_url)s, '
             '%(url)s, %(authors)s);', recipe_data
         )
-        db.commit()
-    flash({'type': 'success', 'text': 'New recipe added.'})
+        flash({'type': 'success', 'text': 'New recipe added.'})
     
 @bp.route('/', methods=('GET', 'POST'))
 @login_required
@@ -102,7 +101,6 @@ def delete(id):
     db = get_db()
     with db.cursor() as c:
         c.execute('DELETE FROM recipes WHERE id = %s;', (id,))
-    db.commit()
     return redirect(url_for('recipe.index'))
 
     
@@ -134,7 +132,6 @@ def edit(id):
                 {'ingredients': Json(ingredients), 'name': request.form['name'],
                 'instructions': Json(instructions), 'id':id}
             )
-            db.commit()
         return redirect(url_for('recipe.view', id=id))
     
     

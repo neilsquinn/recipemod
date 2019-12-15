@@ -33,7 +33,7 @@ def register():
                     'INSERT INTO users (username, password) VALUES (%s, %s);',
                     (username, generate_password_hash(password))
                 )
-                db.commit()
+
                 return redirect(url_for('auth.login'))
             if error:
                 flash(error)

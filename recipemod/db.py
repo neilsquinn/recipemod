@@ -8,6 +8,7 @@ def get_db():
     if 'db' not in g:
         db_url = current_app.config['DATABASE']
         g.db = psycopg2.connect(db_url, cursor_factory=DictCursor)
+        g.db.set_session(autocommit=True)
             
     return g.db
     
@@ -25,8 +26,7 @@ def init_db():
         sql = f.read().decode('utf8')  
         with db.cursor() as c:
             c.execute(sql)
-        db.commit()
-
+        
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
