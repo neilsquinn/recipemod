@@ -8,6 +8,45 @@ import ftfy
 def clean_text(text) -> str:
     return ftfy.fix_text(BeautifulSoup(text, 'lxml').text.strip())
 
+class MicrodataParser:
+    def __init__(self, tag):
+        self.tag = tag
+    
+    def find_props(self, prop_name, verbose=False):
+        '''Recursively parse webpages to find correct tag in Microdata 
+#     version of schema.org recipes.'''
+
+        def digger(prop_name, tag, relevant_tags): 
+            for child in tag.find_all(recursive=False): 
+                if verbose:
+                    print(child.name, child.attrs, len(child.contents)) 
+                if 'itemscope' in child.attrs: 
+                    if verbose:
+                        print('skipping itemscope') 
+                    continue 
+                item_prop = child.attrs.get('itemprop') 
+                if prop_name == item_prop: 
+                    relevant_tags += [child] 
+                if child.contents: 
+                    digger(prop_name, child, relevant_tags) 
+            return relevant_tags 
+        return digger(prop_name, self.tag, []) 
+        
+    def extract_text_props(self, prop_name, single_result=False, clean=True):
+        tags = self.find_props(prop_name)
+        texts = [tag.attrs['content'] if tag.name == 'meta' else tag.text 
+                 for tag in tags]
+        if clean:
+            texts = [clean_text(text) for text in texts]
+        if single_result:
+            if texts:
+                if len(texts) > 1:
+                    print(f'Found {tags}, returning{tags[0]}')
+                return texts[0]
+            else:
+                print('No tags found')
+                return None
+        return texts
 
 def parse_iso_8601(iso_duration) -> timedelta:
     time = iso_duration.split('T')[1]
@@ -102,6 +141,38 @@ def ldjson_get_author(ldjson_recipe) -> list:
     elif type(author) == list:
         return [item['name'] for item in author]
 
+def ldjson_get_keywords(ldjson_recipe) -> list:
+    keywords = ldjson_recipe.get('keywords')
+    if keywords:
+        return keywords.split(',')
+
+def ldjson_get_categories(ldjson_recipe) -> list:
+    categories = ldjson_recipe.get('recipeCategories')
+    if type(categories) == str:
+        return [categories]
+    elif type(categories) == list:
+        return categories
+
+def microdata_get_times(mdparser):
+    times = {}
+    for prop_name in ('cook', 'prep', 'total'):
+        time_tags = mdparser.find_props(f'{prop_name}Time')
+        if time_tags:
+            times[prop_name] = parse_iso_8601(time_tags[0].attrs['datetime']).seconds
+    return times
+    
+def microdata_get_image(mdparser):
+    image_tags = mdparser.find_props('image')
+    if image_tags:
+        return image_tags[0].attrs['src']
+
+def microdata_get_instructions(mdparser):
+    instructions_tags = mdparser.find_props('recipeInstructions')
+    instructions = [
+        clean_text(tag.text) 
+        for tag in instructions_tags[0].find_all(recursive=False)
+        ]
+    return {'steps': instructions, 'type': 'steps'}
 
 def parse_recipe_html(html) -> dict:
     recipe = {}
@@ -125,60 +196,32 @@ def parse_recipe_html(html) -> dict:
         recipe['times'] = ldjson_get_times(ldjson_recipe)
         recipe['authors'] = ldjson_get_author(ldjson_recipe)
         recipe['ingredients'] = [clean_text(item) for item in ldjson_recipe.get('recipeIngredient')]
+        recipe['keywords'] = ldjson_get_keywords(ldjson_recipe)
+        recipe['categories'] = ldjson_get_categories(ldjson_recipe)
         
         return recipe
     
-    recipe_tags = soup.find(itemtype=re.compile("https?://schema.org/Recipe"))
-    if recipe_tags:
-        recipe['name'] = recipe_tags.find(itemprop=['name']).text
-        description_tag = recipe_tags.find(itemprop='description')
-        if not description_tag:
-            text = None 
-        elif 'content' in description_tag.attrs:
-            text = description_tag.get('content')
-        else:
-            text=description_tag.text
-        recipe['description'] = text
+    recipe_tag = soup.find(itemtype=re.compile("https?://schema.org/Recipe"))
+    if recipe_tag:
+        mdparser = MicrodataParser(recipe_tag)
+        recipe['name'] = mdparser.extract_text_props('name', single_result=True)
+        recipe['description'] = mdparser.extract_text_props('description', single_result=True)
+        recipe['authors'] = mdparser.extract_text_props('author')
+        recipe['image_url'] = microdata_get_image(mdparser)
+        recipe['instructions'] = microdata_get_instructions(mdparser)
+        recipe['ingredients'] = mdparser.extract_text_props('recipeIngredient')
+        recipe['times'] = microdata_get_times(mdparser)
+        recipe['yield'] = mdparser.extract_text_props('recipeYield', single_result=True)
+        recipe['categories'] = mdparser.extract_text_props('recipeCategory')
+        recipe['keywords'] = mdparser.extract_text_props('keywords')
         
-        instructions_tags = recipe_tags.find_all(itemprop='recipeInstructions')
-        if len(instructions_tags) == 1:
-            instructions = [line.strip() for line in instructions_tags[0].text.split('\n')]
-        elif len(instructions_tags) > 1:
-            instructions = [tag.text.strip().replace('\r', '') 
-                            for tag in instructions_tags]
-        else:
-            instructions = []
-        recipe['instructions'] = {'steps': instructions, 'type': 'steps'}
-        recipe['authors'] = [tag.text for tag in recipe_tags.find_all(itemprop='author')]
-        
-        ingredients_tags = recipe_tags.find_all(itemprop='recipeIngredient')
-        if not len(ingredients_tags):
-            ingredients_tags = recipe_tags.find_all(itemprop='ingredients')
-        recipe['ingredients'] = [tag.text.strip() for tag in ingredients_tags]
-        
-        times = {}
-        for tag in recipe_tags.find_all(re.compile('\w*Time')):
-            times[key.replace('Time', '')] = parse_iso_8601(tag['content']).seconds
-        recipe['times'] = times
-        recipe_yield = recipe_tags.find(itemprop='recipeYield')
-        if recipe_yield:
-            recipe['yield'] = recipe_yield.text
-        else:
-            recipe['yield'] = None
-        
-        image_tag = recipe_tags.find(itemprop='thumbnailUrl')
-        image_url = None
-        if image_tag:
-            if 'content' in image_tag.attrs:
-                image_url = image_tag['content']
-            else:
-                image_url = image_tag['src']
-        else:
-            image_tag = recipe_tags.find('img')
-            if image_tag:
-                image_url = image_tag['src']
-        recipe['image_url'] = image_url
         return recipe
         
     else:
-        return {'parse_error': 'no recipe JSON found'} # todo look for tags
+        recipe['url']
+        image_url_meta = soup.head.find('meta', attrs={'itemprop': 'image'})
+        if image_url_meta:
+            recipe['image_url'] = image_url_meta.attrs['content']
+        
+        recipe['parse_error'] = 'no recipe metadata found'
+        return recipe # todo look for tags

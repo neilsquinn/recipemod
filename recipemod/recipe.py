@@ -24,7 +24,7 @@ def save_recipe(db, url, user_agent):
         return
     recipe_data = parse_recipe_html(r.text)
     if 'parse_error' in recipe_data:
-        error_message = f'Unable to parse recipe in {url}'
+        error_message = f'Unable to extract recipe from {url}'
         flash({'type': 'warning', 'text': error_message})
         print(error_message)
         return
@@ -35,10 +35,10 @@ def save_recipe(db, url, user_agent):
                 recipe_data[key] = Json(value)
         c.execute(
             'INSERT INTO recipes (name, description, yield, ingredients, '
-            'instructions, times, user_id, image_url, url, authors) '
+            'instructions, times, user_id, image_url, url, authors, category, keywords)'
             'VALUES (%(name)s, %(description)s, %(yield)s, %(ingredients)s, '
             '%(instructions)s, %(times)s, %(user_id)s, %(image_url)s, '
-            '%(url)s, %(authors)s);', recipe_data
+            '%(url)s, %(authors)s, %(categories)s, %(keywords)s);', recipe_data
         )
         flash({'type': 'success', 'text': 'New recipe added.'})
     
