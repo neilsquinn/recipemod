@@ -1,3 +1,6 @@
+from datetime import datetime
+import urllib
+
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, flash
 )
@@ -8,7 +11,6 @@ from recipemod.db import get_db
 from recipemod.parsing import *
 
 from psycopg2.extras import Json
-import urllib
 import requests
 
 bp = Blueprint('recipe', __name__)
@@ -76,9 +78,9 @@ def get_recipe(id, check_user=True):
     db = get_db()
     with db.cursor() as c:
         c.execute(
-        '''SELECT r.id, name, description, created, updated, yield, ingredients, instructions, times, category, cuisine, keywords, ratings, video, reviews, user_id, image_url, url, authors
-        FROM recipes r INNER JOIN users u on u.id=r.user_id
-        WHERE r.id = %s''', (id,)
+        'SELECT r.* '
+        'FROM recipes r INNER JOIN users u on u.id=r.user_id '
+        'WHERE r.id = %s', (id,)
         ) 
         recipe = c.fetchone()
     if not recipe:
@@ -126,11 +128,11 @@ def edit(id):
         db = get_db()
         with db.cursor() as c:
             c.execute(
-                'UPDATE recipes SET instructions = %(instructions)s, name = %(name)s,' 
-                'ingredients = %(ingredients)s'
+                'UPDATE recipes SET instructions = %(instructions)s, name = %(name)s, ' 
+                'ingredients = %(ingredients)s, updated = %(updated)s '
                 'WHERE id=%(id)s;', 
                 {'ingredients': Json(ingredients), 'name': request.form['name'],
-                'instructions': Json(instructions), 'id':id}
+                'instructions': Json(instructions), 'id':id, 'updated': datetime.now()}
             )
         return redirect(url_for('recipe.view', id=id))
     

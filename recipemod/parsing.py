@@ -2,12 +2,22 @@ import json
 from datetime import timedelta
 import re
 
-from bs4 import BeautifulSoup
-import ftfy
+from bs4 import BeautifulSoup, NavigableString
+from ftfy import fix_text
 
 def clean_text(text) -> str:
-    return ftfy.fix_text(BeautifulSoup(text, 'lxml').text.strip())
+    return fix_text(BeautifulSoup(text, 'lxml').text.strip())
 
+def get_attr_text(tag, attr=None):
+    '''Parse a tag to get the content of the meta tag, or some other attr, 
+    or the text'''
+    if tag.name == 'meta':
+        return tag.attrs['content']
+    elif attr:
+        return tag.attrs[attr]
+    else:
+        return tag.text
+    
 class MicrodataParser:
     def __init__(self, tag):
         self.tag = tag
@@ -20,13 +30,13 @@ class MicrodataParser:
             for child in tag.find_all(recursive=False): 
                 if verbose:
                     print(child.name, child.attrs, len(child.contents)) 
+                item_prop = child.attrs.get('itemprop') 
+                if prop_name == item_prop: 
+                    relevant_tags += [child] 
                 if 'itemscope' in child.attrs: 
                     if verbose:
                         print('skipping itemscope') 
                     continue 
-                item_prop = child.attrs.get('itemprop') 
-                if prop_name == item_prop: 
-                    relevant_tags += [child] 
                 if child.contents: 
                     digger(prop_name, child, relevant_tags) 
             return relevant_tags 
@@ -34,10 +44,9 @@ class MicrodataParser:
         
     def extract_text_props(self, prop_name, single_result=False, clean=True):
         tags = self.find_props(prop_name)
-        texts = [tag.attrs['content'] if tag.name == 'meta' else tag.text 
-                 for tag in tags]
+        texts = [get_attr_text(tag) for tag in tags]
         if clean:
-            texts = [clean_text(text) for text in texts]
+            texts = [fix_text(text) for text in texts]
         if single_result:
             if texts:
                 if len(texts) > 1:
@@ -132,7 +141,7 @@ def ldjson_get_times(ldjson_recipe) -> dict:
             times[key.replace('Time', '')] = parse_iso_8601(value).seconds
     return times
 
-def ldjson_get_author(ldjson_recipe) -> list:
+def ldjson_get_authors(ldjson_recipe) -> list:
     author = ldjson_recipe.get('author')
     if type(author) == str:
         return [author]
@@ -158,23 +167,44 @@ def microdata_get_times(mdparser):
     for prop_name in ('cook', 'prep', 'total'):
         time_tags = mdparser.find_props(f'{prop_name}Time')
         if time_tags:
-            times[prop_name] = parse_iso_8601(time_tags[0].attrs['datetime']).seconds
+            time_string = get_attr_text(time_tags[0], 'datetime')
+            times[prop_name] = parse_iso_8601(time_string).seconds
     return times
     
 def microdata_get_image(mdparser):
     image_tags = mdparser.find_props('image')
     if image_tags:
-        return image_tags[0].attrs['src']
+        return get_attr_text(image_tags[0], attr='src')
 
 def microdata_get_instructions(mdparser):
     instructions_tags = mdparser.find_props('recipeInstructions')
-    instructions = [
-        clean_text(tag.text) 
-        for tag in instructions_tags[0].find_all(recursive=False)
-        ]
+    instructions = []
+    for instructions_tag in instructions_tags:
+        if instructions_tag.name == 'li':
+            instructions += [instructions_tag.text.strip()]
+        else:
+            instructions += [
+                fix_text(tag.text.strip()) 
+                for tag in instructions_tag.find_all('li')
+                if not isinstance(tag, NavigableString)
+                and not tag.findChildren('li')
+                ]
     return {'steps': instructions, 'type': 'steps'}
 
-def parse_recipe_html(html) -> dict:
+def microdata_get_ingredients(mdparser):
+    ingredients = mdparser.extract_text_props('recipeIngredient')
+    if not ingredients:
+        ingredients = mdparser.extract_text_props('ingredients')
+    return ingredients
+
+def microdata_get_authors(mdparser):
+    authors = mdparser.extract_text_props('author')
+    if not authors:
+        author_tags = mdparser.find_props('author')
+        authors = [author_tag.text.strip() for tag in author_tags]
+    return authors
+
+def parse_recipe_html(html, verbose=False) -> dict:
     recipe = {}
     soup = BeautifulSoup(html, 'lxml')
     canonical_tag = soup.find('link', rel='canonical')
@@ -185,6 +215,8 @@ def parse_recipe_html(html) -> dict:
     
     ldjson_recipe = extract_ldjson(soup.find_all('script', type='application/ld+json'))
     if ldjson_recipe:
+        if verbose:
+            print('LDJSON tags found')
         recipe['name'] = ldjson_recipe.get('name')
         description = ldjson_recipe.get('description')
         if description:
@@ -194,8 +226,8 @@ def parse_recipe_html(html) -> dict:
         recipe['image_url'] = ldjson_get_image_url(ldjson_recipe)
         recipe['instructions'] = ldjson_get_instructions(ldjson_recipe)
         recipe['times'] = ldjson_get_times(ldjson_recipe)
-        recipe['authors'] = ldjson_get_author(ldjson_recipe)
-        recipe['ingredients'] = [clean_text(item) for item in ldjson_recipe.get('recipeIngredient')]
+        recipe['authors'] = ldjson_get_authors(ldjson_recipe)
+        recipe['ingredients'] = [fix_text(item) for item in ldjson_recipe.get('recipeIngredient')]
         recipe['keywords'] = ldjson_get_keywords(ldjson_recipe)
         recipe['categories'] = ldjson_get_categories(ldjson_recipe)
         
@@ -203,13 +235,15 @@ def parse_recipe_html(html) -> dict:
     
     recipe_tag = soup.find(itemtype=re.compile("https?://schema.org/Recipe"))
     if recipe_tag:
+        if verbose:
+            print('Recipe microdata tag found')
         mdparser = MicrodataParser(recipe_tag)
         recipe['name'] = mdparser.extract_text_props('name', single_result=True)
         recipe['description'] = mdparser.extract_text_props('description', single_result=True)
-        recipe['authors'] = mdparser.extract_text_props('author')
+        recipe['authors'] = microdata_get_authors(mdparser)
         recipe['image_url'] = microdata_get_image(mdparser)
         recipe['instructions'] = microdata_get_instructions(mdparser)
-        recipe['ingredients'] = mdparser.extract_text_props('recipeIngredient')
+        recipe['ingredients'] = microdata_get_ingredients(mdparser)
         recipe['times'] = microdata_get_times(mdparser)
         recipe['yield'] = mdparser.extract_text_props('recipeYield', single_result=True)
         recipe['categories'] = mdparser.extract_text_props('recipeCategory')

@@ -1,37 +1,35 @@
 {% extends 'base.html' %} {% block header %} 
 <div class="row">
-	<div class="{{'col-sm-6' if recipe.image_url else 'col-sm-12'}}" ">
-		<h1>
+	<div class="{{'col-sm-7' if recipe.image_url else 'col-sm-12'}}" ">
+		<h1 class="display-4">
 			{% block title %}{{ recipe['name'] }} {% endblock %} 
 		</h1>
+		<div class="small text-uppercase mb-3">
+			<span class="font-weight-light">Added:</span> <span>{{ recipe.created.strftime('%Y-%m-%d') }} |</span> {% if recipe.updated %} <span class="font-weight-light">Modified:</span> <span>{{ recipe.updated.strftime('%Y-%m-%d') }} |</span> {% endif %} {% if recipe.authors %} <span class="font-weight-light">By:</span> <span>{{ ', '.join(recipe.authors) }} |</span> {% endif %} <span class="font-weight-light">From: </span> <a href="{{ recipe.url }}" target="_blank">{{ recipe.domain }}</a></span> 
+		</div>
 		{% if recipe.description %} 
 		<p class="font-italic">
 			"{{ recipe['description'] }}" 
 		</p>
 		{% endif %} 
 		<ul class="list-group list-group-horizontal small">
-			{% if recipe.authors %} 
-			<li class="list-group-item ">By: <span class="font-italic">{{ ', '.join(recipe.authors) }}</span></li>
-			{% endif %} {% if recipe.yield %} 
-			<li class="list-group-item "> Yield: <span class="font-italic"> {{ recipe.yield }}</span></li>
-			{% endif %} {% if recipe.category %} 
-			<li class="list-group-item ">Category: <span class="font-italic">{{ ', '.join(recipe.category) }}</span></li>
-			{% endif %} {% if recipe.keywords %} 
-			<li class="list-group-item ">Keywords: <span class="font-italic">{{ ', '.join(recipe.keywords) }}</span></li>
-			{% endif %} 
-			<li class="list-group-item ">Source: <a href="{{ recipe.url }}" class="font-italic" target="_blank">{{ recipe.domain }}</a></li>
+			{% if recipe.yield %} 
+			<li class="list-group-item"><span class="font-weight-bold">Yield:</span> <span class="font-italic"> {{ recipe.yield }}</span></li>
+			{% endif %} {% for timeprop, seconds in recipe.times.items() %} 
+			<li class="list-group-item "><span class="font-weight-bold"> {{timeprop | capitalize }} Time:</span> <span class="font-italic"> {{ seconds // 60 }} minutes</span></li>
+			{% endfor %} 
 		</ul>
 		<div>
 		</div>
 		<div class="btn-group mb-3 mt-3">
 			<form action="{{ url_for('recipe.delete', id=recipe['id']) }}" method="post">
-				<a class="btn btn-primary" role="button" href="{{ url_for('recipe.edit', id=recipe['id']) }}">Edit</a> 
+				<a class="btn btn-primary" role="button" href="{{ url_for('recipe.edit', id=recipe['id']) }}"><span class="font-weight-bold">Modify</span></a> 
 				<input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure?')">
 			</form>
 		</div>
 	</div>
 	{% if recipe.image_url %} 
-	<div class="col-sm-6">
+	<div class="col-sm-5">
 		<img src="{{ recipe['image_url'] }}" class="img-fluid rounded mx-auto d-block" onerror='this.style.display = "none"'> 
 	</div>
 	{% endif %} 
@@ -55,7 +53,7 @@
 		</h3>
 		{% if recipe.instructions.type == 'one_step' %} 
 		<p>
-			{{ recipe.instructions.step }}
+			{{ recipe.instructions.step }} 
 		</p>
 		{% elif recipe.instructions.type == 'steps' %} 
 		<ol>
@@ -77,5 +75,14 @@
 			{% endfor %} {% elif recipe.instructions.type == 'one_step' %} {{ recipe.instructions.step }} {% endif %} 
 		</div>
 	</div>
+</div>
+<div class="row m-3">
+	<ul class="list-group list-group-horizontal small">
+		{% if recipe.category %} 
+		<li class="list-group-item "><span class="font-weight-bold">Category: </span><span class="font-italic">{{ ', '.join(recipe.category) }}</span></li>
+		{% endif %} {% if recipe.keywords %} 
+		<li class="list-group-item "><span class="font-weight-bold">Keywords: </span><span class="font-italic">{{ ', '.join(recipe.keywords) }}</span></li>
+		{% endif %} 
+	</ul>
 </div>
 {% endblock %}

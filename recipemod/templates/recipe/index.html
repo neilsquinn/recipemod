@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}Recipes{% endblock %}</h1>
+    <h1 class="display-4">{% block title %}Recipes{% endblock %}</h1>
         <form method="post" class="needs-validation">
             <div class="form-group">
                 <input type="url" value="{{ request.form['url'] }}" class="form-control form-control-lg" placeholder="Enter link to recipe" name="url" required>
