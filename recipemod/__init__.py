@@ -3,16 +3,20 @@ import os
 from flask import Flask
 
 def create_app(test_config=None):
-	app = Flask(__name__, instance_relative_config=True)
+	app = Flask(__name__)
+	SECRET_KEY = os.environ.get('SECRET_KEY')
+	if not SECRET_KEY:
+	    raise ValueError('No SECRET_KEY environment variable found')
+	DATABASE = os.environ.get('DATABASE_URL')
 	app.config.from_mapping(
-		SECRET_KEY=os.environ['SECRET_KEY'],
-		DATABASE=os.environ['DATABASE_URL']
+		SECRET_KEY=SECRET_KEY,
+		DATABASE=DATABASE
 		)
 	
-	if test_config is None:
-		app.config.from_pyfile('config.py', silent=True)
-	else:
-		app.config.from_mapping(test_config)
+# 	if test_config is None:
+# 		app.config.from_pyfile('config.py', silent=True)
+# 	else:
+# 		app.config.from_mapping(test_config)
 	
 	try:
 		os.makedirs(app.instance_path)
@@ -22,6 +26,9 @@ def create_app(test_config=None):
 	from . import db
 	db.init_app(app)
 	
+	from . import migrations
+	app.cli.add_command(migrations.create_modifications_table_command)
+	
 	from . import auth
 	app.register_blueprint(auth.bp)
 	
@@ -30,6 +37,9 @@ def create_app(test_config=None):
 	
 	from . import extras
 	app.register_blueprint(extras.bp)
+	
+	from . import api
+	app.register_blueprint(api.bp)
 	
 	app.add_url_rule('/', endpoint='index')
 	

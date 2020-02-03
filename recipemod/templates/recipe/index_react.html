@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 class="display-4">{% block title %}Recipes{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div id="react-recipe-container"></div>
+{% if env == 'development' %}
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="{{ url_for('static', filename='src/recipe.js') }}" type="text/babel"></script>
+{% else %}
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="{{ url_for('static', filename='lib/recipe.js') }}"></script>
+{% endif %}
+{% endblock %}

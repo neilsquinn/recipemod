@@ -2,17 +2,16 @@
 
 {% block header %}
     <h1 class="display-4">{% block title %}Recipes{% endblock %}</h1>
-        <form method="post" class="needs-validation">
-            <div class="form-group">
-                <input type="url" value="{{ request.form['url'] }}" class="form-control form-control-lg" placeholder="Enter link to recipe" name="url" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Add</button>
-        </form>
-        <br>
 {% endblock %}
 
 {% block content %}
 <div>
+    <form method="post" class="needs-validation mb-3">
+        <div class="form-group">
+            <input type="url" value="{{ request.form['url'] }}" class="form-control form-control-lg" placeholder="Enter link to recipe" name="url" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
 <div class="input-group mb-3">
 <input class="form-control" id="filterByName" type="text" placeholder="Filter by name" width="95%">
 <input class="form-control" id="filterByDomain" type="text" placeholder="Filter by website" width="95%">
@@ -24,7 +23,7 @@
         <div class="card-body">
             <h5 class="card-title"><span class="recipe-name">{{ recipe['name'] }}</span> <span class="text-secondary small recipe-domain">({{ recipe['domain'] }})</span></h5>
             <p class="card-text font-italic">{{ recipe['description'] }}</p>
-            <a href="{{ url_for('recipe.view', id=recipe['id']) }}" class="btn btn-primary stretched-link" >View</a>
+            <a href="{{ url_for('recipe.view', recipe_id=recipe['id']) }}" class="btn btn-primary stretched-link" >View</a>
         </div>
     </div>
   {% endfor %}

@@ -33,6 +33,9 @@ def init_db_command():
     init_db()
     click.echo('Initialized the database')
 
+@click.command('test-click')
+def test_click_command():
+    print('Test...passed, i guess.')
 
 def init_app(app):
     app.teardown_appcontext(close_db)

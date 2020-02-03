@@ -1,6 +1,12 @@
 {% extends 'base.html' %} {% block header %} 
+{% if version_data %}
+<h2>
+Version of: {{ version_data.name }}
+</h2>
+<hr>
+{% endif %}
 <div class="row">
-	<div class="{{'col-sm-7' if recipe.image_url else 'col-sm-12'}}" ">
+	<div class="{{'col-sm-7' if recipe.image_url else 'col-sm-12'}}">
 		<h1 class="display-4">
 			{% block title %}{{ recipe['name'] }} {% endblock %} 
 		</h1>
@@ -8,9 +14,11 @@
 			<span class="font-weight-light">Added:</span> <span>{{ recipe.created.strftime('%Y-%m-%d') }} |</span> {% if recipe.updated %} <span class="font-weight-light">Modified:</span> <span>{{ recipe.updated.strftime('%Y-%m-%d') }} |</span> {% endif %} {% if recipe.authors %} <span class="font-weight-light">By:</span> <span>{{ ', '.join(recipe.authors) }} |</span> {% endif %} <span class="font-weight-light">From: </span> <a href="{{ recipe.url }}" target="_blank">{{ recipe.domain }}</a></span> 
 		</div>
 		{% if recipe.description %} 
-		<p class="font-italic">
-			"{{ recipe['description'] }}" 
-		</p>
+		<div id="description" class="collapse show">
+            <p class="font-italic">
+                "{{ recipe['description'] }}" 
+            </p>
+        </div>
 		{% endif %} 
 		<ul class="list-group list-group-horizontal small">
 			{% if recipe.yield %} 
@@ -22,8 +30,8 @@
 		<div>
 		</div>
 		<div class="btn-group mb-3 mt-3">
-			<form action="{{ url_for('recipe.delete', id=recipe['id']) }}" method="post">
-				<a class="btn btn-primary" role="button" href="{{ url_for('recipe.edit', id=recipe['id']) }}"><span class="font-weight-bold">Modify</span></a> 
+			<form action="{{ url_for('recipe.delete', recipe_id=recipe['id']) }}" method="post">
+				<a class="btn btn-primary" role="button" href="{{ url_for('recipe.edit', recipe_id=recipe['id']) }}"><span class="font-weight-bold">Modify</span></a> 
 				<input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure?')">
 			</form>
 		</div>

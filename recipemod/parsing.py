@@ -5,15 +5,21 @@ import re
 from bs4 import BeautifulSoup, NavigableString
 from ftfy import fix_text
 
-def clean_text(text) -> str:
-    return fix_text(BeautifulSoup(text, 'lxml').text.strip())
-
+def clean_text(text, remove_newlines=False) -> str:
+    cleaned = fix_text(BeautifulSoup(text, 'lxml').text.strip())
+    if remove_newlines:
+        cleaned = re.sub(r'(\s*(\r|\n)\s*)+', ' ', cleaned)
+    return cleaned
+    
 def get_attr_text(tag, attr=None):
     '''Parse a tag to get the content of the meta tag, or some other attr, 
     or the text'''
     if tag.name == 'meta':
-        return tag.attrs['content']
-    elif attr:
+        if 'content' in tag.attrs:
+            return tag.attrs['content']
+        elif 'value' in tag.attrs:
+            return tag.attrs['value']
+    elif attr and attr in tag.attrs:
         return tag.attrs[attr]
     else:
         return tag.text
@@ -44,7 +50,11 @@ class MicrodataParser:
         
     def extract_text_props(self, prop_name, single_result=False, clean=True):
         tags = self.find_props(prop_name)
-        texts = [get_attr_text(tag) for tag in tags]
+        texts = [' '.join([
+                             token.strip() 
+                             for token in get_attr_text(tag).split()
+                           ])
+                 for tag in tags]
         if clean:
             texts = [fix_text(text) for text in texts]
         if single_result:
@@ -104,7 +114,6 @@ def ldjson_get_image_url(ldjson_recipe) -> str:
         return image['url']
     
 def ldjson_get_instructions(ldjson_recipe) -> dict:
-    clean_text = lambda text: BeautifulSoup(text, 'lxml').text.strip()
     steps = ldjson_recipe.get('recipeInstructions')
     if steps:
         if type(steps) == str:
@@ -116,10 +125,18 @@ def ldjson_get_instructions(ldjson_recipe) -> dict:
         if type(steps) == list:
             first_step = steps[0]
             if type(first_step) == str:
-                return {'type': 'steps', 'steps': [clean_text(step) for step in steps]}
+                return {
+                    'type': 'steps', 
+                    'steps': [clean_text(step, remove_newlines=True) 
+                              for step in steps]
+                    }
             elif type(first_step) == dict:
                 if 'HowToStep' in first_step['@type']:
-                    return {'type': 'steps', 'steps': [clean_text(step['text']) for step in steps]}
+                    return {
+                        'type': 'steps', 
+                        'steps': [clean_text(step['text'], remove_newlines=True) 
+                                  for step in steps]
+                            }
                 elif 'HowToSection' in first_step['@type']:
                     sections = []
                     for section in steps:
@@ -128,8 +145,11 @@ def ldjson_get_instructions(ldjson_recipe) -> dict:
                             substeps = section['itemListElement']
                         elif type(first_substep) == dict and 'HowToStep' in first_substep['@type']:
                             substeps = [step['text'] for step in section['itemListElement']]
-                        sections += [{'name': section['name'],
-                                     'steps': [clean_text(step) for step in substeps]}]
+                        sections += [{
+                            'name': section['name'],
+                            'steps': [clean_text(step, remove_newlines=True) 
+                                              for step in substeps]
+                            }]
                     return {'type': 'sections', 'sections': sections}
     else:    
         return {'type': None}
@@ -138,7 +158,10 @@ def ldjson_get_times(ldjson_recipe) -> dict:
     times = {}
     for key, value in ldjson_recipe.items():
         if key.endswith('Time') and value:
-            times[key.replace('Time', '')] = parse_iso_8601(value).seconds
+            try:
+                times[key.replace('Time', '')] = parse_iso_8601(value).seconds
+            except(IndexError):
+                continue
     return times
 
 def ldjson_get_authors(ldjson_recipe) -> list:
