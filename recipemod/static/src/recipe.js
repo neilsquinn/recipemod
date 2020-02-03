@@ -119,11 +119,11 @@ class RecipeTable extends React.Component {
       let recipes = this.state.recipes;
       const nameFilterText = this.state.nameFilterText
       if (nameFilterText) {
-        recipes = recipes.filter(recipe => recipe.name.toLowerCase().search(nameFilterText) > -1);
+        recipes = recipes.filter(recipe => recipe.name.toLowerCase().search(nameFilterText.toLowerCase()) > -1);
       }
       const siteFilterText = this.state.siteFilterText
       if (siteFilterText) {
-        recipes = recipes.filter(recipe => recipe.domain.search(siteFilterText) > -1);
+        recipes = recipes.filter(recipe => recipe.domain.search(siteFilterText.toLowerCase()) > -1);
       }
 
       return (
