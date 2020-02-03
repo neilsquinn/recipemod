@@ -17,9 +17,10 @@ CREATE TABLE modifications (
     created timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE UNIQUE INDEX modifications_pkey ON modifications(id int4_ops);
 CREATE INDEX modifications_recipe_id_idx ON modifications(recipe_id int4_ops);
 ''')
+
+
 
 @click.command('migrate-add-modifications-table')
 @with_appcontext
