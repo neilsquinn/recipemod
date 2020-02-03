@@ -44,7 +44,7 @@ def save_recipe(db, url, user_agent):
         )
         flash({'type': 'success', 'text': 'New recipe added.'})
     
-@bp.route('/', methods=('GET', 'POST'))
+@bp.route('/old_index', methods=('GET', 'POST'))
 @login_required
 def index():
     db = get_db()
@@ -194,7 +194,7 @@ def view_version(recipe_id, version_id):
 
     return render_template('recipe/view.html', recipe=recipe_version, version_data=version_data)
     
-@bp.route('/react_index', methods=('GET', 'POST'))
+@bp.route('/', methods=('GET', 'POST'))
 @login_required
 def react_index():
     from flask import json
