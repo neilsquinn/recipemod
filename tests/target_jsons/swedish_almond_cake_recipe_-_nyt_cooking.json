@@ -1,0 +1,46 @@
+{
+  "url": "https://cooking.nytimes.com/recipes/1020767-swedish-almond-cake",
+  "name": "Swedish Almond Cake",
+  "description": "Fika is the Swedish custom of stopping twice daily for coffee, conversation and a little something sweet; the word was created by flipping the two syllables in kaffe. Minutes after I had a fika in the Stockholm studio of the pastry chef Mia Ohrn, I started thinking about what I'd serve at my own first fika. This cake, so much easier to make than you'd guess by looking at it, has become my favorite. The recipe turns out a moist, buttery, tender cake, which would be lovely as is. But when the cake is half-baked, I cook a mixture of butter, sugar, flour and sliced almonds, spread it over the top (a homage to Sweden's famous tosca cake), put the pan back in the oven and wait for the mixture to bubble, caramelize and create a shell that is a little chewy, a little crackly and very beautiful. It's a perfect cake for fika, and great for brunch. Featured in: The Perfect Cake For Your Coffee Break.",
+  "authors": [
+    "Dorie Greenspan"
+  ],
+  "image_url": "https://static01.nyt.com/images/2020/01/12/magazine/12mag-eat/12mag-eat-articleLarge.jpg",
+  "instructions": {
+    "steps": [
+      "Make the cake: Center a rack in the oven, and heat it to 350 degrees. Butter a 9-inch springform pan (using solid, unmelted butter), and dust the interior with flour; tap out the excess. Place the pan on a baking sheet lined with parchment paper or a silicone baking mat.",
+      "In a medium bowl, whisk together the flour, baking powder and salt.",
+      "Working with a mixer (use a paddle attachment, if you have one), beat the sugar and eggs together on medium-high speed until the mixture is light and slightly thickened, about 3 minutes. Reduce the speed to medium, and gradually add the melted butter, followed by the milk and vanilla. (I like to pour the ingredients down the side of the bowl as the mixer is working.) Mix until the batter is smooth; it will have a lovely sheen. Decrease the speed to low, and gradually add the dry ingredients. When the flour mixture is almost fully incorporated, finish blending by stirring with a spatula. Scrape the batter into the prepared pan.",
+      "Slide the cake into the oven, and set your timer for 30 minutes.",
+      "As soon as the timer dings, start the topping (leaving the cake in the oven): In a medium saucepan, mix together all the topping ingredients. Place over medium-high heat and, stirring constantly, cook until you see a couple of bubbles around the edges. Lower the heat to medium, and cook, stirring nonstop, for 3 minutes. The mixture will thicken a little, and your spatula will leave tracks as you stir. Remove the pan from the heat.",
+      "Immediately take the cake out of the oven (leaving the oven on), and carefully pour the topping over the cake, nudging it gently with a spatula to cover the cake completely.",
+      "Return the cake to the oven, and bake for an additional 15 minutes (total baking time is about 50 minutes) or until the topping, which will bubble and seethe, is a beautiful golden brown and a tester inserted into the center of the cake comes out clean. Transfer the baking sheet to a rack, and cool for 5 minutes. Carefully work a table knife between the side of the pan and the cake, gently pushing the cake away from the side (it's a delicate job because the sticky topping isn't yet set). Remove the sides of the pan, and let the cake come to room temperature on the base. When you're ready to serve, lift the cake off the springform base and onto a platter."
+    ],
+    "type": "steps"
+  },
+  "ingredients": [
+    "½ cup plus 6 tablespoons/200 grams unsalted butter, melted and lukewarm, plus more unmelted butter for greasing the pan",
+    "2 cups minus 2 tablespoons/240 grams all-purpose flour, plus more for dusting the pan",
+    "1 teaspoon baking powder",
+    "¼ teaspoon fine sea salt",
+    "1 ¼ cups/250 grams granulated sugar",
+    "2 large eggs, at room temperature",
+    "⅔ cup/160 milliliters whole milk, lukewarm",
+    "2 teaspoons vanilla extract",
+    "7 tablespoons/100 grams unsalted butter, cut into small chunks",
+    "¾ cup/75 grams sliced almonds",
+    "½ cup/100 grams granulated sugar",
+    "2 tablespoons all-purpose flour",
+    "2 tablespoons whole milk"
+  ],
+  "times": {
+    "cook": 4500
+  },
+  "yield": "8 servings",
+  "categories": [
+    "breakfast",
+    "brunch",
+    "snack"
+  ],
+  "keywords": []
+}
