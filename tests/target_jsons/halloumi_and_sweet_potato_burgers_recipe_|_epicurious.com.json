@@ -1,0 +1,58 @@
+{
+  "url": "https://www.epicurious.com/recipes/food/views/halloumi-and-sweet-potato-veggie-burgers",
+  "name": "Halloumi and Sweet Potato Burgers",
+  "description": "If you don't want to fry the burgers, you can cook them on a lightly oiled griddle pan or bake them in the oven. They can also be served in warmed pita bread.",
+  "authors": [
+    "Heather Thomas"
+  ],
+  "image_url": "https://assets.epicurious.com/photos/5d15107111a2ca0008a89bfe/master/pass/halloumi-burger-recipe-HC-062719.jpg",
+  "instructions": {
+    "steps": [
+      "Cook the sweet potatoes in a large pan of boiling salted water for about 15 minutes until just tender. Drain and cool before roughly crushing with a potato masher – don't mash to a purée.",
+      "Meanwhile, cook the kale in a pan of boiling water for about 4 minutes until just tender. Drain and dry with kitchen paper. Cool, then chop it coarsely.",
+      "Heat the olive oil in a small skillet set over a medium heat and cook the scallions, garlic, and chile for 2–3 minutes without coloring. Stir in the cilantro.",
+      "Spoon into a large bowl, then mix in the sweet potato, kale and flour. Season with salt and pepper. Divide the mixture into four portions and shape each one into a burger. Coat in the sesame seeds, then cover and chill in the fridge for 30 minutes until firm.",
+      "Heat a little oil in a non-stick skillet over a low to medium heat and cook the burgers for 3–4 minutes each side until golden brown. Remove and drain on paper towels.",
+      "Dry-fry or griddle the halloumi over a medium heat for about 2 minutes each side until crisp and golden brown.",
+      "Lightly toast the burger buns and spread the bases with the mashed avocado. Top with the halloumi, burgers and some chile jam. Cover with the bun tops and serve."
+    ],
+    "type": "steps"
+  },
+  "ingredients": [
+    "500g (1lb 2oz) sweet potatoes, peeled and cubed",
+    "175g (6oz) kale, shredded",
+    "1 tbsp olive oil, plus extra for frying",
+    "8 spring scallions, finely chopped",
+    "2 garlic cloves, crushed",
+    "1 red chile, deseeded and diced",
+    "A handful of cilantro, chopped",
+    "2 tbsp all-purpose flour",
+    "50g (2oz or generous 1/4 cup) sesame seeds",
+    "250g (9oz) halloumi, sliced",
+    "4 whole-grain burger buns",
+    "1 ripe avocado, peeled, pitted, and mashed",
+    "Sea salt and freshly ground black pepper",
+    "Store-bought chile jam, to serve"
+  ],
+  "times": {
+    "cook": 4500,
+    "prep": 1200
+  },
+  "yield": "4 servings",
+  "categories": [
+    "HarperCollins",
+    "Sweet Potato/Yam",
+    "Vegetarian",
+    "Grill/Barbecue",
+    "Summer",
+    "Healthy",
+    "Kale",
+    "Green Onion/Scallion",
+    "Sesame",
+    "Sandwich",
+    "Soy Free",
+    "Peanut Free",
+    "Tree Nut Free"
+  ],
+  "keywords": []
+}

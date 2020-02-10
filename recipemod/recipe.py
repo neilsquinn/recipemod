@@ -2,7 +2,8 @@ from datetime import datetime
 import urllib
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for, flash, current_app
+    Blueprint, flash, g, redirect, render_template, request, url_for, flash, 
+    current_app, json
 )
 from werkzeug.exceptions import abort
 
@@ -19,6 +20,7 @@ def get_domain(url):
     return urllib.parse.urlsplit(url).netloc.replace('www.', '')
 
 def save_recipe(db, url, user_agent):
+    breakpoint()
     r = requests.get(url, headers={'User-Agent': user_agent})
     if not r:
         flash({'type': 'warning', 'text': f'Failed to load {url}'})
@@ -46,7 +48,7 @@ def save_recipe(db, url, user_agent):
     
 @bp.route('/old_index', methods=('GET', 'POST'))
 @login_required
-def index():
+def index_old():
     db = get_db()
     if request.method == 'POST':
         save = save_recipe(db, request.form['url'], request.headers['User-Agent'])
@@ -66,7 +68,7 @@ def index():
                     recipe['description'] = recipe['description'][:150] + '...'
             else:
                 recipe['description'] = ''
-    return render_template('recipe/index.html', recipes=recipes)
+    return render_template('recipe/index_old.html', recipes=recipes)
 
 @bp.route('/add')
 def add_recipe(index_request=None):
@@ -196,11 +198,10 @@ def view_version(recipe_id, version_id):
     
 @bp.route('/', methods=('GET', 'POST'))
 @login_required
-def react_index():
-    from flask import json
+def index():
     db = get_db()
-    if request.method == 'POST':
-        save = save_recipe(db, request.form['url'], request.headers['User-Agent'])
+#     if request.method == 'POST':
+#         save = save_recipe(db, request.form['url'], request.headers['User-Agent'])
     with db.cursor() as c:
         c.execute(
         '''SELECT r.id, name, description, image_url, url, created
@@ -210,8 +211,8 @@ def react_index():
         ORDER BY r.created DESC;''', (str(g.user['id']))
         )
         recipes = [dict(row) for row in c.fetchall()]
-        for recipe in recipes:
-            recipe['domain'] = get_domain(recipe['url'])
-    return render_template('recipe/index_react.html', env=current_app.env,
+#         for recipe in recipes:
+#             recipe['domain'] = get_domain(recipe['url'])
+    return render_template('recipe/index.html', env=current_app.env,
                             recipes=json.dumps(recipes, ensure_ascii=False),
                             )

@@ -1,0 +1,1313 @@
+
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tigania (Greek Pan-Fried Pork) | The Domestic Man</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://thedomesticman.com/xmlrpc.php">
+	<script type="text/javascript">
+  WebFontConfig = {"typekit":{"id":"tqp5sgg"}};
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://s0.wp.com/wp-content/plugins/custom-fonts/js/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+	})();
+</script><style id="jetpack-custom-fonts-css">.wf-active html{font-family:"ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2",serif}.wf-active body{font-family:"ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2",serif}.wf-active .widget, .wf-active #masthead-sidebar .widget{font-family:"ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2",serif}.wf-active #masthead .desc{font-family:"ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2",serif}.wf-active .post-header .date-posted{font-family:"ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2",serif}.wf-active #infinite-handle span{font-family:"ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2",serif}.wf-active h1{font-style:normal;font-weight:700}.wf-active .widget .widgettitle{font-family:"proxima-nova-1","proxima-nova-2",sans-serif;font-style:normal;font-weight:700}.wf-active .post-header h1{font-family:"proxima-nova-1","proxima-nova-2",sans-serif;font-style:normal;font-weight:700}.wf-active .section-title, .wf-active .archive-title{font-family:"proxima-nova-1","proxima-nova-2",sans-serif;font-style:normal;font-weight:700}.wf-active #masthead h1 a, .wf-active .more-link{font-family:"proxima-nova-1","proxima-nova-2",sans-serif;font-style:normal;font-weight:700}.wf-active .post-edit-link{font-family:"proxima-nova-1","proxima-nova-2",sans-serif;font-style:normal;font-weight:700}.wf-active .menu-button .menu-text{font-family:"proxima-nova-1","proxima-nova-2",sans-serif;font-style:normal;font-weight:700}</style>
+<meta name="p:domain_verify" content="c118eb8ddc6d5bebb7797bfbe8f110b6" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly90aGVkb21lc3RpY21hbi5jb20%3D"
+		+ "&wpcomid=13987811"
+		+ "&time=1580794270";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//thedomesticatedman.wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel="alternate" type="application/rss+xml" title="The Domestic Man &raquo; Feed" href="https://thedomesticman.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Domestic Man &raquo; Comments Feed" href="https://thedomesticman.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Domestic Man &raquo; Tigania (Greek Pan-Fried&nbsp;Pork) Comments Feed" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1573557586h&ver=5.3.2"}};
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/related-posts/related-posts.css,/wp-content/mu-plugins/likes/jetpack-likes.css?m=1566471846j&cssminify=yes' type='text/css' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='worldview-fonts-css'  href='https://fonts.googleapis.com/css?family=Lato%3A400%2C600%2C700%7CPoly%3A400%2C400italic&#038;subset=latin%2Clatin-ext&#038;ver=5.3.2' media='all' />
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??-eJydVO1ywiAQfKES1Lajfzp9FkJOPOUjAxdT376HxKp1pJ38ynHc7i3cEjn2QgdP4Em6QfR2MOiTNOAhIm88CRud0ou8wdIOHCTZR3A4ODmGaLsjwigTnSw8lP/0GXjZQjS8E0Gum9dmIdsBbSdbG/RBWGyjiqd/05xRSe6BesVwOHIZlw+eujD6uTRWncJAwkTs5lJERehNmgsndGDRwx/47WCtSEggoMPccJqoXDTLTbPKl8qpkCiVBrLDRDIP6imlDpOUZbNiFjH2OriCKxtNkXSe2mxhRZNl1lthv7MP9DeWzQbivOsV5QrHfRRYdqWnGmzEzgAxPF1iQfBVh+QbEG3LZk9JTJYX5QXUFbqshs9zgNLwLlOgKH2g8twuQY3TQBB8M2yu4O8WYmsVxho0QnYDh+as5bqsgZTO5K2K12j2zI0NreKKbJ/8MFi3Zk8pX51z9kQ5nEw7FbP86VtDpaCRe/EJw/2iCtqFSDp0kG9HYz9NbYqf/QN3b9PJcsGn+1i+bxarxXq1We6/AW4kCmc=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<style id='jetpack-recipes-style-inline-css'>
+.jetpack-recipe { border-color: ##f2f2f2; }.jetpack-recipe-title { border-bottom-color: ##56b4ce; }
+</style>
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script>
+var navigation = {"hidemenu":"Hide Menu","showmenu":"Show Menu"};
+</script>
+<script>
+var jetpack_recipes_vars = {"pageTitle":"Tigania (Greek Pan-Fried Pork) | The Domestic Man","loadCSS":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/shortcodes\/recipes\/css\/recipes-print.css"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJydkU1uAyEMhS9UQrJofhZVb9E9BWfGEzDUNh01py+jJFKbidKoEhIgPr/Hs+1YDJKPNYDYoa2PCvx13haDPNl7gEnYsVNYJKQL7DMpkE5syaIJRFwHN15TfscIpgpwA0ibzT5fc6maEmuHJJYhNqtgJtWr2w3130GQPhHGP7EBtDh/MAyCx9mftYeWxhaGhDXZMXMMk6x1IqByyhSACY/8j9o96huGWZZHXN28/T8aJ31m9XkaIIPHchrk+WgKI6n2ODN+VKHVvaaX1fNmtVtu1uvt8A2lTuHg'></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://thedomesticatedman.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='The Heritage Cookbook &#8211; now accepting recipe&nbsp;testers!' href='https://thedomesticman.com/2018/01/04/the-heritage-cookbook-now-accepting-recipe-testers/' />
+<link rel='next' title='Eye of Round Roast with Wine&nbsp;Sauce' href='https://thedomesticman.com/2018/01/16/eye-of-round-roast-with-wine-sauce/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/" />
+<link rel='shortlink' href='https://wp.me/pWGRR-43X' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fthedomesticman.com%2F2018%2F01%2F09%2Ftigania-greek-pan-fried-pork%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fthedomesticman.com%2F2018%2F01%2F09%2Ftigania-greek-pan-fried-pork%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Tigania (Greek Pan-Fried Pork)" />
+<meta property="og:url" content="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/" />
+<meta property="og:description" content="Pork shoulder is great: often one of the most affordable cuts of meat, and it can be used in a variety of dishes, from Kalua Pig, to Pork Adobo, to hearty stews. But most preparations call for exte…" />
+<meta property="article:published_time" content="2018-01-09T16:00:05+00:00" />
+<meta property="article:modified_time" content="2018-01-09T02:01:55+00:00" />
+<meta property="og:site_name" content="The Domestic Man" />
+<meta property="og:image" content="https://thedomesticatedman.files.wordpress.com/2018/01/tigania.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:creator" content="@thedomesticman" />
+<meta name="twitter:site" content="@thedomesticman" />
+<meta name="twitter:text:title" content="Tigania (Greek Pan-Fried&nbsp;Pork)" />
+<meta name="twitter:card" content="summary" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/a54d2fb4727bff8b5d2d7865a87e272a?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/a54d2fb4727bff8b5d2d7865a87e272a?s=32" sizes="16x16" />
+<link rel="apple-touch-icon-precomposed" href="https://secure.gravatar.com/blavatar/a54d2fb4727bff8b5d2d7865a87e272a?s=114" />
+<link rel='openid.server' href='https://thedomesticman.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://thedomesticman.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://thedomesticman.com/osd.xml" title="The Domestic Man" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="The Domestic Man" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Gluten-free recipes, inspired by traditional &amp; international cuisines.  New recipes every Tuesday." /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://thedomesticman.com/feed/;icon-uri=https://secure.gravatar.com/blavatar/a54d2fb4727bff8b5d2d7865a87e272a?s=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Pork shoulder is great: often one of the most affordable cuts of meat, and it can be used in a variety of dishes, from Kalua Pig, to Pork Adobo, to hearty stews. But most preparations call for extended cooking times, to break down all of that connective tissue and create a very tender bite. We&#039;re&hellip;" />
+<link rel="amphtml" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/amp/"><style type="text/css" id="custom-colors-css">.search-form input[type="search"]{background-color:#fff}.widget_custom_tags a,.widget_custom_categories a,.widget_custom_tags a:hover,.widget_custom_categories a:hover,.entry-content .post-edit-link,.entry-content .post-edit-link:hover,.entry-content .more-link,.entry-content .more-link:hover{border-bottom:0}.section-title,.archive-title,.post-header .date-posted a:hover,.post-header .date-posted,.post-header .date-posted a{color:#5b5b5b}input[type="submit"],input[type="reset"],button,.button,.post-edit-link{background-color:#473a02}.widget a,a,body,.post-header .text,.post-header .text h1 a,.more-link,.footertext,.hentry header:before,#previous-post a:hover{color:#333}.entry-content a:hover,.footertext a:hover,.entry-content a:active,.footertext a:active{border-bottom-color:#333}header .genericon,header #menu-social ul li a,#menu-social ul li header a{color:#8c8c8c}.post-edit-link,.post-edit-link:focus,.post-edit-link:hover,.more-link,.more-link:focus,.more-link:hover{color:#333}#masthead-sidebar .widget_pages a:hover,#masthead-sidebar .widget_nav_menu a:hover,#masthead h1 a:hover{color:#8c8c8c}.select-wrap select{color:#222}.paging-navigation a,#infinite-handle span{color:#222}a.banner-bar{color:#212121}.post-navigation a:hover,.paging-navigation a:hover,#infinite-handle a:hover,#sidebar .widget_calendar caption,#sidebar .widget_calendar tbody a,.widget_calendar #calendar_wrap #wp-calendar caption{color:#565656}#main-navigation .menu li a{color:#fff}.page-links a:hover,input[type="submit"]:focus,input[type="reset"]:focus,button:focus,.button:focus,input[type="submit"]:hover,input[type="reset"]:hover,button:hover,.button:hover{color:#000}.widget_custom_tags a,.widget_custom_categories a{color:#222}.content-wrapper{background-color:#e6dfd6}.footertext{background:#e6dfd6}a:hover,a:active,.post-meta a:hover,.post-meta-top .date:hover,#footer a:hover,.post-header .entry-title a:hover,.post-header.has-featured-image .entry-title a:hover,.widget a:hover,.widget_calendar #calendar_wrap #wp-calendar tbody tr td a,.widget_calendar #calendar_wrap #wp-calendar tfoot td a:hover{color:#705900}input[type="submit"],input[type="reset"],button,.button,.post-edit-link,.post-navigation a:hover,#infinite-handle a:hover,#sidebar .widget_calendar caption,#sidebar .widget_calendar tbody a,.single article.post .post-header a:hover,.single article.page .post-header a:hover,#masthead h1 a:hover,.page-links a:hover,a.banner-bar,#masthead-sidebar .widget_pages a:hover,#masthead-sidebar .widget_nav_menu a:hover,.widget_custom_tags a,.widget_custom_categories a,.widget_calendar #calendar_wrap #wp-calendar caption,input[type="submit"]:hover,input[type="reset"]:hover,input[type="submit"]:focus,input[type="reset"]:focus{background-color:#f9d236}.menu-button .menu-icon span{background-color:#f9d236}a header .genericon:hover,a header #menu-social ul li a:hover,#menu-social ul li a header a:hover,#masthead h1 a,#main-navigation .menu li a:hover,.menu-button .menu-text,.menu-open .menu-button .menu-text span,#masthead-sidebar a{color:#f9d236}.entry-content a:hover,.footertext a:hover,.entry-content a:active,.footertext a:active,.hide-menu span,.paging-navigation,.paging-navigation a,.search-form .search-submit,#infinite-handle span{background:#f9d236}.post-content a,.more-link,.author-info .author-link{border-bottom-color:#705900}.post-header#next-post a:hover{border-top-color:#705900}button:focus,.button:focus,.post-edit-link:focus,button:hover,.button:hover,.post-edit-link:hover,.widget_custom_tags a:hover,.widget_custom_categories a:hover,.paging-navigation a:hover,#infinite-handle span:hover{background-color:#f9d236}button:focus,.button:focus,.post-edit-link:focus,button:hover,.button:hover,.post-edit-link:hover,.widget_custom_tags a:hover,.widget_custom_categories a:hover,.paging-navigation a:hover,#infinite-handle span:hover{background-color:rgba(249,210,54,-1)}.search-form .search-submit:hover{background:#f2c307}.entry-content a,.footertext a{border-bottom-color:#f9d236}.widget_custom_tags a,.widget_custom_categories a{border-bottom-color:#f9d236}#masthead-sidebar a:hover{color:#f9d236}#next-post a:hover:before{background:#f9d236}#next-post a:hover:before{background:rgba(249,210,54,.75)}#masthead{background-color:#212121}#masthead .select-arrow{border-top-color:#212121}#masthead .desc,.menu-open .menu-button .menu-text,#masthead-sidebar,#masthead-sidebar .widgettitle{color:#fff}.menu-open .menu-button .menu-icon span{background-color:#fff}</style>
+		<link rel="stylesheet" id="custom-css-css" type="text/css" href="https://s0.wp.com/?custom-css=1&#038;csblog=WGRR&#038;cscache=6&#038;csrev=65" />
+		</head>
+
+
+<body class="post-template-default single single-post postid-15621 single-format-standard customizer-styles-applied has-header-image  has-primary-sidebar highlander-enabled highlander-light custom-colors">
+
+
+<header id="masthead">
+
+	
+	<div class="menu-button">
+		<div class="menu-icon">
+			<span class="top"></span>
+			<span class="mid"></span>
+			<span class="bot"></span>
+		</div>
+		<div class="menu-text">
+			<span>Hide</span>Menu		</div>
+	</div>
+
+	<div class="split-columns">
+
+		<div class="split-left">
+
+			
+<aside id="masthead-sidebar" class="clearfix">
+
+	<div class="widgets">
+
+		
+<div class="widget_nav_menu widget">
+
+	<h3 class="widgettitle">Navigation</h3>
+
+	<div id="menu-masthead" class="masthead"><ul id="menu-masthead-items" class="menu-items"><li id="menu-item-10486" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10486"><a href="https://thedomesticman.com/about/">About</a></li>
+<li id="menu-item-10485" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10485"><a href="https://thedomesticman.com/my-story/">My Story</a></li>
+<li id="menu-item-10841" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10841"><a href="https://thedomesticman.com/cookbooks/">Cookbooks</a></li>
+<li id="menu-item-10484" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10484"><a href="mailto:russ@thedomesticman.com">Contact</a></li>
+</ul></div>
+</div><!--.masthead-menu--><div id="search-6" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://thedomesticman.com/">
+        <label>
+                <span class="assistive-text">Search for:</span>
+                <input type="search" class="search-field" placeholder="Search" value="" name="s">
+        </label>
+        <input type="submit" class="search-submit" value="&#xf400;">
+</form></div><div id="categories-14" class="widget widget_categories"><h2 class="widgettitle">Categories</h2>		<ul>
+				<li class="cat-item cat-item-586"><a href="https://thedomesticman.com/category/food/">Food</a> (504)
+<ul class='children'>
+	<li class="cat-item cat-item-54380741"><a href="https://thedomesticman.com/category/food/1-salads/">1 &#8211; Salads</a> (14)
+</li>
+	<li class="cat-item cat-item-549995098"><a href="https://thedomesticman.com/category/food/2-soups-stews/">2 &#8211; Soups &amp; Stews</a> (69)
+</li>
+	<li class="cat-item cat-item-37149332"><a href="https://thedomesticman.com/category/food/3-vegetables/">3 &#8211; Vegetables</a> (102)
+</li>
+	<li class="cat-item cat-item-549995127"><a href="https://thedomesticman.com/category/food/4-red-meat/">4 &#8211; Red Meat</a> (128)
+	<ul class='children'>
+	<li class="cat-item cat-item-18608"><a href="https://thedomesticman.com/category/food/4-red-meat/beef/">Beef</a> (110)
+</li>
+	<li class="cat-item cat-item-279238"><a href="https://thedomesticman.com/category/food/4-red-meat/bison/">Bison</a> (5)
+</li>
+	<li class="cat-item cat-item-38111"><a href="https://thedomesticman.com/category/food/4-red-meat/lamb/">Lamb</a> (24)
+</li>
+	</ul>
+</li>
+	<li class="cat-item cat-item-549995139"><a href="https://thedomesticman.com/category/food/5-poultry/">5 &#8211; Poultry</a> (109)
+	<ul class='children'>
+	<li class="cat-item cat-item-5178"><a href="https://thedomesticman.com/category/food/5-poultry/chicken/">Chicken</a> (76)
+</li>
+	<li class="cat-item cat-item-196306"><a href="https://thedomesticman.com/category/food/5-poultry/duck/">Duck</a> (5)
+</li>
+	<li class="cat-item cat-item-43992"><a href="https://thedomesticman.com/category/food/5-poultry/eggs/">Eggs</a> (16)
+</li>
+	<li class="cat-item cat-item-1148"><a href="https://thedomesticman.com/category/food/5-poultry/turkey/">Turkey</a> (9)
+</li>
+	</ul>
+</li>
+	<li class="cat-item cat-item-549995157"><a href="https://thedomesticman.com/category/food/6-pork/">6 &#8211; Pork</a> (79)
+</li>
+	<li class="cat-item cat-item-549995165"><a href="https://thedomesticman.com/category/food/7-seafood/">7 &#8211; Seafood</a> (68)
+	<ul class='children'>
+	<li class="cat-item cat-item-5995"><a href="https://thedomesticman.com/category/food/7-seafood/fish/">Fish</a> (28)
+</li>
+	<li class="cat-item cat-item-41384437"><a href="https://thedomesticman.com/category/food/7-seafood/other-shellfish/">Other Shellfish</a> (25)
+</li>
+	<li class="cat-item cat-item-51544"><a href="https://thedomesticman.com/category/food/7-seafood/shrimp/">Shrimp</a> (23)
+</li>
+	</ul>
+</li>
+	<li class="cat-item cat-item-209725620"><a href="https://thedomesticman.com/category/food/8-side-dishes/">8 &#8211; Side Dishes</a> (128)
+	<ul class='children'>
+	<li class="cat-item cat-item-18666"><a href="https://thedomesticman.com/category/food/8-side-dishes/potatoes/">Potatoes</a> (33)
+</li>
+	<li class="cat-item cat-item-18668"><a href="https://thedomesticman.com/category/food/8-side-dishes/rice/">Rice</a> (25)
+</li>
+	</ul>
+</li>
+	<li class="cat-item cat-item-549995555"><a href="https://thedomesticman.com/category/food/9-pressure-cooker/">9 &#8211; Pressure Cooker</a> (17)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-277"><a href="https://thedomesticman.com/category/misc/">Misc</a> (75)
+</li>
+	<li class="cat-item cat-item-38194"><a href="https://thedomesticman.com/category/visits/">Visits</a> (7)
+</li>
+		</ul>
+			</div><div id="text-13" class="widget widget_text">			<div class="textwidget"><p><i>By following my links to sites like <a href="https://www.amazon.com/gp/product/162860087X?ie=UTF8&amp;tag=thedomman-20&amp;camp=1789&amp;linkCode=xm2&amp;creativeASIN=162860087X">Amazon</a>, <a href="http://www.grasslandbeef.com/StoreFront.bok?affId=135214">US Wellness Meats</a>, and <a href="https://www.butcherbox.com/thedomesticman/">ButcherBox</a> (and purchasing something), I earn a small commission at no extra cost to you. Any money I get goes towards supporting this site or buying supplies for my cooking adventures.</i></p>
+</div>
+		</div>
+	</div><!--/.widgets-->
+
+</aside><!--/#sidebar-->
+		</div>
+
+		<div class="split-right">
+
+						<div id="author-avatar">
+				<a href="https://thedomesticman.com/"><img class="no-grav" src="https://thedomesticatedman.files.wordpress.com/2019/11/cropped-dsc5735.jpg" alt=""></a>
+			</div>
+			
+			<h1 id="blog-title"><a href="https://thedomesticman.com/">The Domestic Man</a></h1>
+			<div class="desc">Gluten-free recipes, inspired by traditional &amp; international cuisines.  New recipes every Tuesday.</div>
+
+			
+
+	<div class="social-menu">
+
+		<h3>Connect</h3>
+
+		<div id="menu-social" class="social"><ul id="menu-social-items" class="menu-items"><li id="menu-item-10323" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10323"><a href="http://www.facebook.com/thedomesticman"><span class="assistive-text">FB</span></a></li>
+<li id="menu-item-10326" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10326"><a href="http://instagram.com/thedomesticman"><span class="assistive-text">IG</span></a></li>
+<li id="menu-item-10324" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10324"><a href="http://twitter.com/thedomesticman"><span class="assistive-text">Twitter</span></a></li>
+<li id="menu-item-10325" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10325"><a href="http://pinterest.com/thedomesticman/"><span class="assistive-text">Pinterest</span></a></li>
+</ul></div>
+	</div><!--.social-menu-->
+
+
+		</div>
+
+	</div>
+
+	
+</header>
+
+
+<div id="main-content-area" class="content-wrapper">
+
+<!--PJAX-->
+
+    <section id="primary">
+		<main id="main" class="site-main" role="main">
+
+		
+		
+
+	<article id="post-15621" class="post-15621 post type-post status-publish format-standard hentry category-6-pork category-food tag-cooking tag-dinner tag-food-2 tag-greece tag-greek-food tag-paleo tag-pork tag-primal tag-whole30" data-body-class="post-template-default single single-post postid-15621 single-format-standard customizer-styles-applied has-header-image  has-primary-sidebar highlander-enabled highlander-light custom-colors">
+
+		
+		<header class="post-header ">
+
+			
+			<div class="inner">
+				<div class="text">
+					<time class="date-posted published" datetime="1515495605">
+												January 9, 2018											</time>
+
+					
+					<h1 class="entry-title">Tigania (Greek Pan-Fried&nbsp;Pork)</h1>
+
+									</div>
+			</div>
+
+			
+		</header>
+
+		
+	<div class="split-view">
+
+		<div class="content-view">
+
+		
+	<div class="entry-content">
+
+		<p><img src="https://thedomesticatedman.files.wordpress.com/2018/01/tigania.jpg?w=800"></p>
+<p>Pork shoulder is great: often one of the most affordable cuts of meat, and it can be used in a variety of dishes, from <a href="https://thedomesticman.com/2011/02/23/crock-pot-kalua-pig/">Kalua Pig</a>, to <a href="https://thedomesticman.com/2017/07/04/oven-roasted-pork-adobo/">Pork Adobo</a>, to <a href="https://thedomesticman.com/2017/10/17/pichelsteiner/">hearty stews</a>.  But most preparations call for extended cooking times, to break down all of that connective tissue and create a very tender bite.  We&#8217;re going to do things the Greek way this time around, and give them a quick pan-fry, followed by a simmer in a flavorful sauce.  </p>
+<p>This preparation visits the other end of the pork shoulder spectrum: cooking the meat just through, so it&#8217;s still tender and super juicy.  We&#8217;ll keep the prep and cook time to under an hour, with lots of hands-off time so you can prep a salad and pickled veggies to go with the meal.</p>
+<p>In case you missed <a href="https://thedomesticman.com/2018/01/04/the-heritage-cookbook-now-accepting-recipe-testers/">my post from last week</a>, I&#8217;m officially accepting recipe testers for my next cookbook, which will be entitled <i>The Heritage Cookbook</i>!  Recipe testing is open to the public until January 28th (which is also when feedback is due), so don&#8217;t delay!</p>
+<p><span id="more-15621"></span><div class="hrecipe h-recipe jetpack-recipe" itemscope itemtype="https://schema.org/Recipe"><h3 class="p-name jetpack-recipe-title fn" itemprop="name">Tigania - Greek Pan-Fried Pork (Gluten-free, Paleo, Primal, Perfect Health Diet, Whole30)</h3><ul class="jetpack-recipe-meta"><li class="jetpack-recipe-servings p-yield yield" itemprop="recipeYield"><strong>Servings: </strong>4</li><li class="jetpack-recipe-time">
+				<time itemprop="totalTime" datetime="P0DT0H45M0S"><strong>Time:</strong> <span class="time">45 mins</span></time>
+			</li><li class="jetpack-recipe-difficulty"><strong>Difficulty: </strong>Easy</li></ul><div class="jetpack-recipe-content"></p>
+<p><i>2 lbs boneless pork shoulder, cut into ~1” cubes<br />
+1 tsp kosher salt, more to taste<br />
+1/2 tsp black pepper, more to taste<br />
+1/4 tsp dried oregano, crushed<br />
+1/4 cup olive oil<br />
+juice of 2 lemons (about 6-7 tbsp)<br />
+1/2 cup dry white wine<br />
+lemon slices to serve</i></p>
+<p>1. In a mixing bowl, combine the pork, salt, pepper, and oregano.  Warm the oil in a skillet over medium-high heat.  In two batches, add the pork and brown on each side until crispy, about 3 minutes per side, then remove the pork using a slotted spoon and set aside.</p>
+<p>2. Once the pork is finished and set aside, add the lemon juice and wine to the skillet, then simmer until reduced by one half, about 8 minutes, stirring frequently.  Return the pork and any accumulated juices to the skillet, then return to a simmer; cover, reduce heat to medium-low, and gently simmer until the pork is tender and cooked through, about 10 minutes.  Using a slotted spoon, transfer the pork to a serving platter.</p>
+<p>3. Increase the heat to medium-high, and reduce the sauce, uncovered, until just a few tbsp of glossy liquid remains, about 5 minutes.  Pour the sauce over the pork, then serve with lemon slices, olives, salad, and your favorite pickled vegetables.</p>
+<p>*** If you are avoiding alcohol, use 1/4 cup apple cider vinegar and 1/4 cup chicken stock in place of the white wine.</div></div></p>
+<p><i>Note: In the year leading up to my new cookbook’s release, I will be regularly releasing these recipes to 1) maintain a continuing conversation with my readership and 2) give visitors to this site an opportunity to test and provide feedback before editing. For more information on this new approach, read my post <a href="//thedomesticman.com/2017/04/11/my-new-cookbook-one-week-at-a-time/“">here</a>.</i></p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><div class="sd-content"><ul><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-15621" class="share-facebook sd-button share-icon" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-15621" class="share-twitter sd-button share-icon" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?share=tumblr" target="_blank" title="Click to share on Tumblr"><span>Tumblr</span></a></li><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?share=reddit" target="_blank" title="Click to share on Reddit"><span>Reddit</span></a></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-15621" class="share-pinterest sd-button share-icon" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-custom share-custom-print"><a rel="nofollow noopener noreferrer" data-shared="" class="share-custom share-custom-print sd-button share-icon" href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?share=custom-1399079028" target="_blank" title="Click to share on Print"><span style="background-image:url(&quot;http://cdn.printfriendly.com/icon-print-friendly-16x16.png&quot;);">Print</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-13987811-15621-5e39019e9b3c4' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=13987811&amp;post_id=15621&amp;origin=thedomesticatedman.wordpress.com&amp;obj_id=13987811-15621-5e39019e9b3c4&amp;domain=thedomesticman.com' data-name='like-post-frame-13987811-15621-5e39019e9b3c4'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div></div>
+		
+	</div><!--.entry-content-->
+
+	
+	
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			13 thoughts on &ldquo;<span>Tigania (Greek Pan-Fried&nbsp;Pork)</span>&rdquo;		</h2>
+
+		
+		<ol class="comment-list">
+					<li id="comment-138163" class="comment byuser comment-author-tahenryauthoress even thread-even depth-1 highlander-comment">
+			<article id="div-comment-138163" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/06ecf970a4fbcaf9d6fa74445e838d60?s=74&#038;d=https%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn"><a href='http://tahenryauthoress.wordpress.com' rel='external nofollow ugc' class='url'>tahenryauthoress</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-138163">
+							<time datetime="2018-01-09T12:58:39-05:00">
+								January 9, 2018 at 12:58 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Sounds delicious!</p>
+<p id="comment-like-138163" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=138163&#038;_wpnonce=a18c6378e7" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-138163" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=138163#respond' data-commentid="138163" data-postid="15621" data-belowelement="div-comment-138163" data-respondelement="respond" aria-label='Reply to tahenryauthoress'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-138166" class="comment byuser comment-author-miakouppa odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-138166" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/9bb0240253ad407c346f3c2e5126e9c3?s=74&#038;d=https%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn"><a href='http://miakouppa.com' rel='external nofollow ugc' class='url'>miakouppa</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-138166">
+							<time datetime="2018-01-09T21:32:45-05:00">
+								January 9, 2018 at 9:32 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Our parents prepare pork this way :) Your version sounds delicious!</p>
+<p id="comment-like-138166" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=138166&#038;_wpnonce=7908714bdb" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-138166" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=138166#respond' data-commentid="138166" data-postid="15621" data-belowelement="div-comment-138166" data-respondelement="respond" aria-label='Reply to miakouppa'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-138167" class="pingback even thread-even depth-1 highlander-comment">
+			<div class="comment-body">
+				Pingback: <a href='http://cfsilverspring.com/wordpress/10-january-18/' rel='external nofollow ugc' class='url'>10 January 18 - CrossFit Silver Spring</a> 			</div>
+		</li><!-- #comment-## -->
+		<li id="comment-138173" class="comment byuser comment-author-msohspeaks odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-138173" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/0f1620d262a13fe5758a13a719b70d78?s=74&#038;d=https%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn"><a href='http://msohspeaks.wordpress.com' rel='external nofollow ugc' class='url'>msohspeaks</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-138173">
+							<time datetime="2018-01-10T05:58:27-05:00">
+								January 10, 2018 at 5:58 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Tigania is a town in Kenya, Africa! wow. At last there&#8217;s food named after it.</p>
+<p id="comment-like-138173" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=138173&#038;_wpnonce=757eb4280e" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-138173" class="comment-like-feedback">Liked by <a href="#" class="view-likers" data-like-count="1">1 person</a></span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=138173#respond' data-commentid="138173" data-postid="15621" data-belowelement="div-comment-138173" data-respondelement="respond" aria-label='Reply to msohspeaks'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-138185" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-138185" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/73bab40114306a5727f91c813a561d01?s=74&#038;d=https%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn">AB</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-138185">
+							<time datetime="2018-01-11T19:01:07-05:00">
+								January 11, 2018 at 7:01 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Looks delicious. But why remove the pork at the end of Step 1&#8230; why not just add the fluids (after browning the pork), and by the time the fluid reduces the pork will be done as well (?) Just wondering</p>
+<p id="comment-like-138185" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=138185&#038;_wpnonce=744e75eecb" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-138185" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=138185#respond' data-commentid="138185" data-postid="15621" data-belowelement="div-comment-138185" data-respondelement="respond" aria-label='Reply to AB'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-138760" class="comment byuser comment-author-chefkreso odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-138760" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/d04cfe7eef1fbef19ba3cf605069c121?s=74&#038;d=https%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn"><a href='http://chefkresorecipes.wordpress.com' rel='external nofollow ugc' class='url'>chefkreso</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-138760">
+							<time datetime="2018-01-16T16:48:57-05:00">
+								January 16, 2018 at 4:48 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>This pork looks amazing, made me hungry after reading your post!</p>
+<p id="comment-like-138760" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=138760&#038;_wpnonce=049b1d2b7d" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-138760" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=138760#respond' data-commentid="138760" data-postid="15621" data-belowelement="div-comment-138760" data-respondelement="respond" aria-label='Reply to chefkreso'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-138845" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-138845" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/3658da92102509b4fa49cc43ca359635?s=74&#038;d=https%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn">mikey</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-138845">
+							<time datetime="2018-01-17T05:43:05-05:00">
+								January 17, 2018 at 5:43 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I will be making this at the weekend, it looks amazing,<br />
+I started on a Paleo diet after I had suffered from heartburn for years and was taking omeprazole daily, I looked into a number of different diets and came across paleo which I had never heard of and found that it had a lot of benefits, so though I would try it for 5 weeks, after the 2nd week my heartburn stopped bothering me.<br />
+I dont stick to Paleo 100% of the time, I have my vices lol but ive found a good balance which has clearded up my heartburn and made me fitter.<br />
+I like food and wasnt sure what to do at the beginning so I found a package that gave me lots of recipes and help, some of your readers might find it helpful to so here it is <a href="https://tinyurl.com/y7l4eyuq" rel="nofollow ugc">https://tinyurl.com/y7l4eyuq</a></p>
+<p id="comment-like-138845" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=138845&#038;_wpnonce=7a532c314e" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-138845" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=138845#respond' data-commentid="138845" data-postid="15621" data-belowelement="div-comment-138845" data-respondelement="respond" aria-label='Reply to mikey'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-139615" class="pingback odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<div class="comment-body">
+				Pingback: <a href='http://www.paleodietworld.com/tigania-greek-pan-fried-pork/' rel='external nofollow ugc' class='url'>Tigania (Greek Pan-Fried Pork) - Paleo Diet World</a> 			</div>
+		</li><!-- #comment-## -->
+		<li id="comment-142527" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-142527" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/df7f34f939e55302fcd27fbe8cfe403e?s=74&#038;d=https%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn">Samira Sneed</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-142527">
+							<time datetime="2018-02-21T18:15:32-05:00">
+								February 21, 2018 at 6:15 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The concept just isn&#8217;t to only be taught computation and<br />
+memorize formulas however to learn the way to apply this data to unravel problems <a href="https://math-problem-solver.com/" rel="nofollow ugc">https://math-problem-solver.com/</a> .<br />
+These assets embody wise thinking, problem-fixing capabilities, and the capability to assume in subjective ways.</p>
+<p id="comment-like-142527" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=142527&#038;_wpnonce=1e553e44fe" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-142527" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=142527#respond' data-commentid="142527" data-postid="15621" data-belowelement="div-comment-142527" data-respondelement="respond" aria-label='Reply to Samira Sneed'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-149203" class="comment odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-149203" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/73e68684c1121082e648426002d3893a?s=74&#038;d=https%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn"><a href='https://pandaexpresshours.com/' rel='external nofollow ugc' class='url'>panda express hours</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-149203">
+							<time datetime="2018-04-24T08:11:27-04:00">
+								April 24, 2018 at 8:11 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>delirious food awesome, let me try this.</p>
+<p id="comment-like-149203" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=149203&#038;_wpnonce=5104f7fa06" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-149203" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=149203#respond' data-commentid="149203" data-postid="15621" data-belowelement="div-comment-149203" data-respondelement="respond" aria-label='Reply to panda express hours'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-155000" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-155000" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/f4696883a4ddace6ea345dfd50f4c35a?s=74&#038;d=https%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn">Michelle</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-155000">
+							<time datetime="2018-06-03T22:56:10-04:00">
+								June 3, 2018 at 10:56 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks for the recipe! I thought the meat needed a little more of everything except lemon juice&#8230; I’m sure this is a cultural abomination. But I added some prepared mustard and sour cream at the end to round out the flavor. Can’t wait to go back to the menu for recipes for the rest of my Costco-sizes shoulder!</p>
+<p id="comment-like-155000" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=155000&#038;_wpnonce=21afc54fc6" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-155000" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=155000#respond' data-commentid="155000" data-postid="15621" data-belowelement="div-comment-155000" data-respondelement="respond" aria-label='Reply to Michelle'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-160961" class="comment odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-160961" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/4522716ca63c177ef2a5e84adac7ca4f?s=74&#038;d=https%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn">Rogers</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-160961">
+							<time datetime="2018-07-08T10:40:25-04:00">
+								July 8, 2018 at 10:40 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I don&#8217;t know if I did something wrong, but mine was tough as leather. Good flavor, but difficult to eat.</p>
+<p id="comment-like-160961" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=160961&#038;_wpnonce=f718f79950" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-160961" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=160961#respond' data-commentid="160961" data-postid="15621" data-belowelement="div-comment-160961" data-respondelement="respond" aria-label='Reply to Rogers'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-171104" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-171104" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/b1c548ce8e69d592f7025164111adf17?s=74&#038;d=https%3A%2F%2F2.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />						<b class="fn">Michelle</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/#comment-171104">
+							<time datetime="2018-09-14T16:40:26-04:00">
+								September 14, 2018 at 4:40 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Are the vegetables next to the main course brined?  I love the variety in it and would love to try them brined/pickled.</p>
+<p id="comment-like-171104" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?like_comment=171104&#038;_wpnonce=d62c313e94" class="comment-like-link needs-login" rel="nofollow" data-blog="13987811"><span>Like</span></a><span id="comment-like-count-171104" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/?replytocom=171104#respond' data-commentid="171104" data-postid="15621" data-belowelement="div-comment-171104" data-respondelement="respond" aria-label='Reply to Michelle'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2018/01/09/tigania-greek-pan-fried-pork/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://thedomesticman.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="e5a79c76ed" /><input type="hidden" name="_wp_http_referer" value="/2018/01/09/tigania-greek-pan-fried-pork/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Login via Guest">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Login via WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Login via Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Login via Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25" alt="Google photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='15621' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="c359de96ac" /></p>
+<input type="hidden" name="genseq" value="1580794270" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="180"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments -->
+
+		</div><!--.content-view-->
+
+		
+		<div class="meta-view">
+
+			
+<aside id="post-single" class="widgets">
+
+			
+<div class="author-info">
+	<div class="author-avatar">
+		<img alt='' src='https://0.gravatar.com/avatar/60eb133a6de5e18deff3418e91d80ba0?s=74&#038;d=https%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D74&#038;r=PG' class='avatar avatar-74' height='74' width='74' />	</div><!-- .author-avatar -->
+	<div class="author-description">
+		<h2 class="author-title"><span>About</span> Russ Crandall</h2>
+		<p class="author-bio">
+			Paleo-friendly food blogger and cookbook author, mostly traditional &amp; international dishes. Used to be sick, now I'm not. Active duty Navy.		</p>
+				<p>
+			<a class="author-link" href="https://thedomesticman.com/author/onionsaregross/" rel="author">
+				View all posts			</a>
+		</p>
+			</div><!-- .author-description -->
+</div><!-- .author-info -->	
+	<div id="categories" class="widget widget_custom_categories">
+		<h2 class="widgettitle">Categories</h2>
+		<a href="https://thedomesticman.com/category/food/6-pork/" rel="category tag">6 - Pork</a> <a href="https://thedomesticman.com/category/food/" rel="category tag">Food</a>	</div>
+
+	<div id="tags" class="widget widget_custom_tags">
+		<h2 class="widgettitle">Tags</h2><a href="https://thedomesticman.com/tag/cooking/" rel="tag">cooking</a> <a href="https://thedomesticman.com/tag/dinner/" rel="tag">dinner</a> <a href="https://thedomesticman.com/tag/food-2/" rel="tag">food</a> <a href="https://thedomesticman.com/tag/greece/" rel="tag">greece</a> <a href="https://thedomesticman.com/tag/greek-food/" rel="tag">greek food</a> <a href="https://thedomesticman.com/tag/paleo/" rel="tag">paleo</a> <a href="https://thedomesticman.com/tag/pork/" rel="tag">pork</a> <a href="https://thedomesticman.com/tag/primal/" rel="tag">primal</a> <a href="https://thedomesticman.com/tag/whole30/" rel="tag">whole30</a>	</div>
+
+	
+		<div id="search-5" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://thedomesticman.com/">
+        <label>
+                <span class="assistive-text">Search for:</span>
+                <input type="search" class="search-field" placeholder="Search" value="" name="s">
+        </label>
+        <input type="submit" class="search-submit" value="&#xf400;">
+</form></div><div id="pages-5" class="widget widget_pages"><h2 class="widgettitle">Have a look</h2>		<ul>
+			<li class="page_item page-item-2"><a href="https://thedomesticman.com/about/">About</a></li>
+<li class="page_item page-item-2297"><a href="https://thedomesticman.com/my-story/">My Story</a></li>
+		</ul>
+			</div><div id="blog_subscription-4" class="widget widget_blog_subscription jetpack_subscription_widget"><h2 class="widgettitle"><label for="subscribe-field">Email Newsletter</label></h2>
+            <form action="https://subscribe.wordpress.com" method="post" accept-charset="utf-8"
+                  id="subscribe-blog">
+									<p>Enter your email address to receive notifications of new posts by email.</p>
+<p>Join 79,728 other followers</p>
+                    <p><input type="text" name="email" style="width: 95%; padding: 1px 2px"
+                              placeholder="Enter your email address" value=""
+                              id="subscribe-field"/></p>
+				
+                <p>
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="13987811"/>
+                    <input type="hidden" name="source" value="https://thedomesticman.com/2018/01/09/tigania-greek-pan-fried-pork/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-4"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="c9c6611c3d" />                    <button type="submit"
+	                    		                	                >
+	                    Sign me up                    </button>
+                </p>
+            </form>
+			
+</div><div id="text-15" class="widget widget_text"><h2 class="widgettitle">My Cookbooks</h2>			<div class="textwidget"><a href="https://thedomesticman.com/cookbooks/the-heritage-cookbook/"><img src="https://thedomesticatedman.files.wordpress.com/2019/11/final-cover-copy.jpg" width="200" style="border:1px solid black;"></a><br><a href="https://thedomesticman.com/cookbooks/paleo-take-out/"><img src="https://thedomesticatedman.files.wordpress.com/2015/04/ptocoversmall.jpeg" width="200" style="border:1px solid black;"><br>
+<a href="https://thedomesticman.com/cookbooks/the-ancestral-table/"><img src="https://thedomesticatedman.files.wordpress.com/2014/08/final-cover-mini.png" width="198" style="border:1px solid black;"><br>
+<a href="https://thedomesticman.com/cookbooks/the-safe-starch-cookbook/"><img src="https://thedomesticatedman.files.wordpress.com/2017/01/the-safe-starch-cookbook-cover-small.jpg" width="200" style="border:1px solid black;"><br>
+<a href="https://thedomesticman.com/2016/05/24/deep-dish-season-one/"><img src="https://thedomesticatedman.files.wordpress.com/2016/05/podcast-coverartv1b.jpg" width="200" style="border:1px solid black;"></a></div>
+		</div><div id="text-16" class="widget widget_text">			<div class="textwidget"><a href="http://www.grasslandbeef.com/StoreFront.bok?affId=135214" target="_blank" rel="noopener noreferrer"><img src="https://i1.wp.com/i112.photobucket.com/albums/n177/onionsaregross/album2/UWM.jpg" width="150"></a>
+<br><a href="http://www.primalpalate.com/organic-spices/ref/4"><img border="0" src="https://thedomesticatedman.files.wordpress.com/2016/03/primalpalate2.png" width="150"></a><br>
+<a href="https://www.butcherbox.com/thedomesticman/" target="_blank" rel="noopener noreferrer"><img src="https://thedomesticatedman.files.wordpress.com/2016/12/bb2.png" width="150"></a><br>
+<a href="http://www.idevaffiliate.com/32527/idevaffiliate.php?id=thedomesticman" target="_blank" rel="noopener noreferrer"><img src="https://thedomesticatedman.files.wordpress.com/2016/03/kasandrinos.png" width="150"></a><br>
+<img src="https://thedomesticatedman.files.wordpress.com/2016/06/2015_bestnewcookbook.png" width="150"><br>
+<a href="http://www.saveur.com/article/blog/2013-Best-Food-Blog-Awards-Winners" target="_blank" rel="noopener noreferrer"><img src="https://thedomesticatedman.files.wordpress.com/2013/04/saveur1.jpg" width="160"></a><br>
+<a href="http://paleomagonline.com/top-10-paleo-blogs-on-the-web-2014//" target="_blank" rel="noopener noreferrer"><img src="https://thedomesticatedman.files.wordpress.com/2014/09/paleo-award-badge.png" width="150" title="Top 10 Paleo Blogs" alt=" Top 10 Paleo Blogs" border="0" /></a></div>
+		</div>
+	
+</aside><!--#post-meta-->
+		</div><!--.meta-view-->
+
+		
+	</div><!--.split-view-->
+
+	
+	
+		
+		<div id="previous-post">
+			<a href="https://thedomesticman.com/2018/01/04/the-heritage-cookbook-now-accepting-recipe-testers/">
+				<i class="genericon genericon-leftarrow"></i>
+				<span class="previous-post">Previous Post</span>
+				<h1>The Heritage Cookbook - now accepting recipe testers!</h1>
+			</a>
+		</div>
+
+		
+				<div id="next-post" class="post-header">
+			<a href="https://thedomesticman.com/2018/01/16/eye-of-round-roast-with-wine-sauce/" >
+				<div class="inner">
+					<div class="fader">
+						<div class="text">
+							<span class="next-post">Next Post</span>
+				  			<h1>Eye of Round Roast with Wine Sauce</h1>
+						</div>
+					</div>
+				</div>
+			</a>
+  		</div>
+		
+	
+		
+	</article>
+
+
+		
+		</main><!-- #main -->
+    </section>
+
+
+			<div class="footertext">
+								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a> 						</div><!--.footertext-->
+
+		</div><!--/.content-wrapper-->
+
+<!--PJAX-->
+
+	<div id="pjax-container"></div>
+
+	</div><!--/#container-->
+
+	<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202006y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-06ecf970a4fbcaf9d6fa74445e838d60">
+	</div>
+	<div class="grofile-hash-map-9bb0240253ad407c346f3c2e5126e9c3">
+	</div>
+	<div class="grofile-hash-map-0f1620d262a13fe5758a13a719b70d78">
+	</div>
+	<div class="grofile-hash-map-73bab40114306a5727f91c813a561d01">
+	</div>
+	<div class="grofile-hash-map-d04cfe7eef1fbef19ba3cf605069c121">
+	</div>
+	<div class="grofile-hash-map-3658da92102509b4fa49cc43ca359635">
+	</div>
+	<div class="grofile-hash-map-df7f34f939e55302fcd27fbe8cfe403e">
+	</div>
+	<div class="grofile-hash-map-73e68684c1121082e648426002d3893a">
+	</div>
+	<div class="grofile-hash-map-f4696883a4ddace6ea345dfd50f4c35a">
+	</div>
+	<div class="grofile-hash-map-4522716ca63c177ef2a5e84adac7ca4f">
+	</div>
+	<div class="grofile-hash-map-b1c548ce8e69d592f7025164111adf17">
+	</div>
+	<div class="grofile-hash-map-60eb133a6de5e18deff3418e91d80ba0">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/thedomesticatedman.wordpress.com\/public.api\/connect\/?action=request&domain=thedomesticman.com","logoutURL":"https:\/\/thedomesticatedman.wordpress.com\/wp-login.php?action=logout&_wpnonce=adb5445975","homeURL":"https:\/\/thedomesticman.com\/","postID":"15621","gravDefault":"mystery","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/thedomesticman.com\/2018\/01\/09\/tigania-greek-pan-fried-pork\/":15621};
+	</script>
+							<div id="sharing_email" style="display: none;">
+		<form action="/2018/01/09/tigania-greek-pan-fried-pork/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=en" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+<link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/wp-content/plugins/gutenberg-blocks/jetpack-layout-grid/blocks/front.css?m=1576278967h&cssminify=yes' type='text/css' media='all' />
+<script>
+var pjaxData = {"pjaxContainer":"#pjax-container","pjaxFilters":[".jpg",".png",".pdf"],"pjaxTarget":".single #next-post a"};
+</script>
+<script>
+var comment_like_text = {"loading":"Loading..."};
+</script>
+<script>
+var actionbardata = {"siteID":"13987811","siteName":"The Domestic Man","siteURL":"https:\/\/thedomesticman.com","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/a54d2fb4727bff8b5d2d7865a87e272a?s=50&d=https%3A%2F%2Fs0.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"premium\/worldview","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fthedomesticman.com%2F2018%2F01%2F09%2Ftigania-greek-pan-fried-pork%2F&signup_flow=account&domain=thedomesticman.com","themeURL":"https:\/\/wordpress.com\/theme\/worldview\/","xhrURL":"https:\/\/thedomesticman.com\/wp-admin\/admin-ajax.php","nonce":"408d3fc4eb","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"c9c6611c3d\" \/>","referer":"https:\/\/thedomesticman.com\/2018\/01\/09\/tigania-greek-pan-fried-pork\/","canFollow":"1","feedID":"94801","statusMessage":"","customizeLink":"https:\/\/thedomesticatedman.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fthedomesticatedman.wordpress.com%2F2018%2F01%2F09%2Ftigania-greek-pan-fried-pork%2F","postID":"15621","shortlink":"https:\/\/wp.me\/pWGRR-43X","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/thedomesticman.com\/15621","statsLink":"https:\/\/wordpress.com\/stats\/post\/15621\/thedomesticman.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Worldview","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 79,728 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fthedomesticman.com%2F2018%2F01%2F09%2Ftigania-greek-pan-fried-pork%2F&signup_flow=account&domain=thedomesticman.com\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVUltSwzAMvBCOWphO0w+GozCOraRK/MKPhN4emzad0EKGfkVZ7UrrtWFyTFgT0UToA0gcSaD7rPrwBIuWTsyp1JEJoGjAAB8JEx65kQr9LTkeUWeK86gpaZisV3IknICHgDGUPX3W+1Plen636h/qK8aWA8gIlSR+M4TVOg9jHp06VZrMbyRJIcKIRlpfWs6qU0tKLemzqfnwbVKKBYrIUFIk011igU21ratnaJTNkA0xsFyK4bIjW11JdDZ7TrYvETcQJnL4iOgH8Jf/LuXfBn13tpeFGB0XA8OxaIVNJko7Gbi0b+AVP1zm2FjDPWgeIvpcMTui91TSvmIPTog+m7s7zVIkIllTRNdqjT1Q0BjZS7WB9/wUoLVer/DLTbJWcfIQjtzn+56/WfSmX7e7/f6wqw913X8Bce079w=='></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.26.0-0"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+</script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?60" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'13987811','blog_tz':'-5','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'13987811','v':'wpcom','tz':'-5','user_id':'0','post':'15621','subd':'thedomesticatedman'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGRVYVNrSFguN3FwSmQ5RGtNX3VQcj1yVzhiflM1THQtLGFdQ2toOXYlJi58cC9NTXI9b1ZLNS9lSHNGOE1IJlAreC4xfCxpJXRsZkxjZnV4RkFOUj1IZjVfaD9uenlXamMmOHRESHhVam0rLURmaXh6OHxOJnZBVS5sWEREVlJzYmsvcVEzMWFQeW1FejdldGU/b1s9W0RMLnlbMlBiTmNOTVRDXXcxOGxFWU51Nnc1WCxmfG1MY2dlRWZ+VHVqYlV+PT1IbXVYaD94XWVKRFo9NU5XYitzfCthZE5oRHB1NlBCWl1qNWVhK05nWUQ5ViZzRitQWjVPNFRoYjZddHBtN2ZpR0QsTGJzTj84YSxRakdsUC4yT2FPUz9ULXx5dkp4Z1JxNS4='}]);
+_stq.push([ 'clickTrackerInit', '13987811', '15621' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+	
+</body>
+
+</html>

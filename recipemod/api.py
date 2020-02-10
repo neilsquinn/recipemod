@@ -33,6 +33,7 @@ def recipes():
 @login_required  
 @bp.route('/api/recipes/add', methods=('POST',))
 def add_recipe():
+    print('AHHHHHHHHHHH!!!!!!!')
     data = json.loads(request.data.decode())
     url = data['url']
     if not url:
@@ -41,12 +42,17 @@ def add_recipe():
     r = requests.get(url, headers={'User-Agent': request.headers["User-Agent"]})
     if not r:
         return (f'Error: Request to {url} failed with error {r.status_code}: \n {r.text}', 500)
-    db = get_db()
+    
     recipe_data = parse_recipe_html(r.text)
     if 'parse_error' in recipe_data:
         about (500, f'Error: Unable to extract recipe from {url}')
     
+    if not recipe_data.get('url'):
+        recipe_data['url'] = url
+    
     recipe_data['user_id'] = g.user['id']
+    
+    db = get_db()
     with db.cursor() as c:  
         for key, value in recipe_data.items():
             if type(value) in (list, dict):

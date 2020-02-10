@@ -1,0 +1,35 @@
+{
+  "url": "https://www.allrecipes.com/recipe/33385/best-spanish-rice/",
+  "name": "Best Spanish Rice",
+  "description": "\"The combination of picante sauce and chicken broth makes this easy recipe very tasty!\"",
+  "authors": [
+    "ilovetocook"
+  ],
+  "image_url": "https://images.media-allrecipes.com/userphotos/560x315/1028467.jpg",
+  "instructions": {
+    "steps": [
+      "Heat oil in a large, heavy skillet over medium heat. Stir in onion, and cook until tender, about 5 minutes.",
+      "Mix rice into skillet, stirring often. When rice begins to brown, stir in chicken broth and salsa. Reduce heat, cover and simmer 20 minutes, until liquid has been absorbed."
+    ],
+    "type": "steps"
+  },
+  "ingredients": [
+    "2 tablespoons oil",
+    "2 tablespoons chopped onion",
+    "1 1/2 cups uncooked white rice",
+    "2 cups chicken broth",
+    "1 cup chunky salsa"
+  ],
+  "times": {
+    "cook": 1200,
+    "prep": 600,
+    "total": 1800
+  },
+  "yield": "5",
+  "categories": [
+    "Side Dish",
+    "Rice",
+    "Spanish Rice"
+  ],
+  "keywords": []
+}

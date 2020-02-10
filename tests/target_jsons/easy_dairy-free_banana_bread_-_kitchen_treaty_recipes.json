@@ -1,0 +1,41 @@
+{
+  "url": "https://www.kitchentreaty.com/easy-dairy-free-banana-bread/",
+  "name": "Easy Dairy-Free Banana Bread",
+  "description": "Super moist, sturdy-yet-tender, and full of flavor. This classic banana bread recipe hits all the marks – no dairy necessary!",
+  "authors": [
+    "Kare"
+  ],
+  "image_url": "https://www.kitchentreaty.com/wp-content/uploads/2019/09/dairy-free-banana-bread-5-220x290.jpg",
+  "instructions": {
+    "steps": [
+      "Preheat oven to 350 degrees Fahrenheit. Grease a standard-size loaf pan (mine is 4.5″ x 8.5″). Set aside.",
+      "To a large mixing bowl, add the bananas. Using a potato masher, smash until as smooth as possible. Stir in the sugar and canola oil. Add the eggs and whisk together until smooth. Whisk in the vanilla.",
+      "Set a fine-mesh sieve over the bowl. Add the flour, baking soda, cinnamon, and salt to the sieve. Sift over the wet ingredients. Using a spatula, fold the dry ingredients into the wet, just until combined.",
+      "Pour into the prepared loaf pan.",
+      "Bake until middle is set and a toothpick inserted into the middle comes out clean, 45 – 55 minutes (if you're using a larger pan than my 4.5″ x 8.5″ pan, start checking at around the 45 minute mark. For the smaller pan, it'll take a bit more time to cook in the middle – closer to 55 minutes).",
+      "Remove from oven and let the loaf cool in the pan for about 10 minutes. Use a butter knife to loosen the sides of the loaf then gently invert the pan to remove the loaf. Let cool on a wire rack.",
+      "Wrap in plastic wrap to store. Bonus: The plastic wrap also makes it nice and moist. Yum!"
+    ],
+    "type": "steps"
+  },
+  "ingredients": [
+    "4 very ripe medium bananas",
+    "1/2 cup granulated sugar",
+    "1/2 cup dark brown sugar",
+    "1/2 cup canola oil (can also use melted coconut oil)",
+    "2 large eggs",
+    "2 teaspoons pure vanilla extract",
+    "1 1/2 cups all-purpose flour",
+    "1 teaspoon baking soda",
+    "2 teaspoons ground cinnamon",
+    "1 teaspoon fine-grain sea salt"
+  ],
+  "times": {
+    "cook": 3000,
+    "prep": 600,
+    "total": 3600
+  },
+  "yield": "1 loaf",
+  "categories": [],
+  "keywords": []
+}
