@@ -31,11 +31,7 @@ function AddRecipeBox(props) {
   })), React.createElement("button", {
     type: "submit",
     className: "btn btn-primary"
-<<<<<<< HEAD
   }, "Add Recipe"));
-=======
-  }, "Addled"));
->>>>>>> 962aac978f930e51bfa833feca3ad33c22039430
 }
 
 function RecipeCard(props) {
