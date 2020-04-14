@@ -1,10 +1,12 @@
+const useState = React.useState;
+const useEffect = React.useEffect;
+
 async function getData(url) {
   const response = await fetch(url);
   return await response.json();
 }
 
 async function postData(url = '', data = {}) {
-  // Default options are marked with *
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -63,7 +65,94 @@ function SearchBox(props) {
     )
 }
 
-class RecipeTable extends React.Component {
+
+function RecipeTable() {
+  let [recipes, setRecipes] = useState([]);
+  useEffect(() => {
+    getData("/api/recipes")
+      .then((data) => {
+        data.forEach(recipe => {
+          recipe.domain = new URL(recipe.url).hostname
+        });
+        setRecipes(data);
+      });
+  }, []);
+
+  const [nameFilterText, setNameFilterText] = useState('');
+  function handleNameFilterChange(event) {
+     setNameFilterText(event.target.value);
+  }
+  if (nameFilterText) {
+    let lowerFilterText = nameFilterText.toLowerCase();
+    recipes = recipes.filter(recipe => recipe.name.toLowerCase().search(lowerFilterText) > -1);
+  }
+
+  const [addRecipeUrlText, setAddRecipeURLText] = useState('');
+  function handleAddURLChange(event) {
+    setAddRecipeURLText(event.target.value);
+  }
+
+  const [siteFilterText, setSiteFilterText] = useState('');
+  function handleSiteFilterChange(event){
+    setSiteFilterText(event.target.value);
+  }
+  if (siteFilterText) {
+    let lowerFilterText = siteFilterText.toLowerCase();
+    recipes = recipes.filter(recipe => recipe.domain.search(lowerFilterText) > -1);
+  }
+
+  function handleSubmitRecipe(event) {
+    let url = addRecipeUrlText;
+    postData('/api/recipes/add', {url: url})
+      .then((recipe) => {
+        setRecipes([recipe].concat(recipes));
+      });
+    event.preventDefault();
+  }
+
+  function handleFilterReset() {
+    setSiteFilterText('');
+    setNameFilterText('');
+  }  
+
+  return (
+        <div>
+            <AddRecipeBox 
+                handleAddURLChange={handleAddURLChange}
+                handleSubmitRecipe={handleSubmitRecipe} 
+            />
+            <SearchBox nameFilterText={nameFilterText} 
+                siteFilterText={siteFilterText}
+                handleNameFilterChange={handleNameFilterChange} 
+                handleSiteFilterChange={handleSiteFilterChange}
+                handleFilterReset={handleFilterReset}
+            />
+            <RecipeCardColumns recipes={recipes} />
+        </div>
+      )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class RecipeTableClass extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -100,7 +189,7 @@ class RecipeTable extends React.Component {
 
     handleSubmitRecipe(event) {
       let url = this.state.addRecipeUrlText;
-      console.log('To add this: ', url);
+      console.log('To add this:', url);
       let recipes = this.state.recipes;
       postData('/api/recipes/add', {url: url})
         .then((recipe) => {
@@ -155,6 +244,6 @@ class RecipeTable extends React.Component {
 }
 
 ReactDOM.render(
-    <RecipeTable />,
+    <RecipeTable/>,
     document.getElementById('react-recipe-container')
   );
