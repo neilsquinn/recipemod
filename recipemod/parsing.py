@@ -175,9 +175,9 @@ class LDJSONParser:
         recipes = []
         for tag in self.script_tags:
             print('tag is:', tag)
-            print('type of tag text is:', type(tag.text), 'tag text is:', tag.text)
+            print('type of tag text is:', type(tag.text), 'tag text is:', tag.text, 'tag string is:', tag.string)
             print('where was it?')
-            parse_tree(json.loads(tag.text), recipes)
+            parse_tree(json.loads(tag.string), recipes)
     
         if not recipes:
             return None
