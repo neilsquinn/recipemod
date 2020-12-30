@@ -1,11 +1,9 @@
 .DS_Store
-
 venv/
+instance/
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+recipemod/__pycache__/
 
 # C extensions
 *.so
