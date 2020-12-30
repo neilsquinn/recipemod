@@ -3,7 +3,7 @@ venv/
 instance/
 
 # Byte-compiled / optimized / DLL files
-recipemod/__pycache__/
+__pycache__/
 
 # C extensions
 *.so
@@ -12,7 +12,6 @@ recipemod/__pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
