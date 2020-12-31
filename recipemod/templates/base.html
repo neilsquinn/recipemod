@@ -13,7 +13,7 @@
 </head>
 <body>
 	<nav class="navbar bg-danger navbar-dark fixed-top ">
-		<a class="navbar-brand" href="../">
+		<a class="navbar-brand" href="/">
 			<img src="{{ url_for('static', filename='logo.png') }}" alt="O" style="width:25px;"> RecipeMod
 		</a>
 		{% if g.user %} 
@@ -23,7 +23,7 @@
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('extras.bookmarklet') }}">Get Bookmarklet</a>
+                    <a class="nav-link" href="{{ url_for('bookmarklet') }}">Get Bookmarklet</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.change_password') }}">Change Password</a>

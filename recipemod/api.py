@@ -1,10 +1,11 @@
+import json
+
 from flask import (
     Blueprint, g, current_app, request, abort
 )
 from flask.json import jsonify
 import requests
 from psycopg2.extras import Json
-import json
 
 from recipemod.auth import login_required
 from recipemod.db import get_db
@@ -28,7 +29,7 @@ def recipes():
         )
         recipes = [dict(row) for row in c.fetchall()]
 
-        return jsonify(recipes)
+        return {'recipes': recipes}
 
 @login_required  
 @bp.route('/api/recipes/add', methods=('POST',))
@@ -36,14 +37,14 @@ def add_recipe():
     data = json.loads(request.data.decode())
     url = data['url']
     if not url:
-        abort (400, 'Error: no URL provided')
+        abort(400, 'Error: no URL provided')
 
     resp = requests.get(url, headers={'User-Agent': request.headers["User-Agent"]})
     if not resp:
         return (f'Error: Request to {url} failed with error {r.status_code}: \n {resp.text}', 500)
     recipe_data = parse_recipe_html(resp.text)
     if 'parse_error' in recipe_data:
-        (500, f'Error: Unable to extract recipe from {url}')
+        abort(500, f'Error: Unable to extract recipe from {url}')
     
     if not recipe_data.get('url'):
         recipe_data['url'] = url
@@ -65,7 +66,7 @@ def add_recipe():
         )
         recipe_id = c.fetchone()[0]
     recipe = get_recipe(recipe_id)
-    return jsonify(recipe)
+    return recipe
 
 @login_required
 @bp.route('/api/recipes/<int:recipe_id>/')
@@ -82,10 +83,10 @@ def get_recipe_data(recipe_id):
     if not recipe:
         abort(404, f'Recipe {recipe_id} does not exist.')
     recipe = dict(recipe)
-    return jsonify(recipe)
+    return recipe
 
 @login_required
-@bp.route('/api/recipes/<int:recipe_id>/delete', methods=('DELETE',))
+@bp.route('/api/recipes/<int:recipe_id>', methods=('DELETE',))
 def delete(recipe_id):
     db = get_db()
     with db.cursor() as c:
