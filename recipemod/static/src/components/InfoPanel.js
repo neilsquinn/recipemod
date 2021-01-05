@@ -2,7 +2,6 @@ import React from 'react';
 
 
 function InfoPanel (props) {
-	console.log(props.info);
 	const info = props.info;
 	return (
 		<ul className="list-group list-group-horizontal small">

@@ -48,7 +48,7 @@ function RecipeList() {
     let url = addRecipeUrlText;
     axios.post('/api/recipes/add', {url: url})
       .then((resp) => {
-        setRecipes([resp.data].concat(recipes));
+        setRecipes([resp.data.recipe].concat(recipes));
       });
     event.preventDefault();
   }

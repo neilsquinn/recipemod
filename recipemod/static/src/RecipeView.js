@@ -1,29 +1,60 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import axios from 'axios';
 import {useHistory} from "react-router-dom";
+import {Pencil, CheckCircle, XCircle} from "react-bootstrap-icons";
 
 import SubtitleBar from './components/SubtitleBar.js';
 import InfoPanel from './components/InfoPanel.js';
+import ToggleableEditor from './components/ToggleableEditor.js';
+import EditorControls from './components/EditorControls.js';
 
 // TODO add onError for image- onError={(e) => e.target.src = some url} works if i have a placeholder 
 
 function RecipeView(props) {
-
-	const [recipe, setRecipe] = useState({});
+	const [recipe, setRecipe] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [editedRecipe, setEditedRecipe] = useState([])
+	const [isEditing, setIsEditing] = useState(false);
+
+	const [editSaved, setEditSaved] = useState(false);
+
 	let history = useHistory();
 
 	useEffect(() => {
 		setIsLoading(true);
+		console.log('loading recipe')
 		axios.get(`/api/recipes/${props.recipeId}`)
 			.then(resp => {
-				setRecipe(resp.data);
+				const recipe = resp.data.recipe
+				setRecipe(recipe);
 				setIsLoading(false);
+			})
+			.catch(error => {
+				console.log(error.response)
+				if (error.response.status == 404) {
+					alert('Recipe not found.')
+				} else {
+					alert('Unable to load recipe!')
+				}
 			});
 	}, []);
-	// console.log(recipe);
 
-	function handleDelete(event) {
+	useEffect(() => {
+		console.log('running edit effect, editSaved is:', editSaved)
+		if (editSaved) {
+			console.log('saving to server', editedRecipe)
+			axios.put(`/api/recipes/${props.recipeId}`, {recipe: editedRecipe})
+				.then(resp => {
+					setRecipe(resp.data.recipe)
+					setEditSaved(false)
+					setEditedRecipe([])
+				})
+			
+		}
+		
+	}, [editSaved]);
+
+	function handleDelete(event) { 
 		if (!confirm('Are you sure?')) {
 			return null;
 		}
@@ -33,16 +64,41 @@ function RecipeView(props) {
 		
 	}
 
-	function renderInstructions() {
-		switch(recipe.instructions.type) {
+	function renderViewIngredients() {
+		return (
+			<ul>
+			{
+				recipe.ingredients.map((ingredient, index) => <li key={index}>{ingredient}</li>)
+			}
+			</ul>
+		)
+	}
+
+	function renderEditIngredients() {
+		const ingredients = recipe.ingredients;
+
+		return (
+			<textarea  
+				className="form-control" 
+				defaultValue={ingredients.join('\n')} 
+				rows={Math.max(ingredients.length + 1, 12)} 
+				onChange={() => setEditedRecipe({...recipe, 'ingredients':  event.target.value.split('\n')})}
+			/>
+
+		)
+	}
+
+	function renderViewInstructions() {
+		const instructions = recipe.instructions;
+		switch(instructions.type) {
 			case 'one_step':
-				return <p>{recipe.instructions.step} </p>
+				return <p>{instructions.step} </p>
 			
 			case 'steps':
 				return (
 					<ol>
 						{
-							recipe.instructions.steps.map((step, index) => {
+							instructions.steps.map((step, index) => {
 								return <li key={index}>{ step }</li>
 							})
 						}
@@ -53,8 +109,7 @@ function RecipeView(props) {
 				return (
 					<div>
 					{
-						recipe.instructions.sections.map((section) => {
-							console.log(section.name)
+						instructions.sections.map((section) => {
 							return (
 								<div>
 									<h6 className="initialism">
@@ -76,6 +131,70 @@ function RecipeView(props) {
 		}
 	}
 
+	function renderEditInstructions() {
+		const instructions = recipe.instructions;
+		switch(instructions.type) {
+			case 'one_step':
+				return (
+		    	<textarea 
+		    		className="form-control" 
+		    		name="instructions" 
+		    		defaultValue={instructions.step}
+		    		onChange={() => {
+		    			setEditedRecipe({
+		    				...recipe, 'instructions':  {type: 'one_step', step: event.target.value}
+		    			})}
+		    		}
+		    	/>
+				)
+			
+			case 'steps':
+				return (
+					<textarea 
+						className="form-control" 
+						name="instructions" 
+						rows={Math.max(instructions.steps.length + 1, 12)} 
+						defaultValue={instructions.steps.join('\n')}
+						onChange={() => {
+							setEditedRecipe({
+								...recipe, 
+								'instructions':  {
+									type: 'steps', 
+									steps: event.target.value.split('\n')
+								}
+							})}
+						}
+					/> 
+				)
+			
+			case 'sections':
+				return <div>Sorry, not implemented yet!</div>
+				return (
+					<div>
+					{
+						instructions.sections.map((section, sectionIndex) => {
+							const tagName = `instructions-${sectionIndex}`
+							return (
+								<Fragment>
+									<label for={tagName} className="initialism">{section.name}</label>			
+									<textarea 
+										className="form-control" 
+										name={tagName} 
+										rows={section.steps.length + 1 } 
+										defaultValue={ section.steps.join('\n')}
+										onChange={() => {
+											console.log('todo')
+										}}
+									/>
+								</Fragment>
+							)
+						})
+					}
+					</div>
+				)
+		}
+	}
+
 	function getTimeLabels(times) {
 		return Object.entries(times).map(([key, seconds]) => {
 	    return {
@@ -85,7 +204,8 @@ function RecipeView(props) {
 		})
 	}
 
-	function getKeywordCategoryValues () {
+
+	function getKeywordCategoryValues() {
 		let info = []
 		recipe.category ? info.push({label: 'Category', value: recipe.category.join(', ')}) : null
 		recipe.keywords ? info.push({label: 'Keywords', value: recipe.keywords.join(', ')}) : null
@@ -103,8 +223,9 @@ function RecipeView(props) {
 		<div>
 			<div className="row">
 				<div className={recipe.image_url ? "col-sm-7" : "col-sm-12"}>
-					<h1 className="display-4">
+					<h1 className="display-4" style={{display: 'inline-block'}}>
 						{recipe.name}
+					<EditorControls setIsEditing={setIsEditing} isEditing={isEditing} setEditedRecipe={setEditedRecipe} />
 					</h1>
 					<SubtitleBar recipe={recipe} />
 					{
@@ -135,18 +256,22 @@ function RecipeView(props) {
 			<br/>
 			<div className="row">
 				<div className="col-sm-4">
-					<h3>
-						Ingredients 
-					</h3>
-					<ul>
-						{recipe.ingredients.map((ingredient, index) => <li key={index}>{ingredient}</li>)}
-					</ul>
+					<ToggleableEditor 
+						title={"Ingredients"}
+						renderViewFunc={renderViewIngredients}
+						renderEditFunc={renderEditIngredients}
+						setEditSaved={setEditSaved}
+						setEditedRecipe={setEditedRecipe}
+					/>
 				</div>
 				<div className="col-sm-8">
-					<h3>
-						Instructions 
-					</h3>
-					{renderInstructions()}
+					<ToggleableEditor 
+						title={"Instructions"}
+						renderViewFunc={renderViewInstructions}
+						renderEditFunc={renderEditInstructions} 
+						setEditSaved={setEditSaved}
+						setEditedRecipe={setEditedRecipe} // remove
+					/>
 				</div>
 			</div>
 			<div className="row m-3">
