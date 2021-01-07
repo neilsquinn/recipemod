@@ -3,7 +3,6 @@ import os
 from flask import Flask, url_for, redirect, render_template
 
 from .auth import login_required
-from .recipe import get_recipe
 
 def create_app(test_config=None):
     app = Flask(__name__)
@@ -15,11 +14,6 @@ def create_app(test_config=None):
         SECRET_KEY=SECRET_KEY,
         DATABASE=DATABASE
         )
-    
-#   if test_config is None:
-#       app.config.from_pyfile('config.py', silent=True)
-#   else:
-#       app.config.from_mapping(test_config)
     
     try:
         os.makedirs(app.instance_path)
@@ -35,13 +29,6 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
     
-    # from . import recipe
-    # app.register_blueprint(recipe.bp)
-
-    @app.route('/missing_image.jpg')
-    def missing_image():
-        return url_for('static', filename='logo.png')
-
     @app.route('/bookmarklet')
     def bookmarklet():
         return(render_template('extras/bookmarklet.html'))
