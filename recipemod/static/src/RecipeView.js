@@ -6,7 +6,6 @@ import {Pencil, CheckCircle, XCircle} from "react-bootstrap-icons";
 import SubtitleBar from './components/SubtitleBar.js';
 import InfoPanel from './components/InfoPanel.js';
 import ToggleableEditor from './components/ToggleableEditor.js';
-import EditorControls from './components/EditorControls.js';
 
 // TODO add onError for image- onError={(e) => e.target.src = some url} works if i have a placeholder 
 
@@ -14,8 +13,6 @@ function RecipeView(props) {
 	const [recipe, setRecipe] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [editedRecipe, setEditedRecipe] = useState([])
-	const [isEditing, setIsEditing] = useState(false);
-
 	const [editSaved, setEditSaved] = useState(false);
 
 	let history = useHistory();
@@ -225,7 +222,6 @@ function RecipeView(props) {
 				<div className={recipe.image_url ? "col-sm-7" : "col-sm-12"}>
 					<h1 className="display-4" style={{display: 'inline-block'}}>
 						{recipe.name}
-					<EditorControls setIsEditing={setIsEditing} isEditing={isEditing} setEditedRecipe={setEditedRecipe} />
 					</h1>
 					<SubtitleBar recipe={recipe} />
 					{

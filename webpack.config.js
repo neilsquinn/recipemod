@@ -34,10 +34,6 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   plugins: [
-    new HtmlWebpackPlugin({
-      // title: 'Recipe Test',
-      template: path.resolve(staticDirPath, 'src/index.html'),
-    }),
     new CleanWebpackPlugin()
   ],
   output: {
