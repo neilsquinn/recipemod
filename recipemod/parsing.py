@@ -297,7 +297,7 @@ class LDJSONParser:
         return recipe
 
 
-def parse_recipe_html(html, verbose=False) -> dict:
+def parse_recipe_html(html: str, url: str, verbose: bool = False) -> dict:
     soup = BeautifulSoup(html, 'lxml')
     
     ldjson_tags = soup.find_all('script', type='application/ld+json')

@@ -10,6 +10,7 @@ function RecipeList() {
 
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [parseErrorUrl, setParseErrorUrl] = useState(null);
 
   useEffect(() => {
     console.log('get recipes');
@@ -48,10 +49,18 @@ function RecipeList() {
     let url = addRecipeUrlText;
     axios.post('/api/recipes/add', {url: url})
       .then((resp) => {
-        setRecipes([resp.data.recipe].concat(recipes));
+        const data = resp.data;
+        console.log(data)
+        if (data.hasOwnProperty('error')) {
+         console.log('found parse error')
+         setParseErrorUrl(url)
+        } else {
+          setRecipes([data.recipe].concat(recipes));
+        }
       });
     event.preventDefault();
   }
+
 
   function handleFilterReset() {
     setSiteFilterText('');
@@ -73,6 +82,14 @@ function RecipeList() {
         handleAddURLChange={handleAddURLChange}
         handleSubmitRecipe={handleSubmitRecipe} 
       />
+      {
+        parseErrorUrl
+        ? <div className="alert alert-danger alert-dismissible">
+            <button type="button" className="close" data-dismiss="alert" onClick={() => setParseErrorUrl(null)}>&times;</button>
+            <strong>Error:</strong> This recipe on {new URL(parseErrorUrl).hostname} does not have data that RecipeMod can parse.
+          </div>
+        : null
+      }
       <SearchBox nameFilterText={nameFilterText} 
         siteFilterText={siteFilterText}
         handleNameFilterChange={handleNameFilterChange} 
