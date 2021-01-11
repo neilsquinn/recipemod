@@ -59,8 +59,9 @@ def add_recipe():
     if not resp:
         return (f'Error: Request to {url} failed with error {r.status_code}: \n {resp.text}', 500)
     recipe_data = parse_recipe_html(resp.text)
+    print(recipe_data)
     if 'parse_error' in recipe_data:
-        abort(500, f'Error: Unable to extract recipe from {url}')
+        return {'error': 'Unable to extract recipe data'}
     
     if not recipe_data.get('url'):
         recipe_data['url'] = url
