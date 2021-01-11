@@ -297,7 +297,7 @@ class LDJSONParser:
         return recipe
 
 
-def parse_recipe_html(html: str, url: str, verbose: bool = False) -> dict:
+def parse_recipe_html(html: str, verbose: bool = False) -> dict:
     soup = BeautifulSoup(html, 'lxml')
     
     ldjson_tags = soup.find_all('script', type='application/ld+json')
@@ -323,7 +323,7 @@ def parse_recipe_html(html: str, url: str, verbose: bool = False) -> dict:
     if canonical_tag:
         recipe['url'] = canonical_tag['href']
     else:
-        recipe['url'] = url
+        recipe['url'] = None
     image_url_meta = soup.head.find('meta', attrs={'itemprop': 'image'})
     if image_url_meta:
         recipe['image_url'] = image_url_meta.attrs['content']

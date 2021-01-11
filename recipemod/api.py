@@ -58,7 +58,7 @@ def add_recipe():
     resp = requests.get(url, headers={'User-Agent': request.headers["User-Agent"]})
     if not resp:
         return (f'Error: Request to {url} failed with error {r.status_code}: \n {resp.text}', 500)
-    recipe_data = parse_recipe_html(resp.text, url=url)
+    recipe_data = parse_recipe_html(resp.text)
     print(recipe_data)
     if 'parse_error' in recipe_data:
         return {'error': 'Unable to extract recipe data'}

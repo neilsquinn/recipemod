@@ -86,7 +86,7 @@ function RecipeList() {
         parseErrorUrl
         ? <div className="alert alert-danger alert-dismissible">
             <button type="button" className="close" data-dismiss="alert" onClick={() => setParseErrorUrl(null)}>&times;</button>
-            <strong>Error:</strong> This recipe on {new URL(parseErrorUrl).hostname} does not have data that RecipeMod can parse.
+            <strong>Unable to add recipe:</strong> This page on {new URL(parseErrorUrl).hostname} does not contain a recipe in a format that RecipeMod can read.
           </div>
         : null
       }
