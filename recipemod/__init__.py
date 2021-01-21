@@ -1,24 +1,26 @@
 import os
+from pathlib import Path
 
 from flask import Flask, url_for, redirect, render_template
 
 from .auth import login_required
 
 def create_app(test_config=None):
-    app = Flask(__name__)
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    if not SECRET_KEY:
-        raise ValueError('No SECRET_KEY environment variable found')
-    DATABASE = os.environ.get('DATABASE_URL')
+    app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY=SECRET_KEY,
-        DATABASE=DATABASE
-        )
-    
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+        SECRET_KEY="development",
+        DATABASE="postgresql://localhost:5432/recipemod",
+    )
+
+    if test_config:
+        app.config.update(test_config)
+    else:
+        app.config.update({
+            key: os.environ.get(key) 
+            for key in ['SECRET_KEY', 'DATABASE']
+        })
+    print(app.config)
+    Path(app.instance_path).mkdir(parents=True, exist_ok=True)
         
     from . import db
     db.init_app(app)

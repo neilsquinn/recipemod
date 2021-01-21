@@ -5,3 +5,4 @@ gunicorn
 ftfy
 bs4==0.0.1
 lxml==4.5.0
+testing.postgresql
