@@ -7,7 +7,8 @@ from recipemod.db import get_db
 def create_modifications_table():
     db = get_db()
     with db.cursor() as c:
-        c.execute('''
+        c.execute(
+            """
 DROP TABLE IF EXISTS modifications;
 CREATE TABLE modifications (
     id SERIAL PRIMARY KEY,
@@ -18,20 +19,16 @@ CREATE TABLE modifications (
 );
 
 CREATE INDEX modifications_recipe_id_idx ON modifications(recipe_id int4_ops);
-''')
+"""
+        )
 
 
-
-@click.command('migrate-add-modifications-table')
+@click.command("migrate-add-modifications-table")
 @with_appcontext
 def create_modifications_table_command():
     try:
         create_modifications_table()
     except Exception as e:
-        click.echo(f'Failed: {e}')
+        click.echo(f"Failed: {e}")
     else:
-        click.echo('Added modifications table')
-        
-        
-    
-    
+        click.echo("Added modifications table")

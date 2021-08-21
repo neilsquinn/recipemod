@@ -11,8 +11,11 @@ function RecipeList() {
   const [parseErrorUrl, setParseErrorUrl] = useState(null);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
 
+  const [addRecipeUrlText, setAddRecipeURLText] = useState("");
+  const [nameFilterText, setNameFilterText] = useState("");
+  const [siteFilterText, setSiteFilterText] = useState("");
+
   useEffect(() => {
-    console.log("get recipes");
     setIsLoading(true);
     axios.get("/api/recipes").then((resp) => {
       setRecipes(resp.data.recipes);
@@ -21,41 +24,36 @@ function RecipeList() {
     });
   }, []);
   // should it pass in the recipes array instead?
-  const [nameFilterText, setNameFilterText] = useState("");
   function handleNameFilterChange(event) {
     const filterText = event.target.value;
-    setNameFilterText(filterText)
+    setNameFilterText(filterText);
 
     if (filterText) {
-      console.log('setting to filter:', filterText)
-      let lowerFilterText = filterText.toLowerCase();
       setFilteredRecipes(
         recipes.filter(
-          (recipe) => recipe.name.toLowerCase().search(lowerFilterText) > -1
+          (recipe) =>
+            recipe.name.toLowerCase().search(filterText.toLowerCase()) > -1
         )
       );
     } else {
-      console.log('Setting to original!')
       setFilteredRecipes(recipes);
     }
   }
 
-  
+  function handleSiteFilterChange(event) {
+    const filterText = event.target.value;
+    setSiteFilterText(filterText);
+    if (filterText) {
+      setFilteredRecipes(recipes.filter(
+        (recipe) => new URL(recipe.url).host.search(filterText.toLowerCase()) > -1
+      ));
+    } else {
+      setFilteredRecipes(recipes)
+    }
+  }
 
-  const [addRecipeUrlText, setAddRecipeURLText] = useState("");
   function handleAddURLChange(event) {
     setAddRecipeURLText(event.target.value);
-  }
-
-  const [siteFilterText, setSiteFilterText] = useState("");
-  function handleSiteFilterChange(event) {
-    setSiteFilterText(event.target.value);
-  }
-  if (siteFilterText) {
-    let lowerFilterText = siteFilterText.toLowerCase();
-    recipes = recipes.filter(
-      (recipe) => recipe.domain.search(lowerFilterText) > -1
-    );
   }
 
   function handleSubmitRecipe(event) {
@@ -76,7 +74,7 @@ function RecipeList() {
   function handleFilterReset() {
     setSiteFilterText("");
     setNameFilterText("");
-    setFilteredRecipes(recipes)
+    setFilteredRecipes(recipes);
   }
 
   if (isLoading) {
