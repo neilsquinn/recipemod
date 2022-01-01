@@ -65,7 +65,9 @@ function RecipeList() {
         console.log("found parse error");
         setParseErrorUrl(url);
       } else {
-        setRecipes([data.recipe].concat(recipes));
+        const newRecipes = [data.recipe].concat(recipes)
+        setRecipes(newRecipes);
+        setFilteredRecipes(newRecipes);
       }
     });
     event.preventDefault();
