@@ -228,7 +228,7 @@ function RecipeView(props) {
 						recipe.description
 							? <div id="description" className="collapse show">
 				          <p className="font-italic">
-				            "{recipe.description}""
+				            "{recipe.description}"
 				          </p>
 				        </div>
 				      : null
