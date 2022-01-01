@@ -12,7 +12,6 @@ from recipemod.db import get_db
 
 def _row_to_recipe(row) -> Recipe:
     recipe = dict(row)
-    print(recipe)
     for attr, col_name in [
         ("yield_", "yield"),
         ("categories", "category"),
@@ -62,7 +61,6 @@ def save_recipe(recipe: Recipe) -> Recipe:
         for key, value in payload.items():
             if type(value) in (list, dict):
                 payload[key] = Json(value)
-        print(payload)
         c.execute(
             "INSERT INTO recipes (name, description, yield, ingredients, "
             "instructions, times, user_id, image_url, url, authors, category, keywords) "
