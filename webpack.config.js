@@ -7,10 +7,10 @@ const staticDirPath = path.resolve(__dirname, "./recipemod/static");
 module.exports = {
   mode: "development",
   entry: {
-    index: path.resolve(__dirname, "src/index.js"),
+    index: path.resolve(staticDirPath, "src/index.js"),
   },
   devServer: {
-    contentBase: path.resolve(__dirname, "dist"),
+    contentBase: path.resolve(staticDirPath, "dist"),
     hot: true,
     proxy: {
       "/api": "http://localhost:5000",
@@ -36,6 +36,6 @@ module.exports = {
   plugins: [new CleanWebpackPlugin()],
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(staticDirPath, "dist"),
   },
 };
