@@ -148,23 +148,6 @@ class MicrodataParser:
         return authors
 
     def get_recipe(self):
-        # recipe = {}
-        # recipe["url"] = self.extract_text_props("url", single_result=True)
-        # recipe["name"] = self.extract_text_props("name", single_result=True)
-        # recipe["description"] = self.extract_text_props(
-        #     "description", single_result=True
-        # )
-        # recipe["authors"] = self.get_authors()
-        # recipe["image_url"] = self.get_image()
-        # recipe["instructions"] = self.get_instructions()
-        # recipe["ingredients"] = self.get_ingredients()
-        # recipe["times"] = self.get_times()
-        # recipe["yield"] = self.extract_text_props("recipeYield", single_result=True)
-        # recipe["categories"] = self.extract_text_props("recipeCategory")
-        # recipe["keywords"] = self.extract_text_props("keywords")
-
-        # return recipe
-
         return Recipe(
             name=self.extract_text_props("name", single_result=True),
             description=self.extract_text_props("description", single_result=True),
@@ -206,7 +189,7 @@ class LDJSONParser:
         if not recipes:
             return None
         elif len(recipes) > 1:
-            raise ValueError(
+            raise ParseError(
                 "This page contains more than one recipe:",
                 [recipe["name"] for recipe in recipes],
             )
@@ -319,23 +302,6 @@ class LDJSONParser:
         ldjson_recipe = self.extract_ldjson_recipe()
         if not ldjson_recipe:
             return
-        # recipe = {}
-        # recipe["url"] = ldjson_recipe.get("url")
-        # recipe["name"] = clean_text(ldjson_recipe.get("name"))
-        # description = ldjson_recipe.get("description")
-        # recipe["description"] = clean_text(description) if description else None
-        # recipe["yield"] = ldjson_recipe.get("recipeYield")
-        # recipe["image_url"] = self.get_image_url(ldjson_recipe)
-        # recipe["instructions"] = self.get_instructions(ldjson_recipe)
-        # recipe["times"] = self.get_times(ldjson_recipe)
-        # recipe["authors"] = self.get_authors(ldjson_recipe)
-        # recipe["ingredients"] = [
-        #     clean_text(item) for item in ldjson_recipe.get("recipeIngredient")
-        # ]
-        # recipe["keywords"] = self.get_keywords(ldjson_recipe)
-        # recipe["categories"] = self.get_categories(ldjson_recipe)
-
-        # return recipe
 
         description = ldjson_recipe.get("description")
         return Recipe(

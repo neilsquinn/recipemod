@@ -24,7 +24,7 @@ def _get_recipe(recipe_id, check_user=True) -> Recipe:
     recipe = get_recipe_detail(recipe_id)
     if not recipe:
         abort(404, f"Recipe {recipe_id} does not exist.")
-    if check_user and recipe["user_id"] != g.user["id"]:
+    if check_user and recipe.user_id != g.user["id"]:
         abort(403)
     return recipe
 
