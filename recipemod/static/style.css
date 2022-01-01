@@ -4,6 +4,7 @@ h1, h2, h3, h4, h5 {
 
 body {
 	background-color: rgb(250, 250, 250);
+	line-height: 1.5;
 }
 
 #collapsibleNavbar {
