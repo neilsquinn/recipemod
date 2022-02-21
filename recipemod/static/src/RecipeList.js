@@ -4,11 +4,13 @@ import axios from "axios";
 import AddRecipeBox from "./components/AddRecipeBox.js";
 import SearchBox from "./components/SearchBox.js";
 import RecipeCardColumns from "./components/RecipeCardColumns.js";
+import { states } from "./constants.js";
 
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [parseErrorUrl, setParseErrorUrl] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState(states.INIT);
+  const [submitErrorMessage, setSubmitErrorMessage] = useState("");
   const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   const [addRecipeUrlText, setAddRecipeURLText] = useState("");
@@ -44,11 +46,14 @@ function RecipeList() {
     const filterText = event.target.value;
     setSiteFilterText(filterText);
     if (filterText) {
-      setFilteredRecipes(recipes.filter(
-        (recipe) => new URL(recipe.url).host.search(filterText.toLowerCase()) > -1
-      ));
+      setFilteredRecipes(
+        recipes.filter(
+          (recipe) =>
+            new URL(recipe.url).host.search(filterText.toLowerCase()) > -1
+        )
+      );
     } else {
-      setFilteredRecipes(recipes)
+      setFilteredRecipes(recipes);
     }
   }
 
@@ -58,18 +63,24 @@ function RecipeList() {
 
   function handleSubmitRecipe(event) {
     let url = addRecipeUrlText;
-    axios.post("/api/recipes/add", { url: url }).then((resp) => {
-      const data = resp.data;
-      console.log(data);
-      if (data.hasOwnProperty("error")) {
-        console.log("found parse error");
-        setParseErrorUrl(url);
-      } else {
-        const newRecipes = [data.recipe].concat(recipes)
+    setSubmitStatus(states.LOADING);
+    axios
+      .post("/api/recipes/add", { url: url })
+      .then((resp) => {
+        const data = resp.data;
+        const newRecipes = [data.recipe].concat(recipes);
         setRecipes(newRecipes);
         setFilteredRecipes(newRecipes);
-      }
-    });
+        setSubmitStatus(states.COMPLETE);
+      })
+      .catch((err) => {
+        setSubmitStatus(states.ERROR);
+        const errorType = err.response.data.error;
+        const errorMessage = errorMessages[errorType];
+        if (errorMessage) {
+          setSubmitErrorMessage(errorMessage);
+        }
+      });
     event.preventDefault();
   }
 
@@ -87,26 +98,36 @@ function RecipeList() {
     );
   }
 
+  const errorMessages = {
+    MISSING_URL: "Please provide a valid URL.",
+    REQUEST_FAILED: "Unable to load data from this page.",
+    PARSE_FAILED: "Unable to extract a recipe from this page.",
+  };
+
   return (
     <div>
       <h1 className="display-4">Recipes</h1>
+      <p>Status: {submitStatus}</p>
       <AddRecipeBox
         handleAddURLChange={handleAddURLChange}
         handleSubmitRecipe={handleSubmitRecipe}
+        loading={submitStatus == states.LOADING}
       />
-      {parseErrorUrl ? (
+      {submitStatus == states.ERROR ? (
         <div className="alert alert-danger alert-dismissible">
           <button
             type="button"
             className="close"
             data-dismiss="alert"
-            onClick={() => setParseErrorUrl(null)}
+            onClick={() => {
+              setSubmitStatus(states.INIT);
+              setSubmitErrorMessage("");
+            }}
           >
             &times;
           </button>
-          <strong>Unable to add recipe:</strong> This page on{" "}
-          {new URL(parseErrorUrl).hostname} does not contain a recipe in a
-          format that RecipeMod can read.
+          <strong>Unable to add recipe:</strong>
+          {submitErrorMessage}
         </div>
       ) : null}
       <SearchBox
