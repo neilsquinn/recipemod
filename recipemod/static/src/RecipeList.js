@@ -125,8 +125,7 @@ function RecipeList() {
           >
             &times;
           </button>
-          <strong>Unable to add recipe:</strong>
-          {submitErrorMessage}
+          <strong>Error: </strong> {submitErrorMessage}
         </div>
       ) : null}
       <SearchBox
