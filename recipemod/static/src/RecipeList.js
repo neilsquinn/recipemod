@@ -107,7 +107,6 @@ function RecipeList() {
   return (
     <div>
       <h1 className="display-4">Recipes</h1>
-      <p>Status: {submitStatus}</p>
       <AddRecipeBox
         handleAddURLChange={handleAddURLChange}
         handleSubmitRecipe={handleSubmitRecipe}
