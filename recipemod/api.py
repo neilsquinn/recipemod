@@ -43,16 +43,16 @@ def add_recipe():
     data = json.loads(request.data.decode())
     url = data["url"]
     if not url:
-        abort(400, "No URL provided")
+        return { "error": "MISSING_URL", "msg": "No URL provided"}, 400
 
     resp = requests.get(url, headers={"User-Agent": request.headers["User-Agent"]})
     if not resp:
-        abort(500, f"Request failed with error {resp.status_code}: \n {resp.text}")
+        return {"error": "REQUEST_FAILED", "msg": f"Request failed with error {resp.status_code}: \n {resp.text}"}, 500
 
     try:
         recipe = parse_recipe_html(resp.text)
     except (ParseError):
-        abort(500, "Unable to extract recipe data")
+        return {"error": "PARSE_FAILED", "msg": "Unable to extract recipe data"}, 500
 
     if not recipe.url:
         recipe.url = url
