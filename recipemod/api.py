@@ -43,11 +43,14 @@ def add_recipe():
     data = json.loads(request.data.decode())
     url = data["url"]
     if not url:
-        return { "error": "MISSING_URL", "msg": "No URL provided"}, 400
+        return {"error": "MISSING_URL", "msg": "No URL provided"}, 400
 
     resp = requests.get(url, headers={"User-Agent": request.headers["User-Agent"]})
     if not resp:
-        return {"error": "REQUEST_FAILED", "msg": f"Request failed with error {resp.status_code}: \n {resp.text}"}, 500
+        return {
+            "error": "REQUEST_FAILED",
+            "msg": f"Request failed with error {resp.status_code}: \n {resp.text}",
+        }, 500
 
     try:
         recipe = parse_recipe_html(resp.text)
@@ -86,9 +89,9 @@ def update(recipe_id):
     new_recipe = json.loads(request.data.decode())["recipe"]
     old_recipe = _get_recipe(recipe_id)
     changed_fields = {
-        key: old_recipe[key]
+        key: getattr(old_recipe, key)
         for key in ["name", "ingredients", "instructions"]
-        if new_recipe[key] != old_recipe[key]
+        if new_recipe[key] != getattr(old_recipe, key)
     }
     print(changed_fields)
     if changed_fields:
