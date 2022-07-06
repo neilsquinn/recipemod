@@ -4,4 +4,4 @@ requests
 gunicorn
 ftfy
 bs4==0.0.1
-lxml==4.6.2
+lxml==4.9.1
