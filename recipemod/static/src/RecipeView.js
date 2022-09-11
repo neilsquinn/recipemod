@@ -1,7 +1,6 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import axios from 'axios';
 import {useHistory} from "react-router-dom";
-import {Pencil, CheckCircle, XCircle} from "react-bootstrap-icons";
 
 import SubtitleBar from './components/SubtitleBar.js';
 import InfoPanel from './components/InfoPanel.js';
