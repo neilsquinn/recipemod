@@ -312,7 +312,7 @@ class LDJSONParser:
             yield_=ldjson_recipe.get("recipeYield"),
             instructions=self.get_instructions(ldjson_recipe),
             ingredients=[
-                clean_text(item) for item in ldjson_recipe.get("recipeIngredient")
+                clean_text(item) for item in ldjson_recipe.get("recipeIngredient", [])
             ],
             times=self.get_times(ldjson_recipe),
             authors=self.get_authors(ldjson_recipe),
