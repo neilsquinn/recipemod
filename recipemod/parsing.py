@@ -73,7 +73,7 @@ class MicrodataParser:
                     print(child.name, child.attrs, len(child.contents))
                 item_prop = child.attrs.get("itemprop")
                 if prop_name == item_prop:
-                    relevant_tags += [child]
+                    relevant_tags.append(child)
                 if "itemscope" in child.attrs:
                     if verbose:
                         print("skipping itemscope")
