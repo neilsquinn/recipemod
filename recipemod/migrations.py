@@ -32,3 +32,22 @@ def create_modifications_table_command():
         click.echo(f"Failed: {e}")
     else:
         click.echo("Added modifications table")
+
+
+def create_all_tables():
+    with open("schema.sql") as infile:
+        schema_sql = infile.read()
+    db = get_db()
+    with db.cursor() as c:
+        c.execute(schema_sql)
+
+
+@click.command("init-db")
+@with_appcontext
+def init_db():
+    try:
+        create_all_tables()
+    except Exception as e:
+        click.echo(f"Failed to initialize database: {e}")
+    else:
+        click.echo("Initialized database")

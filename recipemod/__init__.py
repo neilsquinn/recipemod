@@ -35,11 +35,6 @@ def create_app():
     DATABASE = os.environ.get("DATABASE_URL")
     app.config.from_mapping(SECRET_KEY=SECRET_KEY, DATABASE=DATABASE)
 
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
-
     from . import db
 
     db.init_app(app)
