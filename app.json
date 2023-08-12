@@ -1,5 +1,0 @@
-{
-  "name": "RecipeMod",
-  "description": "App for storing and modifying recipes",
-  "addons": [ "heroku-postgresql" ],
-}

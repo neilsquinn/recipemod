@@ -1,0 +1,11 @@
+fly.toml
+node_modules
+tests
+webpack.config.js
+package.json
+package-lock.json
+venv
+__pycache__
+.vscode
+static/src
+.DS_Store
