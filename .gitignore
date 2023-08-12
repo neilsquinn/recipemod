@@ -26,6 +26,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.ipynb_checkpoints
 
 # Unit test / coverage reports
 htmlcov/
