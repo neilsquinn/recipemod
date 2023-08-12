@@ -1,12 +1,17 @@
-import psycopg2
-from psycopg2.extras import DictCursor
+import logging
+
 import click
+import psycopg2
 from flask import current_app, g
 from flask.cli import with_appcontext
+from psycopg2.extras import DictCursor
+
+logger = logging.getLogger(__name__)
 
 
 def get_db():
     if "db" not in g:
+        logger.info("Creating database")
         db_url = current_app.config["DATABASE"]
         g.db = psycopg2.connect(db_url, cursor_factory=DictCursor)
         g.db.set_session(autocommit=True)

@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS recipes;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS modifications;
+
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,

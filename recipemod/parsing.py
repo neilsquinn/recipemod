@@ -1,6 +1,7 @@
 import json
 from datetime import timedelta
 import re
+from typing import Any
 import urllib
 
 from bs4 import BeautifulSoup, NavigableString
@@ -167,13 +168,18 @@ class LDJSONParser:
     def __init__(self, script_tags):
         self.script_tags = script_tags
 
-    def extract_ldjson_recipe(self) -> list:
-        def parse_tree(data, recipes):
+    def extract_ldjson_recipe(self) -> list | None:
+        def parse_tree(data: dict[str, Any] | list[Any], recipes: list):
             if type(data) == dict:
-                if data.get("@type") == "Recipe":
-                    recipes += [data]
+                node_type = data.get("@type")
+                print(node_type)
+                # @type can be array of multiple types
+                if (type(node_type) == str and node_type == "Recipe") or (
+                    type(node_type) == list and "Recipe" in node_type
+                ):
+                    recipes.append(data)
                 elif data.get("mainEntity"):
-                    recipes += [data["mainEntity"]]
+                    parse_tree(data["mainEntity"], recipes)
                 else:
                     graph = data.get("@graph")
                     if graph:
@@ -196,7 +202,7 @@ class LDJSONParser:
         return recipes[0]
 
     @staticmethod
-    def get_image_url(ldjson_recipe) -> str:
+    def get_image_url(ldjson_recipe) -> str | None:
         image = ldjson_recipe.get("image")
         if type(image) == list:
             image = image[0]
@@ -266,7 +272,7 @@ class LDJSONParser:
             if key.endswith("Time") and value:
                 try:
                     times[key.replace("Time", "")] = parse_iso_8601(value).seconds
-                except (IndexError):
+                except IndexError:
                     continue
         return times
 
@@ -329,8 +335,7 @@ def parse_recipe_html(html: str, verbose: bool = False) -> Recipe:
         parser = LDJSONParser(ldjson_tags)
         recipe = parser.get_recipe()
         if recipe:
-            if verbose:
-                print("LD+JSON recipe found")
+            print("LD+JSON recipe found")
             return recipe
 
     recipe_microdata_elem = soup.find(itemtype=re.compile("https?://schema.org/Recipe"))

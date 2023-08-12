@@ -1,11 +1,33 @@
 import os
+from logging.config import dictConfig
 
-from flask import Flask, url_for, redirect, render_template
+from flask import Flask, render_template
+import werkzeug.exceptions
 
 from .auth import login_required
 
 
-def create_app(test_config=None):
+dictConfig(
+    {
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+            }
+        },
+        "handlers": {
+            "wsgi": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://flask.logging.wsgi_errors_stream",
+                "formatter": "default",
+            }
+        },
+        "root": {"level": "INFO", "handlers": ["wsgi"]},
+    }
+)
+
+
+def create_app():
     app = Flask(__name__)
     SECRET_KEY = os.environ.get("SECRET_KEY")
     if not SECRET_KEY:
@@ -44,5 +66,13 @@ def create_app(test_config=None):
     def serve_app(path):
         return render_template("index.html")
         # return url_for('static', filename='dist/index.html')
+
+    @app.errorhandler(werkzeug.exceptions.InternalServerError)
+    def handle_server_error(error):
+        return {"message": "Server encountered an unexpected error"}, 500
+
+    @app.errorhandler(werkzeug.exceptions.BadRequest)
+    def handle_bad_request(error):
+        return {"message": "Bad request encountered"}, 400
 
     return app

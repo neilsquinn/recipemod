@@ -1,125 +1,131 @@
+from enum import Enum
 import json
-from datetime import datetime
+import logging
 
-from flask import Blueprint, g, current_app, request, abort
-from flask.json import jsonify
+from flask import Blueprint, g, request
 import requests
-from psycopg2.extras import Json
 
 from recipemod.auth import login_required
-from recipemod.db import get_db  # KILL
-from recipemod.repository import (
-    delete_recipe,
-    get_recipe_detail,
-    get_recipes_by_user,
-    save_recipe,
-)
-from recipemod.models import Recipe
-from recipemod.parsing import ParseError, parse_recipe_html
+from recipemod import repository, parsing
+from recipemod.models import Modification, Recipe
 
 bp = Blueprint("api", __name__)
 
+logger = logging.getLogger(__name__)
 
-def _get_recipe(recipe_id, check_user=True) -> Recipe:
-    recipe = get_recipe_detail(recipe_id)
-    if not recipe:
-        abort(404, f"Recipe {recipe_id} does not exist.")
-    if check_user and recipe.user_id != g.user["id"]:
-        abort(403)
-    return recipe
+
+class Error(Enum):
+    NOT_FOUND = "NOT_FOUND"
+    REQUEST_FAILED = "REQUEST_FAILED"
+    MISSING_URL = "MISSING_URL"
+    PARSE_FAILED = "PARSE_FAILED"
 
 
 @login_required
-@bp.route("/api/recipes")
+@bp.get("/api/recipes")
 def recipes():
     """Get all recipes for this user."""
-    recipes = get_recipes_by_user(g.user["id"])
+    recipes = repository.get_recipes_by_user(g.user["id"])
     return {"recipes": [recipe.to_json() for recipe in recipes]}
 
 
 @login_required
-@bp.route("/api/recipes/add", methods=("POST",))
+@bp.post("/api/recipes/add")
 def add_recipe():
     data = json.loads(request.data.decode())
     url = data["url"]
     if not url:
-        return {"error": "MISSING_URL", "msg": "No URL provided"}, 400
+        return {"error": Error.MISSING_URL.value, "msg": "No URL provided"}, 400
 
     resp = requests.get(url, headers={"User-Agent": request.headers["User-Agent"]})
     if not resp:
+        logger.info("Request to URL '%s' failed with status %s", url, resp.status_code)
         return {
-            "error": "REQUEST_FAILED",
+            "error": Error.REQUEST_FAILED.value,
             "msg": f"Request failed with error {resp.status_code}: \n {resp.text}",
         }, 500
 
     try:
-        recipe = parse_recipe_html(resp.text)
-    except (ParseError):
-        return {"error": "PARSE_FAILED", "msg": "Unable to extract recipe data"}, 500
+        recipe = parsing.parse_recipe_html(resp.text)
+    except parsing.ParseError as error:
+        logger.error(
+            "Error parsing recipe data from URL '%s', message: '%s'", url, error
+        )
+        return {
+            "error": Error.PARSE_FAILED.value,
+            "msg": "Unable to extract recipe data",
+        }, 500
 
     if not recipe.url:
         recipe.url = url
 
     recipe.user_id = g.user["id"]
-    recipe_id = save_recipe(recipe)
-    recipe.id = recipe_id
+    recipe = repository.save_recipe(recipe)
 
+    logger.info(
+        "Saved recipe from URL '%s' with name '%s' as %d for user ID %s ",
+        url,
+        recipe.name,
+        recipe.id,
+        recipe.user_id,
+    )
     return {"recipe": recipe}
 
 
 @login_required
-@bp.route("/api/recipes/<int:recipe_id>")
+@bp.get("/api/recipes/<int:recipe_id>")
 def get_recipe_data(recipe_id):
-    recipe = get_recipe_detail(recipe_id)
+    recipe = repository.get_recipe_detail(recipe_id)
     if not recipe:
-        abort(404, f"Recipe {recipe_id} does not exist.")
+        logger.error(
+            "Unable to load recipe ID %s for user ID %s as it does not exist",
+            recipe_id,
+            g.user["id"],
+        )
+        return {
+            "error": Error.NOT_FOUND.value,
+            "msg": f"Recipe {recipe_id} does not exist.",
+        }, 404
     return {"recipe": recipe.to_json()}
 
 
 @login_required
-@bp.route("/api/recipes/<int:recipe_id>", methods=("DELETE",))
+@bp.delete("/api/recipes/<int:recipe_id>")
 def delete(recipe_id):
-    status = delete_recipe(recipe_id)
-    return "Recipe deleted" if status else ("Recipe not deleted", 500)
+    try:
+        repository.delete_recipe(recipe_id)
+    except repository.NotFoundError:
+        logger.exception("Unable to delete recipe with ID %s as not found", recipe_id)
+        return {
+            "msg": f"Unable to delete recipe with ID {recipe_id} as not found.",
+            "error": Error.NOT_FOUND.value,
+        }, 404
+
+    logger.info("Deleted recipe with ID %s", recipe_id)
+
+    return {"msg": "Recipe deleted"}
 
 
 @login_required
-@bp.route("/api/recipes/<int:recipe_id>", methods=("PUT",))
+@bp.put("/api/recipes/<int:recipe_id>")
 def update(recipe_id):
-    new_recipe = json.loads(request.data.decode())["recipe"]
-    old_recipe = _get_recipe(recipe_id)
-    changed_fields = {
-        key: getattr(old_recipe, key)
-        for key in ["name", "ingredients", "instructions"]
-        if new_recipe[key] != getattr(old_recipe, key)
-    }
-    print(changed_fields)
-    if changed_fields:
-        db = get_db()
-        with db.cursor() as c:
-            c.execute(
-                "UPDATE recipes SET "
-                "instructions = %(instructions)s, "
-                "name = %(name)s, "
-                "ingredients = %(ingredients)s, "
-                "updated = %(updated)s "
-                "WHERE id=%(id)s;",
-                {
-                    "ingredients": Json(new_recipe["ingredients"]),
-                    "name": new_recipe["name"],
-                    "instructions": Json(new_recipe["instructions"]),
-                    "id": recipe_id,
-                    "updated": datetime.now(),
-                },
-            )
-            c.execute(
-                """INSERT INTO modifications (recipe_id, changed_fields, meta) 
-                VALUES (%(recipe_id)s,  %(changed_fields)s,  %(meta)s);""",
-                {
-                    "recipe_id": recipe_id,
-                    "changed_fields": Json(changed_fields),
-                    "meta": Json({}),
-                },
-            )
+    recipe = Recipe.from_json(json.loads(request.data.decode())["recipe"])
+    try:
+        old_recipe = repository.get_recipe_detail(recipe_id)
+    except repository.NotFoundError:
+        return {
+            "msg": f"Unable to modify recipe with ID {recipe_id} as not found.",
+            "error": Error.NOT_FOUND.value,
+        }, 404
+    mod = Modification.from_recipes(old_recipe, recipe)
 
-    return {"recipe": new_recipe}
+    if mod.changed_fields:
+        logger.info("Updating recipe ID %s with changes: %s", recipe.id, mod)
+        repository.update_recipe(recipe)
+        repository.save_modification(mod)
+    else:
+        logger.info(
+            "Received request to update recipe ID %s but no changes found", recipe.id
+        )
+
+    return {"recipe": recipe}
