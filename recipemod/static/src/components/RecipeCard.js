@@ -25,12 +25,7 @@ function RecipeCard(props) {
             ? recipe.description.slice(0, 150).trim() + "..."
             : recipe.description}
         </p>
-        <Link
-          className="btn btn-primary stretched-link"
-          to={`/recipe/${recipe.id}`}
-        >
-          View
-        </Link>
+        <Link className="stretched-link" to={`/recipe/${recipe.id}`}></Link>
       </div>
     </div>
   );
