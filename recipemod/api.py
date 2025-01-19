@@ -25,7 +25,7 @@ class Error(Enum):
 @bp.get("/api/recipes")
 def recipes():
     """Get all recipes for this user."""
-    recipes = repository.get_recipes_by_user(g.user["id"])
+    recipes = repository.get_recipes_by_user(g.user.id)
     return {"recipes": [recipe.to_json() for recipe in recipes]}
 
 
@@ -59,7 +59,7 @@ def add_recipe():
     if not recipe.url:
         recipe.url = url
 
-    recipe.user_id = g.user["id"]
+    recipe.user_id = g.user.id
     recipe = repository.save_recipe(recipe)
 
     logger.info(
@@ -80,7 +80,7 @@ def get_recipe_data(recipe_id):
         logger.error(
             "Unable to load recipe ID %s for user ID %s as it does not exist",
             recipe_id,
-            g.user["id"],
+            g.user.id,
         )
         return {
             "error": Error.NOT_FOUND.value,

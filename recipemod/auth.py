@@ -1,4 +1,5 @@
 import functools
+import logging
 
 from flask import (
     Blueprint,
@@ -12,6 +13,9 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from recipemod.db import get_db
+from recipemod.repository import get_user_by_id, get_user_by_name
+
+logger = logging.getLogger(__name__)
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -21,6 +25,7 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        logger.info("Registering new user with name %s", username)
         db = get_db()
         with db.cursor() as c:
             error = None
@@ -55,21 +60,19 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        db = get_db()
-        with db.cursor() as c:
-            error = None
-            c.execute("SELECT * FROM users WHERE username = %s;", (username,))
-            user = c.fetchone()
-            if not user:
-                error = {"type": "danger", "text": "Incorrect username"}
-            elif not check_password_hash(user["password"], password):
-                error = {"type": "danger", "text": "Incorrect password"}
-            if not error:
-                session.clear()
-                session["user_id"] = user["id"]
-                return redirect(url_for("serve_app"))
+        error_message = None
+        user = get_user_by_name(username)
+        if not user:
+            error_message = "Incorrect username"
+        elif not check_password_hash(user.password, password):
+            error_message = "Incorrect password"
 
-            flash(error)
+        if not error_message:
+            session.clear()
+            session["user_id"] = user.id
+            return redirect(url_for("serve_app"))
+
+        flash(error_message, "danger")
 
     return render_template("auth/login.html")
 
@@ -81,10 +84,7 @@ def load_logged_in_user():
     if not user_id:
         g.user = None
     else:
-        db = get_db()
-        with db.cursor() as c:
-            c.execute("SELECT * FROM users WHERE id = %s;", (user_id,))
-            user = c.fetchone()
+        user = get_user_by_id(user_id)
         g.user = user
 
 
@@ -108,24 +108,34 @@ def login_required(view):
 @bp.route("/change_password", methods=("GET", "POST"))
 def change_password():
     if request.method == "POST":
-        message = None
-        user = g.user
-        print(request.form)
+        error_message = None
+
+        logger.info("Changing password for user %s", g.user.username)
         current_password = request.form["current-password"]
         new_password = request.form["new-password"]
-        if not new_password == request.form["confirm-new-password"]:
-            message = {"type": "danger", "text": "New passwords don't match"}
-        if not check_password_hash(user["password"], current_password):
-            message = {"type": "danger", "text": "Incorrect current password"}
 
-        if not message:
+        if not new_password == request.form["confirm-new-password"]:
+            error_message = "New passwords don't match"
+
+        if not check_password_hash(g.user.password, current_password):
+            error_message = "Incorrect current password"
+
+        if not error_message:
             db = get_db()
             with db.cursor() as c:
                 c.execute(
-                    "UPDATE users SET password = %(password)s " "WHERE id = %(id)s;",
-                    {"password": generate_password_hash(password), "id": user["id"]},
+                    "UPDATE users SET password = %(password)s WHERE id = %(id)s;",
+                    {
+                        "password": generate_password_hash(new_password),
+                        "id": g.user.id,
+                    },
                 )
             db.commit()
-            message = {"type": "success", "text": "Password successfully changed"}
-        flash(message)
+            logger.info("Updated password for user %s", g.user.username)
+
+            flash("Password successfully changed", "success")
+            return redirect("/")
+
+        flash(error_message, "danger")
+
     return render_template("auth/change_password.html")

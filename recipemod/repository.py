@@ -2,11 +2,11 @@ from dataclasses import asdict
 from datetime import datetime
 import logging
 
-from psycopg2.extras import Json
+from psycopg2.extras import Json, DictCursor
 import psycopg2.errors
 
 from recipemod.db import get_db
-from recipemod.models import Recipe, Modification
+from recipemod.models import Recipe, Modification, User
 
 from recipemod.db import get_db
 
@@ -19,6 +19,43 @@ class RepositoryError(Exception):
 
 class NotFoundError(RepositoryError):
     """Item not found in database"""
+
+
+def get_user_by_id(user_id: int) -> User:
+    logger.debug("Fetching user with id %i", user_id)
+    db = get_db()
+    with db.cursor(cursor_factory=DictCursor) as c:
+        try:
+            c.execute(
+                "SELECT id, username, password FROM users WHERE id = %s;", (user_id,)
+            )
+            user = c.fetchone()
+            if user is None:
+                logger.exception("Unable to find user with id %s", user_id)
+                raise NotFoundError(f"Unable to find user with id {user_id}")
+            return User(**user)
+        except psycopg2.errors.Error:
+            logger.exception("Error getting user with id %i", user_id)
+            raise
+
+
+def get_user_by_name(username: str) -> User:
+    logger.debug("Fetching user with name %s", username)
+    db = get_db()
+    with db.cursor(cursor_factory=DictCursor) as c:
+        try:
+            c.execute(
+                "SELECT id, username, password FROM users WHERE username = %s;",
+                (username,),
+            )
+            user = c.fetchone()
+            if user is None:
+                logger.exception("Unable to find user with name %s", username)
+                raise NotFoundError(f"Unable to find user with name {username}")
+            return User(**user)
+        except psycopg2.errors.Error:
+            logger.exception("Error getting user with id %i", username)
+            raise
 
 
 def _row_to_recipe(row) -> Recipe:

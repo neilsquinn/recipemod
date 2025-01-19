@@ -6,6 +6,13 @@ JSONDict = Dict[str, Any]
 
 
 @dataclass
+class User:
+    id: int
+    username: str
+    password: str
+
+
+@dataclass
 class Recipe:
     id: int | None = None
     name: str | None = None
