@@ -1,11 +1,9 @@
 fly.toml
-node_modules
+frontend
+bundle-dev.js
 tests
-webpack.config.js
-package.json
-package-lock.json
 venv
 __pycache__
+.pytest_cache
 .vscode
-static/src
 .DS_Store

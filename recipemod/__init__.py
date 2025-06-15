@@ -35,6 +35,11 @@ def create_app():
     DATABASE = os.environ.get("DATABASE_URL")
     app.config.from_mapping(SECRET_KEY=SECRET_KEY, DATABASE=DATABASE)
 
+    if app.config["DEBUG"]:
+        bundle_path = "bundle-dev.js"
+    else:
+        bundle_path = "bundle.js"
+
     from . import db
 
     db.init_app(app)
@@ -59,8 +64,7 @@ def create_app():
     @app.route("/<path:path>")
     @login_required
     def serve_app(path):
-        return render_template("index.html")
-        # return url_for('static', filename='dist/index.html')
+        return render_template("index.html", bundle_path="dist/" + bundle_path)
 
     @app.errorhandler(werkzeug.exceptions.InternalServerError)
     def handle_server_error(error):

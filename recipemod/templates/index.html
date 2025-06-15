@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div id="react-app"></div>
-<script src="{{url_for('static', filename='dist/bundle.js')}}"></script>
+<script src="{{url_for('static', filename=bundle_path)}}"></script>
 {% endblock %}
