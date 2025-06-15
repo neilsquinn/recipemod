@@ -52,10 +52,6 @@ def create_app():
 
     app.register_blueprint(auth.bp)
 
-    @app.route("/bookmarklet")
-    def bookmarklet():
-        return render_template("extras/bookmarklet.html")
-
     from . import api
 
     app.register_blueprint(api.bp)
