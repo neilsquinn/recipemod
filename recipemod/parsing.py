@@ -16,7 +16,7 @@ class ParseError(Exception):
     pass
 
 
-def clean_text(text, remove_newlines=False) -> str:
+def clean_text(text: str, remove_newlines=False) -> str:
     cleaned = fix_text(BeautifulSoup(text, "lxml").text.strip())
     if remove_newlines:
         cleaned = re.sub(newline_regex, " ", cleaned)

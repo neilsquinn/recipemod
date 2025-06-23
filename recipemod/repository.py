@@ -6,7 +6,7 @@ from psycopg2.extras import Json, DictCursor
 import psycopg2.errors
 
 from recipemod.db import get_db
-from recipemod.models import Recipe, Modification, User
+from recipemod.models import DBRecipe, Recipe, Modification, User
 
 from recipemod.db import get_db
 
@@ -58,7 +58,7 @@ def get_user_by_name(username: str) -> User:
             raise
 
 
-def _row_to_recipe(row) -> Recipe:
+def _row_to_recipe(row) -> DBRecipe:
     recipe = dict(row)
     for attr, col_name in [
         ("yield_", "yield"),
@@ -71,10 +71,10 @@ def _row_to_recipe(row) -> Recipe:
         if col_name in recipe:
             del recipe[col_name]
 
-    return Recipe(**recipe)
+    return DBRecipe(**recipe)
 
 
-def get_recipe_detail(recipe_id: int) -> Recipe:
+def get_recipe_detail(recipe_id: int) -> DBRecipe:
     logger.debug("Fetching recipe detail for ID %s", recipe_id)
     db = get_db()
     with db.cursor() as c:
@@ -97,7 +97,7 @@ def get_recipe_detail(recipe_id: int) -> Recipe:
             raise
 
 
-def get_recipes_by_user(user_id: int) -> list[Recipe]:
+def get_recipes_by_user(user_id: int) -> list[DBRecipe]:
     logger.debug("Fetching recipes for user %s", user_id)
     db = get_db()
     with db.cursor() as c:
@@ -117,12 +117,13 @@ def get_recipes_by_user(user_id: int) -> list[Recipe]:
             raise
 
 
-def save_recipe(recipe: Recipe) -> Recipe:
+def save_recipe(recipe: Recipe, user_id: int) -> DBRecipe:
     """Save recipe to database"""
     payload = asdict(recipe)
     for key, value in payload.items():
         if type(value) in (list, dict):
             payload[key] = Json(value)
+    payload["user_id"] = user_id
 
     db = get_db()
     with db.cursor() as c:
@@ -132,15 +133,15 @@ def save_recipe(recipe: Recipe) -> Recipe:
                 "instructions, times, user_id, image_url, url, authors, category, keywords) "
                 "VALUES (%(name)s, %(description)s, %(yield_)s, %(ingredients)s, "
                 "%(instructions)s, %(times)s, %(user_id)s, %(image_url)s, "
-                "%(url)s, %(authors)s, %(categories)s, %(keywords)s) RETURNING id;",
+                "%(url)s, %(authors)s, %(categories)s, %(keywords)s) RETURNING *;",
                 payload,
             )
         except psycopg2.errors.Error:
             logger.exception("Error writing recipe '%s' to database: '%s'", recipe.url)
             raise
-        recipe_id = c.fetchone()[0]
-        recipe.id = recipe_id
-    return recipe
+        created_recipe = c.fetchone()
+    db_recipe = _row_to_recipe(created_recipe)
+    return db_recipe
 
 
 def delete_recipe(recipe_id: int) -> None:
@@ -160,7 +161,7 @@ def delete_recipe(recipe_id: int) -> None:
             raise
 
 
-def update_recipe(recipe: Recipe):
+def update_recipe(recipe: DBRecipe):
     db = get_db()
     with db.cursor() as c:
         try:

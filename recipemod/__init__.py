@@ -64,10 +64,10 @@ def create_app():
 
     @app.errorhandler(werkzeug.exceptions.InternalServerError)
     def handle_server_error(error):
-        return {"message": "Server encountered an unexpected error"}, 500
+        return render_template("error.html", error=error.description), 500
 
     @app.errorhandler(werkzeug.exceptions.BadRequest)
     def handle_bad_request(error):
-        return {"message": "Bad request encountered"}, 400
+        return render_template("error.html", error=error.description), 400
 
     return app

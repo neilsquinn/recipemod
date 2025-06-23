@@ -13,7 +13,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from recipemod.db import get_db
-from recipemod.repository import get_user_by_id, get_user_by_name
+from recipemod.repository import NotFoundError, get_user_by_id, get_user_by_name
 
 logger = logging.getLogger(__name__)
 
@@ -31,16 +31,13 @@ def register():
             error = None
 
             if not username:
-                error = {"type": "danger", "text": "Username is required."}
+                error = "Username is required."
             elif not password:
-                error = {"type": "danger", "text": "Password is required"}
+                error = "Password is required"
             else:
                 c.execute("SELECT id FROM users WHERE username = %s;", (username,))
                 if c.fetchone():
-                    error = {
-                        "type": "danger",
-                        "text": f"User {username} is already registered.",
-                    }
+                    error = f"User {username} is already registered."
 
             if not error:
                 c.execute(
@@ -50,7 +47,7 @@ def register():
 
                 return redirect(url_for("auth.login"))
             if error:
-                flash(**error)
+                flash(error, "danger")
 
     return render_template("auth/register.html")
 
@@ -61,11 +58,12 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         error_message = None
-        user = get_user_by_name(username)
-        if not user:
-            error_message = "Incorrect username"
-        elif not check_password_hash(user.password, password):
-            error_message = "Incorrect password"
+        try:
+            user = get_user_by_name(username)
+            if not check_password_hash(user.password, password):
+                error_message = "Incorrect password"
+        except NotFoundError:
+            error_message = "User not found"
 
         if not error_message:
             session.clear()

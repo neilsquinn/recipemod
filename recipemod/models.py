@@ -12,32 +12,35 @@ class User:
     password: str
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Recipe:
-    id: int | None = None
-    name: str | None = None
-    user_id: int | None = None
+    name: str
     description: str | None = None
     url: str | None = None
     image_url: str | None = None
-    authors: List[str] | None = None
+    authors: list[str] | None = None
     instructions: JSONDict | None = None
-    ingredients: List[str] | None = None
+    ingredients: list[str] | None = None
     times: JSONDict | None = None
-    yield_: Union[List[str], int] | None = None
-    categories: List[str] | None = None
-    keywords: List[str] | None = None
-    created: str | None = None  # for now
+    yield_: Union[list[str], int] | None = None
+    categories: list[str] | None = None
+    keywords: list[str] | None = None
+
+    def to_json(self) -> dict[str, Any]:
+        data = asdict(self)
+        data["yield"] = data.pop("yield_")
+        return data
+
+
+@dataclass
+class DBRecipe(Recipe):
+    id: int
+    created: str
+    user_id: int | None = None
     updated: str | None = None
 
-    def to_json(self):
-        return {
-            **asdict(self),
-            "yield": self.yield_,
-        }
-
     @classmethod
-    def from_json(cls, data: JSONDict) -> "Recipe":
+    def from_json(cls, data: JSONDict) -> "DBRecipe":
         data = {"yield_" if k == "yield" else k: v for k, v in data.items()}
         return cls(**data)
 
