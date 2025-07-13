@@ -35,12 +35,12 @@
     "style-loader": "^2.0.0",
     "webpack": "^5.99.9",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^3.11.3",
+    "webpack-dev-server": "^5.2.2",
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.22.10",
-    "axios": "^0.21.4",
+    "axios": "^1.10.0",
     "bootstrap-icons": "^1.10.5",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
