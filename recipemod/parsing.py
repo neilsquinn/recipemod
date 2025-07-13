@@ -2,12 +2,14 @@ import json
 from datetime import timedelta
 import re
 from typing import Any
-import urllib
+import logging
 
 from bs4 import BeautifulSoup, NavigableString
 from ftfy import fix_text
 
 from recipemod.models import Recipe
+
+logger = logging.getLogger(__name__)
 
 newline_regex = r"(\s*(\r|\n)\s*)+"
 
@@ -33,17 +35,6 @@ def parse_iso_8601(iso_duration) -> timedelta:
                 args[arg] = float(element[0])
                 time = element[1]
     return timedelta(**args)
-
-
-def complete_url(image_url, page_url):
-    image_url_components = urllib.parse.urlparse(image_url)
-    if not image_url_components.netloc:
-        page_url_components = urllib.parse.urlparse(page_url)
-        return urllib.parse.urlunparse(
-            page_url_components[:2] + image_url_components[2:]
-        )
-    else:
-        return image_url
 
 
 class MicrodataParser:
@@ -277,7 +268,7 @@ class LDJSONParser:
         return times
 
     @staticmethod
-    def get_authors(ldjson_recipe) -> list:
+    def get_authors(ldjson_recipe) -> list[str] | None:
         author = ldjson_recipe.get("author")
         if type(author) == str:
             return [author]
@@ -327,7 +318,13 @@ class LDJSONParser:
         )
 
 
-def parse_recipe_html(html: str, verbose: bool = False) -> Recipe:
+def get_canonical_url(soup) -> str | None:
+    canonical_tag = soup.find("link", rel="canonical")
+    if canonical_tag:
+        return canonical_tag.get("href")
+
+
+def parse_recipe_html(html: str) -> Recipe:
     soup = BeautifulSoup(html, "lxml")
 
     ldjson_tags = soup.find_all("script", type="application/ld+json")
@@ -335,14 +332,18 @@ def parse_recipe_html(html: str, verbose: bool = False) -> Recipe:
         parser = LDJSONParser(ldjson_tags)
         recipe = parser.get_recipe()
         if recipe:
-            print("LD+JSON recipe found")
-            return recipe
+            logger.debug("LD+JSON recipe found")
 
     recipe_microdata_elem = soup.find(itemtype=re.compile("https?://schema.org/Recipe"))
     if recipe_microdata_elem:
-        if verbose:
-            print("Recipe microdata element found")
+        logger.debug("Recipe microdata element found")
         parser = MicrodataParser(recipe_microdata_elem)
-        return parser.get_recipe()
+        recipe = parser.get_recipe()
 
-    raise ParseError("No parsable recipe could be found.")
+    if not recipe:
+        raise ParseError("No parsable recipe could be found.")
+
+    if not recipe.url:
+        recipe.url = get_canonical_url(soup)
+
+    return recipe
